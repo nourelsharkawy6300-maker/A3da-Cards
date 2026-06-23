@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>لعبة قعدة - جاري التحميل...</title>
+    <style>
+        body { background-color: #1a1a1a; color: #f1c40f; font-family: Tahoma, sans-serif; text-align: center; padding-top: 20vh; }
+        h2 { font-size: 24px; }
+    </style>
+    <script>
+        // 🚨 هنا هتحط لينكات جوجل درايف بتاعتك كلها 🚨
+        const cardLinks = {
+            "1": "https://drive.google.com/file/d/1IZt07iwzOs-BC98JuzzkGbJwm54qcwab/view?usp=sharing",
+            "2": "حط_لينك_الكارت_رقم_2_هنا",
+            "3": "حط_لينك_الكارت_رقم_3_هنا"
+            // وقت ما تحب تزود باقي الـ 75 كارت، هتنزل سطر وتكتب رقم الكارت واللينك بنفس الطريقة
+        };
+
+        window.onload = function() {
+            // سحب رقم الكارت من اللينك اللي في الـ QR
+            const urlParams = new URLSearchParams(window.location.search);
+            const cardId = urlParams.get('id');
+
+            // لو الرقم موجود في اللستة، حوله فوراً
+            if (cardId && cardLinks[cardId]) {
+                window.location.replace(cardLinks[cardId]);
+            } else {
+                // لو الرقم غلط أو مش موجود
+                document.body.innerHTML = "<h2>⚠️ الكارت ده مش موجود يا معلم!</h2><p>اتأكد إنك عملت سكان للباركود صح.</p>";
+            }
+        }
+    </script>
+</head>
+<body>
+    <h2>🚀 جاري تحويلك للكارت...</h2>
+</body>
+</html>
