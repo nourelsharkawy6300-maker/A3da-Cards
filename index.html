@@ -10,6 +10,9 @@
     
     <title>لعبة قعدة - جاري التحميل...</title>
     
+    <!-- 🌟 خطوط جوجل العربية (Cairo) -->
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@600;800&display=swap" rel="stylesheet">
+    
     <!-- 🌟 إحصائيات جوجل (Google Analytics) -->
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-RNZPERH684"></script>
@@ -17,45 +20,77 @@
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date());
-
       gtag('config', 'G-RNZPERH684');
     </script>
 
     <style>
+        /* 🌟 أنيميشن الخلفية الجديدة */
         body { 
-            background-color: #1a1a1a; 
-            color: #f1c40f; 
-            font-family: Tahoma, sans-serif; 
-            text-align: center; 
-            padding-top: 25vh; 
             margin: 0;
+            font-family: 'Cairo', sans-serif; 
+            background: linear-gradient(-45deg, #1a1a2e, #16213e, #0f3460, #e94560);
+            background-size: 400% 400%;
+            animation: gradientBG 10s ease infinite;
+            color: #ffffff; 
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            text-align: center; 
         }
-        h2 { font-size: 26px; margin-bottom: 10px; }
-        p { color: #ccc; font-size: 16px; margin-bottom: 30px; }
-        
-        .loader {
-            border: 5px solid #333;
-            border-top: 5px solid #f1c40f;
-            border-radius: 50%;
-            width: 50px;
-            height: 50px;
-            animation: spin 1s linear infinite;
-            margin: 0 auto 20px auto;
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
         }
-        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
+        /* 🌟 بوكس الإزاز الاحترافي */
+        .glass-box {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 40px 30px;
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+            width: 85%;
+            max-width: 400px;
+        }
+
+        h2 { font-size: 28px; margin-bottom: 10px; font-weight: 800; color: #f1c40f; text-shadow: 0 2px 4px rgba(0,0,0,0.5); }
+        p { color: #e0e0e0; font-size: 16px; margin-bottom: 30px; font-weight: 600; }
         
+        /* 🌟 أنيميشن الكارت اللي بيلف */
+        .card-loader {
+            width: 60px;
+            height: 85px;
+            background: linear-gradient(135deg, #f1c40f, #e67e22);
+            border-radius: 8px;
+            margin: 0 auto 25px auto;
+            border: 2px solid #fff;
+            box-shadow: 0 4px 15px rgba(241, 196, 15, 0.5);
+            animation: flipCard 1.5s infinite ease-in-out;
+        }
+        @keyframes flipCard {
+            0% { transform: perspective(400px) rotateY(0); }
+            100% { transform: perspective(400px) rotateY(360deg); }
+        }
+        
+        /* 🌟 زرار الطوارئ بشكله الجديد */
         .fallback-btn {
             display: none; 
-            background-color: #e74c3c;
+            background: linear-gradient(135deg, #e74c3c, #c0392b);
             color: white;
             padding: 12px 25px;
             text-decoration: none;
-            border-radius: 8px;
-            font-weight: bold;
-            font-size: 18px;
-            margin-top: 20px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+            border-radius: 25px;
+            font-weight: 800;
+            font-size: 16px;
+            margin-top: 15px;
+            box-shadow: 0 4px 15px rgba(231, 76, 60, 0.4);
+            transition: transform 0.3s ease;
         }
+        .fallback-btn:active { transform: scale(0.95); }
     </style>
 
     <script>
@@ -95,15 +130,17 @@
                 }, 3000);
 
             } else {
-                document.body.innerHTML = "<h2>⚠️ الكارت ده مش موجود يا معلم!</h2><p>اتأكد إنك عملت سكان للباركود صح.</p>";
+                document.getElementById('content-box').innerHTML = "<h2>⚠️ الكارت ده مش موجود!</h2><p>اتأكد إنك عملت سكان للباركود صح يا معلم.</p>";
             }
         }
     </script>
 </head>
 <body>
-    <div class="loader"></div>
-    <h2>🚀 ثواني وكارتك يفتح...</h2>
-    <p>جاري سحب الكارت من العلبة!</p>
-    <a id="fallback" class="fallback-btn" href="#">اضغط هنا لو الكارت مفتحش لوحده</a>
+    <div class="glass-box" id="content-box">
+        <div class="card-loader"></div>
+        <h2>🚀 ثواني وكارتك يفتح...</h2>
+        <p>جاري سحب الكارت من العلبة!</p>
+        <a id="fallback" class="fallback-btn" href="#">اضغط هنا لو الكارت مفتحش لوحده</a>
+    </div>
 </body>
 </html>
