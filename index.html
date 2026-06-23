@@ -4,10 +4,23 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
+    <!-- 🌟 شكل اللينك لو اتبعت على السوشيال ميديا -->
     <meta property="og:title" content="لعبة قعدة 🎲">
     <meta property="og:description" content="اسحب كارتك وشوف حظك!">
     
     <title>لعبة قعدة - جاري التحميل...</title>
+    
+    <!-- 🌟 إحصائيات جوجل (Google Analytics) -->
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-RNZPERH684"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-RNZPERH684');
+    </script>
+
     <style>
         body { 
             background-color: #1a1a1a; 
@@ -20,7 +33,6 @@
         h2 { font-size: 26px; margin-bottom: 10px; }
         p { color: #ccc; font-size: 16px; margin-bottom: 30px; }
         
-        /* 🌟 الإكستنشن 1: شكل دايرة التحميل الاحترافية */
         .loader {
             border: 5px solid #333;
             border-top: 5px solid #f1c40f;
@@ -32,9 +44,8 @@
         }
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
         
-        /* 🌟 الإكستنشن 2: تصميم زرار الطوارئ */
         .fallback-btn {
-            display: none; /* الزرار مخفي في البداية */
+            display: none; 
             background-color: #e74c3c;
             color: white;
             padding: 12px 25px;
@@ -75,10 +86,8 @@
             const cardId = urlParams.get('id');
 
             if (cardId && cardLinks[cardId]) {
-                // التحويل الأوتوماتيك
                 window.location.replace(cardLinks[cardId]);
                 
-                // تشغيل زرار الطوارئ بعد 3 ثواني لو التحويل اتأخر
                 setTimeout(() => {
                     const btn = document.getElementById('fallback');
                     btn.style.display = 'inline-block';
