@@ -3,13 +3,52 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <meta property="og:title" content="لعبة قعدة 🎲">
+    <meta property="og:description" content="اسحب كارتك وشوف حظك!">
+    
     <title>لعبة قعدة - جاري التحميل...</title>
     <style>
-        body { background-color: #1a1a1a; color: #f1c40f; font-family: Tahoma, sans-serif; text-align: center; padding-top: 20vh; }
-        h2 { font-size: 24px; }
+        body { 
+            background-color: #1a1a1a; 
+            color: #f1c40f; 
+            font-family: Tahoma, sans-serif; 
+            text-align: center; 
+            padding-top: 25vh; 
+            margin: 0;
+        }
+        h2 { font-size: 26px; margin-bottom: 10px; }
+        p { color: #ccc; font-size: 16px; margin-bottom: 30px; }
+        
+        /* 🌟 الإكستنشن 1: شكل دايرة التحميل الاحترافية */
+        .loader {
+            border: 5px solid #333;
+            border-top: 5px solid #f1c40f;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px auto;
+        }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        
+        /* 🌟 الإكستنشن 2: تصميم زرار الطوارئ */
+        .fallback-btn {
+            display: none; /* الزرار مخفي في البداية */
+            background-color: #e74c3c;
+            color: white;
+            padding: 12px 25px;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: bold;
+            font-size: 18px;
+            margin-top: 20px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+        }
     </style>
+
     <script>
-        // 🚨 لينكات كروت جوجل درايف 🚨
+        // 🚨 لينكات كروت جوجل درايف (18 كارت) 🚨
         const cardLinks = {
             "1": "https://drive.google.com/file/d/1qu6YdXldg_3yfhRNpBSDcNb812jX6zsb/view?usp=drive_link",
             "2": "https://drive.google.com/file/d/1ptdc7mw3GQ8UIbaDqTX2jMXcQ3ljp3Y0/view?usp=drive_link",
@@ -27,25 +66,35 @@
             "14": "https://drive.google.com/file/d/1GZTKXBogY0E_zHvagW3hDUmT67syCdqg/view?usp=drive_link",
             "15": "https://drive.google.com/file/d/1yLvyisdqn7J2ljMxG9dT5OKhXXsTXu7j/view?usp=drive_link",
             "16": "https://drive.google.com/file/d/1E6dzcfODGUn2-0tPZD7T9OMroeXUl4ez/view?usp=drive_link",
-            "17": "https://drive.google.com/file/d/13EazBzOqqnjFpOW6ql-ByGniFhKD7POY/view?usp=drive_link"
+            "17": "https://drive.google.com/file/d/13EazBzOqqnjFpOW6ql-ByGniFhKD7POY/view?usp=drive_link",
+            "18": "حط_لينك_الكارت_رقم_18_هنا"
         };
 
         window.onload = function() {
-            // سحب رقم الكارت من اللينك اللي في الـ QR
             const urlParams = new URLSearchParams(window.location.search);
             const cardId = urlParams.get('id');
 
-            // لو الرقم موجود في اللستة، حوله فوراً
             if (cardId && cardLinks[cardId]) {
+                // التحويل الأوتوماتيك
                 window.location.replace(cardLinks[cardId]);
+                
+                // تشغيل زرار الطوارئ بعد 3 ثواني لو التحويل اتأخر
+                setTimeout(() => {
+                    const btn = document.getElementById('fallback');
+                    btn.style.display = 'inline-block';
+                    btn.href = cardLinks[cardId];
+                }, 3000);
+
             } else {
-                // لو الرقم غلط أو مش موجود
                 document.body.innerHTML = "<h2>⚠️ الكارت ده مش موجود يا معلم!</h2><p>اتأكد إنك عملت سكان للباركود صح.</p>";
             }
         }
     </script>
 </head>
 <body>
-    <h2>🚀 جاري تحويلك للكارت...</h2>
+    <div class="loader"></div>
+    <h2>🚀 ثواني وكارتك يفتح...</h2>
+    <p>جاري سحب الكارت من العلبة!</p>
+    <a id="fallback" class="fallback-btn" href="#">اضغط هنا لو الكارت مفتحش لوحده</a>
 </body>
 </html>
