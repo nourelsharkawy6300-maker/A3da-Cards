@@ -4,22 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="theme-color" content="#000000">
-    
-    <meta property="og:title" content="لعبة قعدة 🎲">
-    <meta property="og:description" content="اسحب كارتك وشوف حظك يا معلم!">
-    
     <title>لعبة قعدة - جاري سحب الكارت...</title>
-    
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@600;800;900&display=swap" rel="stylesheet">
     
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-RNZPERH684"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', 'G-RNZPERH684');
-    </script>
-
     <style>
         body { 
             margin: 0; font-family: 'Cairo', sans-serif; 
@@ -54,26 +41,23 @@
             border-radius: 10px; border: 3px solid #fff; box-shadow: 0 5px 15px rgba(241, 196, 15, 0.5);
             animation: flipCard3D 1.5s infinite ease-in-out; transform-style: preserve-3d;
         }
-        @keyframes flipCard3D {
-            0% { transform: rotateY(0deg) translateY(0); }
-            50% { transform: rotateY(180deg) translateY(-15px); box-shadow: 0 20px 30px rgba(241, 196, 15, 0.3); }
-            100% { transform: rotateY(360deg) translateY(0); }
-        }
+        @keyframes flipCard3D { 0% { transform: rotateY(0deg) translateY(0); } 50% { transform: rotateY(180deg) translateY(-15px); box-shadow: 0 20px 30px rgba(241, 196, 15, 0.3); } 100% { transform: rotateY(360deg) translateY(0); } }
 
-        /* 🌟 ستايل الصورة وهي مالية الشاشة بالكامل */
+        /* ستايل الصورة وهي مالية الشاشة بالكامل */
         .full-screen-img {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            object-fit: contain; /* عشان الصورة تظهر كاملة وماتتقصش */
-            background-color: #000000; /* خلفية سودة زي الاستوديو */
-            z-index: 9999;
-            opacity: 0;
-            animation: fadeIn 0.5s forwards;
+            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+            object-fit: contain; background-color: #000000; z-index: 9999;
+            opacity: 0; animation: fadeIn 0.5s forwards;
         }
         @keyframes fadeIn { to { opacity: 1; } }
+
+        /* زرار طوارئ لو النت عند اللاعب قاطع */
+        .emergency-btn {
+            position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%);
+            background: #e74c3c; color: #fff; padding: 12px 25px; border-radius: 25px;
+            text-decoration: none; z-index: 10000; font-family: 'Cairo', sans-serif; font-weight: 900;
+            display: none; box-shadow: 0 4px 15px rgba(0,0,0,0.5); border: 2px solid #fff;
+        }
     </style>
 
     <script>
@@ -123,19 +107,29 @@
 
             if (cardId && cardLinks[cardId]) {
                 const driveId = getDriveId(cardLinks[cardId]);
+                const originalUrl = cardLinks[cardId];
                 
-                // لو قدرنا نجيب الـ ID بتاع الصورة
                 if (driveId) {
-                    const imgUrl = `https://drive.google.com/uc?export=view&id=${driveId}`;
+                    // 🚀 ثغرة سيرفرات lh3.googleusercontent السحرية اللي بتخترق حماية جوجل
+                    const magicUrl = `https://lh3.googleusercontent.com/d/${driveId}`;
                     
-                    // استنى ثانيتين، وبعدين امسح الشاشة واعرض الصورة Full Screen
                     setTimeout(() => {
-                        document.body.innerHTML = `<img src="${imgUrl}" class="full-screen-img" alt="الكارت" />`;
+                        // بنعرض الصورة، وبنجهز زرار طوارئ لو النت فصل
+                        document.body.innerHTML = `
+                            <img src="${magicUrl}" class="full-screen-img" alt="الكارت" onerror="document.getElementById('em-btn').style.display='block'" />
+                            <a id="em-btn" class="emergency-btn" href="${originalUrl}">اضغط هنا لفتح الكارت</a>
+                        `;
+                        
+                        // إظهار زرار الطوارئ أوتوماتيك لو الصورة غابت أكتر من 4 ثواني
+                        setTimeout(() => {
+                            const emBtn = document.getElementById('em-btn');
+                            if(emBtn) emBtn.style.display = 'block';
+                        }, 4000);
+
                     }, 2000);
 
                 } else {
-                    // لو اللينك محطوط غلط هيحوله عادي
-                    setTimeout(() => { window.location.replace(cardLinks[cardId]); }, 2000);
+                    setTimeout(() => { window.location.replace(originalUrl); }, 2000);
                 }
 
             } else {
