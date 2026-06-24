@@ -93,8 +93,16 @@
             "يا ترى الكارت ده أكشن ولا فخ؟ 🃏"
         ];
 
+        // دالة صايعة بتستخرج الـ ID وتحوله للينك عرض مباشر بدون واجهة درايف
+        function getDirectLink(url) {
+            const match = url.match(/\/d\/(.+?)\//);
+            if (match && match[1]) {
+                return `https://drive.google.com/uc?export=view&id=${match[1]}`;
+            }
+            return url;
+        }
+
         window.onload = function() {
-            // اختيار جملة عشوائية تظهر في التحميل
             const randomQuote = funnyQuotes[Math.floor(Math.random() * funnyQuotes.length)];
             const quoteElement = document.getElementById('random-quote');
             if (quoteElement) quoteElement.innerText = randomQuote;
@@ -103,11 +111,12 @@
             const cardId = urlParams.get('id');
 
             if (cardId && cardLinks[cardId]) {
-                const driveUrl = cardLinks[cardId];
+                // تحويل اللينك العادي للينك المباشر
+                const finalUrl = getDirectLink(cardLinks[cardId]);
 
-                // 🚀 السر هنا: بعد ثانيتين بالظبط (2000 ملي ثانية) هيفتح صورة الكارت أوتوماتيك!
+                // بعد ثانيتين بالظبط هيطير للصورة الخام علطول
                 setTimeout(() => {
-                    window.location.replace(driveUrl);
+                    window.location.replace(finalUrl);
                 }, 2000); 
 
             } else {
