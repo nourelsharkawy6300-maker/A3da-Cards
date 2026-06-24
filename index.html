@@ -2,22 +2,37 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>لعبة قعدة</title>
+    <title>لعبة قعدة - تجربة سريعة</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@600;800;900&display=swap" rel="stylesheet">
     <style>
-        body { margin: 0; background: #000; display: flex; justify-content: center; align-items: center; min-height: 100vh; }
-        .card-img { width: 100%; max-width: 500px; }
+        body { margin: 0; font-family: 'Cairo', sans-serif; background: linear-gradient(-45deg, #1a1a2e, #16213e, #0f3460, #e94560); background-size: 400% 400%; animation: gradientBG 10s ease infinite; color: #ffffff; display: flex; justify-content: center; align-items: center; height: 100vh; text-align: center; overflow: hidden; }
+        @keyframes gradientBG { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
+        .glass-box { background: rgba(255, 255, 255, 0.08); backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.2); border-radius: 25px; padding: 40px 30px; }
+        h2 { font-size: 24px; color: #f1c40f; }
+        .card-loader { width: 70px; height: 100px; margin: 0 auto 20px auto; background: linear-gradient(135deg, #f1c40f, #e67e22); border-radius: 10px; border: 3px solid #fff; animation: flip 1.5s infinite; }
+        @keyframes flip { 0% { transform: rotateY(0deg); } 100% { transform: rotateY(360deg); } }
+        /* ستايل الصورة النهائية */
+        .full-screen-img { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; object-fit: contain; background-color: #000; z-index: 9999; animation: fadeIn 0.5s forwards; }
+        @keyframes fadeIn { to { opacity: 1; } }
     </style>
 </head>
 <body>
-    <img id="cardImage" src="" class="card-img" />
+    <div class="glass-box">
+        <div class="card-loader"></div>
+        <h2>🚀 جاري سحب الكارت...</h2>
+    </div>
+
     <script>
-        const urlParams = new URLSearchParams(window.location.search);
-        const cardId = urlParams.get('id');
-        // هنا الكود بياخد رقم الكارت وبيفتح الصورة اللي اسمها (رقم.jpg) من نفس مكان الموقع
-        if(cardId) {
-            document.getElementById('cardImage').src = cardId + ".jpg";
-        }
+        // لينك درايف بتاع كارت رقم 1 للتجربة
+        const testDriveUrl = "https://drive.google.com/file/d/1qu6YdXldg_3yfhRNpBSDcNb812jX6zsb/view?usp=drive_link";
+        const match = testDriveUrl.match(/\/d\/(.+?)\//);
+        const driveId = match ? match[1] : null;
+
+        // بعد ثانيتين هيسحب الصورة خام ويفرشها
+        setTimeout(() => {
+            const directImgUrl = `https://drive.google.com/thumbnail?id=${driveId}&sz=w1000`;
+            document.body.innerHTML = `<img src="${directImgUrl}" class="full-screen-img" />`;
+        }, 2000);
     </script>
 </body>
 </html>
