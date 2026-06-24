@@ -3,23 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <meta name="theme-color" content="#1a1a2e">
+    <meta name="theme-color" content="#4a4d9e">
     
     <meta name="referrer" content="no-referrer">
     
     <title>لعبة قعدة 🎲</title>
     
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@600;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@500;700;800;900&display=swap" rel="stylesheet">
     
     <style>
-        /* ================= ستايل التحميل الشيك ================= */
+        /* ================= الهوية البصرية (Colors & Typography) ================= */
         body { 
             margin: 0; 
-            font-family: 'Cairo', sans-serif; 
-            background: linear-gradient(-45deg, #1a1a2e, #16213e, #0f3460, #e94560);
+            font-family: 'Tajawal', sans-serif; /* الخط الأساسي لكل حاجة */
+            
+            /* خلفية اللعبة باللون الأساسي #4a4d9e مع تدرج شبابي */
+            background: linear-gradient(-45deg, #4a4d9e, #36387a, #2a2c66, #4a4d9e);
             background-size: 400% 400%; 
             animation: gradientBG 10s ease infinite;
-            color: #ffffff; 
+            
+            color: #f0f0f0; /* اللون الفاتح الأساسي للنصوص */
             display: flex; 
             justify-content: center; 
             align-items: center;
@@ -34,10 +37,10 @@
             100% { background-position: 0% 50%; } 
         }
 
-        /* تأثير النقط في الخلفية */
+        /* تأثير النقط في الخلفية (Chaotic Vibe) */
         .particles {
             position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 0;
-            background-image: radial-gradient(rgba(255,255,255,0.1) 2px, transparent 2px);
+            background-image: radial-gradient(rgba(240, 240, 240, 0.1) 2px, transparent 2px);
             background-size: 40px 40px; animation: particleMove 15s linear infinite;
         }
         @keyframes particleMove { 
@@ -47,12 +50,12 @@
 
         /* البوكس الزجاجي */
         .glass-box {
-            background: rgba(255, 255, 255, 0.08); 
+            background: rgba(240, 240, 240, 0.1); 
             backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.2); 
-            border-radius: 25px; 
+            border: 2px solid rgba(240, 240, 240, 0.2); 
+            border-radius: 30px; 
             padding: 40px 30px;
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5); 
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3); 
             width: 85%; 
             max-width: 400px; 
             z-index: 1;
@@ -63,15 +66,50 @@
             100% { opacity: 1; transform: scale(1) translateY(0); } 
         }
 
-        h2 { font-size: 26px; margin-bottom: 5px; font-weight: 900; color: #f1c40f; text-shadow: 0 3px 6px rgba(0,0,0,0.6); }
-        .funny-quote { color: #00ffcc; font-size: 16px; font-weight: 800; min-height: 25px; }
+        /* العناوين الكبيرة (ExtraBold / Black) */
+        h2 { 
+            font-size: 30px; 
+            margin-bottom: 5px; 
+            font-weight: 900; 
+            color: #f0f0f0; 
+            text-shadow: 0 4px 10px rgba(0,0,0,0.3); 
+            line-height: 1.2;
+        }
+
+        /* نصوص الشرح والمواقف (Bold) */
+        .funny-quote { 
+            color: #f0f0f0; 
+            font-size: 18px; 
+            font-weight: 700; 
+            min-height: 25px; 
+            opacity: 0.9;
+        }
         
-        /* كارت الـ 3D اللي بيلف */
+        /* النصوص الصغيرة (Medium) للتنبيهات */
+        .small-text {
+            font-weight: 500;
+            font-size: 14px;
+            color: rgba(240, 240, 240, 0.7);
+            margin-top: 15px;
+        }
+
+        /* كارت الـ 3D اللي بيلف (معدل عشان يناسب الألوان) */
         .card-loader {
-            width: 70px; height: 100px; margin: 0 auto 25px auto;
-            background: linear-gradient(135deg, #f1c40f, #e67e22); 
-            border-radius: 10px; border: 3px solid #fff; box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+            width: 75px; height: 110px; margin: 0 auto 25px auto;
+            background: #f0f0f0; 
+            border-radius: 12px; 
+            border: 4px solid #fff; 
+            box-shadow: 0 10px 25px rgba(0,0,0,0.4);
+            position: relative;
             animation: flipCard3D 1.5s infinite ease-in-out;
+        }
+        /* ظهر الكارت الوهمي */
+        .card-loader::after {
+            content: '';
+            position: absolute;
+            top: 6px; left: 6px; right: 6px; bottom: 6px;
+            border: 3px dashed #4a4d9e;
+            border-radius: 8px;
         }
         @keyframes flipCard3D { 
             0% { transform: perspective(400px) rotateY(0deg); } 
@@ -81,7 +119,7 @@
     </style>
 
     <script>
-        // 🚨 الداتا بيز بتاعة الكروت (الـ IDs مستخرجة جاهزة ومفلترة) 🚨
+        // 🚨 الداتا بيز بتاعة الـ 18 كارت 🚨
         const cardDatabase = {
             "1": "1qu6YdXldg_3yfhRNpBSDcNb812jX6zsb",
             "2": "1ptdc7mw3GQ8UIbaDqTX2jMXcQ3ljp3Y0",
@@ -100,7 +138,7 @@
             "15": "1yLvyisdqn7J2ljMxG9dT5OKhXXsTXu7j",
             "16": "1E6dzcfODGUn2-0tPZD7T9OMroeXUl4ez",
             "17": "13EazBzOqqnjFpOW6ql-ByGniFhKD7POY",
-            "18": "1xdgLolS11_odTOENqH8uyjnTQYTaQNH3" // <-- تم إضافة الكارت الـ 18 هنا بنجاح
+            "18": "1b7sv8YQZqPHYx9n7JCjzySxi50DJDn0B" 
         };
 
         const funnyQuotes = [
@@ -112,31 +150,26 @@
         ];
 
         window.onload = function() {
-            // عرض جملة عشوائية للاعب
             document.getElementById('random-quote').innerText = funnyQuotes[Math.floor(Math.random() * funnyQuotes.length)];
             
-            // قراءة رقم الكارت من اللينك
             const urlParams = new URLSearchParams(window.location.search);
             const cardId = urlParams.get('id');
 
-            // لو الكارت موجود في الداتا بيز
             if (cardId && cardDatabase[cardId]) {
                 const driveId = cardDatabase[cardId];
                 
-                // لينك عرض الصورة الخام بأعلى جودة من غير واجهة جوجل درايف
+                // لينك عرض الصورة الخام بأعلى جودة
                 const directImgUrl = `https://drive.google.com/thumbnail?id=${driveId}&sz=w1000`;
                 
-                // بعد ثانيتين بالظبط، هيحول المتصفح للصورة مباشرة بدون أي ضغطة
                 setTimeout(() => {
                     window.location.replace(directImgUrl);
                 }, 2000);
 
             } else {
-                // رسالة خطأ لو الباركود بايظ
                 document.getElementById('content-box').innerHTML = `
                     <div style="font-size: 60px; margin-bottom: 15px; animation: popUp 0.5s;">⚠️</div>
                     <h2>الكارت ده مش موجود!</h2>
-                    <p style="color: #e0e0e0; font-size: 15px;">شكلك ضربت باركود غلط يا معلم.</p>
+                    <p class="funny-quote" style="font-size: 16px;">شكلك ضربت باركود غلط يا معلم.</p>
                 `;
             }
         }
@@ -146,8 +179,9 @@
     <div class="particles"></div>
     <div class="glass-box" id="content-box">
         <div class="card-loader"></div>
-        <h2>🚀 ثواني وكارتك يفتح...</h2>
+        <h2>ثواني وكارتك يفتح...</h2>
         <div id="random-quote" class="funny-quote">جاري سحب الكارت...</div>
+        <div class="small-text">قعدة سكرول 🎮</div>
     </div>
 </body>
 </html>
