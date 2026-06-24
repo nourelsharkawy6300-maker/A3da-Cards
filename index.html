@@ -2,19 +2,16 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="theme-color" content="#1a1a2e">
     
-    <!-- 🌟 شكل اللينك لو اتبعت على السوشيال ميديا -->
     <meta property="og:title" content="لعبة قعدة 🎲">
-    <meta property="og:description" content="اسحب كارتك وشوف حظك!">
+    <meta property="og:description" content="اسحب كارتك وشوف حظك يا معلم!">
     
-    <title>لعبة قعدة - جاري التحميل...</title>
+    <title>لعبة قعدة - جاري سحب الكارت...</title>
     
-    <!-- 🌟 خطوط جوجل العربية (Cairo) -->
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@600;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@600;800;900&display=swap" rel="stylesheet">
     
-    <!-- 🌟 إحصائيات جوجل (Google Analytics) -->
-    <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-RNZPERH684"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
@@ -24,7 +21,7 @@
     </script>
 
     <style>
-        /* 🌟 أنيميشن الخلفية الجديدة */
+        /* 🌟 أنيميشن الخلفية والبارتيكلز */
         body { 
             margin: 0;
             font-family: 'Cairo', sans-serif; 
@@ -37,6 +34,8 @@
             align-items: center;
             height: 100vh;
             text-align: center; 
+            overflow: hidden;
+            position: relative;
         }
         @keyframes gradientBG {
             0% { background-position: 0% 50%; }
@@ -44,39 +43,79 @@
             100% { background-position: 0% 50%; }
         }
 
-        /* 🌟 بوكس الإزاز الاحترافي */
-        .glass-box {
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(15px);
-            -webkit-backdrop-filter: blur(15px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 20px;
-            padding: 40px 30px;
-            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
-            width: 85%;
-            max-width: 400px;
+        /* 🌟 تأثير النقط الطايرة في الخلفية */
+        .particles {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            background-image: radial-gradient(rgba(255,255,255,0.15) 2px, transparent 2px);
+            background-size: 40px 40px;
+            animation: particleMove 15s linear infinite;
+        }
+        @keyframes particleMove {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(-40px); }
         }
 
-        h2 { font-size: 28px; margin-bottom: 10px; font-weight: 800; color: #f1c40f; text-shadow: 0 2px 4px rgba(0,0,0,0.5); }
-        p { color: #e0e0e0; font-size: 16px; margin-bottom: 30px; font-weight: 600; }
+        /* 🌟 بوكس الإزاز مع أنيميشن دخول */
+        .glass-box {
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 25px;
+            padding: 40px 30px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+            width: 85%;
+            max-width: 400px;
+            z-index: 1;
+            opacity: 0;
+            transform: scale(0.8) translateY(30px);
+            animation: popUp 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+        }
+        @keyframes popUp {
+            to { opacity: 1; transform: scale(1) translateY(0); }
+        }
+
+        h2 { font-size: 26px; margin-bottom: 5px; font-weight: 900; color: #f1c40f; text-shadow: 0 3px 6px rgba(0,0,0,0.6); }
         
-        /* 🌟 أنيميشن الكارت اللي بيلف */
-        .card-loader {
-            width: 60px;
-            height: 85px;
-            background: linear-gradient(135deg, #f1c40f, #e67e22);
-            border-radius: 8px;
+        /* 🌟 الجملة العشوائية اللي بتطلع */
+        .funny-quote { 
+            color: #00ffcc; 
+            font-size: 16px; 
+            margin-bottom: 25px; 
+            font-weight: 800; 
+            text-shadow: 0 2px 4px rgba(0,0,0,0.5); 
+            min-height: 25px;
+        }
+        
+        p { color: #e0e0e0; font-size: 15px; margin-bottom: 20px; font-weight: 600; }
+        
+        /* 🌟 أنيميشن الكارت 3D الطاير */
+        .card-loader-container {
+            perspective: 800px;
             margin: 0 auto 25px auto;
-            border: 2px solid #fff;
-            box-shadow: 0 4px 15px rgba(241, 196, 15, 0.5);
-            animation: flipCard 1.5s infinite ease-in-out;
+            width: 70px;
+            height: 100px;
         }
-        @keyframes flipCard {
-            0% { transform: perspective(400px) rotateY(0); }
-            100% { transform: perspective(400px) rotateY(360deg); }
+        .card-loader {
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #f1c40f, #e67e22);
+            border-radius: 10px;
+            border: 3px solid #fff;
+            box-shadow: 0 5px 15px rgba(241, 196, 15, 0.5);
+            animation: flipCard3D 1.5s infinite ease-in-out;
+            transform-style: preserve-3d;
+        }
+        @keyframes flipCard3D {
+            0% { transform: rotateY(0deg) translateY(0); }
+            50% { transform: rotateY(180deg) translateY(-15px); box-shadow: 0 20px 30px rgba(241, 196, 15, 0.3); }
+            100% { transform: rotateY(360deg) translateY(0); }
         }
         
-        /* 🌟 زرار الطوارئ بشكله الجديد */
+        /* 🌟 زرار الطوارئ بريميم */
         .fallback-btn {
             display: none; 
             background: linear-gradient(135deg, #e74c3c, #c0392b);
@@ -88,9 +127,25 @@
             font-size: 16px;
             margin-top: 15px;
             box-shadow: 0 4px 15px rgba(231, 76, 60, 0.4);
-            transition: transform 0.3s ease;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
         }
+        .fallback-btn:hover { border: 2px solid #fff; box-shadow: 0 6px 20px rgba(231, 76, 60, 0.6); }
         .fallback-btn:active { transform: scale(0.95); }
+
+        /* 🌟 شاشة الخطأ اللي بتترج */
+        .error-icon {
+            font-size: 60px;
+            margin-bottom: 15px;
+            display: inline-block;
+            animation: shake 0.5s ease-in-out;
+        }
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-10px) rotate(-5deg); }
+            50% { transform: translateX(10px) rotate(5deg); }
+            75% { transform: translateX(-10px) rotate(-5deg); }
+        }
     </style>
 
     <script>
@@ -116,30 +171,61 @@
             "18": "حط_لينك_الكارت_رقم_18_هنا"
         };
 
+        // 🌟 لستة الجمل الكوميدية العشوائية
+        const funnyQuotes = [
+            "جهز نفسك للفضايح يا معلم! 😈",
+            "استرها علينا يارب... 🤲",
+            "يا ترى الكارت ده أكشن ولا فخ؟ 🃏",
+            "اللي بيخاف يروح! 🚀",
+            "النقطة السلبية بتوجع، ركز! 📉",
+            "القعدة دي مش هتعدي على خير... 🔥",
+            "اسحب كارتك وواجه مصيرك! ⚡"
+        ];
+
         window.onload = function() {
+            // اختيار جملة عشوائية
+            const randomQuote = funnyQuotes[Math.floor(Math.random() * funnyQuotes.length)];
+            const quoteElement = document.getElementById('random-quote');
+            if (quoteElement) quoteElement.innerText = randomQuote;
+
             const urlParams = new URLSearchParams(window.location.search);
             const cardId = urlParams.get('id');
 
             if (cardId && cardLinks[cardId]) {
-                window.location.replace(cardLinks[cardId]);
+                // 🌟 تأخير مقصود (1.5 ثانية) عشان يعيشوا في المود ويشوفوا الأنيميشن
+                setTimeout(() => {
+                    window.location.replace(cardLinks[cardId]);
+                }, 1500);
                 
+                // زرار الطوارئ يظهر بعد 4 ثواني لو النت تقيل
                 setTimeout(() => {
                     const btn = document.getElementById('fallback');
-                    btn.style.display = 'inline-block';
-                    btn.href = cardLinks[cardId];
-                }, 3000);
+                    if(btn) {
+                        btn.style.display = 'inline-block';
+                        btn.href = cardLinks[cardId];
+                    }
+                }, 4000);
 
             } else {
-                document.getElementById('content-box').innerHTML = "<h2>⚠️ الكارت ده مش موجود!</h2><p>اتأكد إنك عملت سكان للباركود صح يا معلم.</p>";
+                // رسالة الخطأ المتطورة
+                document.getElementById('content-box').innerHTML = `
+                    <div class="error-icon">⚠️</div>
+                    <h2>الكارت ده مش موجود!</h2>
+                    <p>شكلك ضربت باركود غلط أو الكارت لسه متطبعش يا معلم.</p>
+                `;
             }
         }
     </script>
 </head>
 <body>
+    <div class="particles"></div>
     <div class="glass-box" id="content-box">
-        <div class="card-loader"></div>
+        <div class="card-loader-container">
+            <div class="card-loader"></div>
+        </div>
         <h2>🚀 ثواني وكارتك يفتح...</h2>
-        <p>جاري سحب الكارت من العلبة!</p>
+        <div id="random-quote" class="funny-quote">جاري سحب الكارت...</div>
+        <p>خليك جاهز!</p>
         <a id="fallback" class="fallback-btn" href="#">اضغط هنا لو الكارت مفتحش لوحده</a>
     </div>
 </body>
