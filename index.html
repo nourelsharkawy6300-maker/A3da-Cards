@@ -11,7 +11,6 @@
     
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@500;700;800;900&display=swap" rel="stylesheet">
 
-    <!-- 🚨 Google Analytics (gtag.js) 🚨 -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-RNZPERH684"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
@@ -20,7 +19,6 @@
       gtag('config', 'G-RNZPERH684');
     </script>
 
-    <!-- 🚨 مكتبة الكاميرا للسكانر الداخلي 🚨 -->
     <script src="https://unpkg.com/html5-qrcode"></script>
     
     <style>
@@ -29,12 +27,12 @@
             font-family: 'Tajawal', sans-serif; 
             background-color: #4a4d9e; 
             
-            /* خلفية بتتحرك ببطء */
+            /* خلفية بتتحرك ببطء شديد وانسيابية */
             background-image: url('image_23f560.jpg');
             background-size: 150%; 
             background-position: center;
             background-attachment: fixed;
-            animation: panBackground 25s infinite alternate linear;
+            animation: panBackground 30s infinite alternate cubic-bezier(0.45, 0.05, 0.55, 0.95);
             
             color: #f0f0f0; 
             display: flex; 
@@ -45,7 +43,6 @@
             overflow: hidden; 
             position: relative;
             letter-spacing: normal; 
-            
             user-select: none; 
             -webkit-user-select: none;
         }
@@ -61,64 +58,98 @@
             background: rgba(74, 77, 158, 0.45); z-index: 0;
         }
 
-        /* البوكس الزجاجي */
+        /* 🚨 البوكس الزجاجي (مع دخول بـ Bounce خفيف) 🚨 */
         .glass-box {
             background: rgba(240, 240, 240, 0.08); 
             backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
             border: 1px solid rgba(240, 240, 240, 0.15); 
             border-radius: 24px; 
-            padding: 25px 20px; 
-            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5); 
-            width: 90%; 
-            max-width: 380px; 
+            padding: 20px 15px; 
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.6); 
+            width: 95%; 
+            max-width: 420px; 
             box-sizing: border-box;
             z-index: 1;
-            animation: popUp 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+            /* Bounce Entrance */
+            animation: popUpBounce 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
         }
         
-        @keyframes popUp { 
-            0% { opacity: 0; transform: scale(0.9) translateY(20px); } 
+        @keyframes popUpBounce { 
+            0% { opacity: 0; transform: scale(0.8) translateY(40px); } 
             100% { opacity: 1; transform: scale(1) translateY(0); } 
         }
 
         .game-logo {
-            max-width: 110px; margin: 0 auto 15px auto; display: block;
+            max-width: 100px; margin: 0 auto 10px auto; display: block;
             filter: drop-shadow(0 4px 6px rgba(0,0,0,0.3));
         }
 
-        h2 { font-size: 24px; margin: 0 0 10px 0; font-weight: 900; color: #f0f0f0; text-shadow: 0 4px 10px rgba(0,0,0,0.3); }
-        .small-text { font-weight: 500; font-size: 14px; color: rgba(240, 240, 240, 0.6); margin-bottom: 5px; }
+        h2 { font-size: 24px; margin: 0 0 5px 0; font-weight: 900; color: #f0f0f0; text-shadow: 0 4px 10px rgba(0,0,0,0.3); }
+        .small-text { font-weight: 500; font-size: 14px; color: rgba(240, 240, 240, 0.7); margin-bottom: 5px; }
 
-        /* ====== 🚨 الكارت وهو بيلعب (الأنيميشن الجديد) 🚨 ====== */
+        /* ====== 🚨 الكارت (أنيميشن الدخول 3D واللعب المستمر) 🚨 ====== */
         .display-card {
             width: 100%; 
-            max-height: 55vh; 
+            max-height: 68vh; 
             object-fit: contain; 
             border-radius: 12px; 
-            border: 2px solid #f0f0f0; 
-            margin: 10px auto 20px auto; 
+            border: 2px solid rgba(240, 240, 240, 0.8); 
+            margin: 5px auto 15px auto; 
             display: block; 
             pointer-events: none; 
+            transform-origin: center center;
             
-            /* الأنيميشن اللي بيخلي الكارت يلعب باستمرار */
-            animation: floatCard 3.5s ease-in-out infinite;
+            /* الكارت بيلعب بنعومة بعد ما يدخل */
+            animation: floatCard 4s ease-in-out infinite;
         }
 
         @keyframes floatCard {
-            0% { transform: translateY(0px) rotate(-1deg); box-shadow: 0 15px 35px rgba(0,0,0,0.6); }
-            50% { transform: translateY(-12px) rotate(1deg); box-shadow: 0 25px 50px rgba(0,0,0,0.8); }
-            100% { transform: translateY(0px) rotate(-1deg); box-shadow: 0 15px 35px rgba(0,0,0,0.6); }
+            0% { transform: translateY(0px) rotate(-1.5deg); box-shadow: 0 15px 25px rgba(0,0,0,0.4); }
+            50% { transform: translateY(-12px) rotate(1.5deg); box-shadow: 0 30px 45px rgba(0,0,0,0.7); }
+            100% { transform: translateY(0px) rotate(-1.5deg); box-shadow: 0 15px 25px rgba(0,0,0,0.4); }
+        }
+
+        .final-card-container { 
+            display: none; 
+            /* دخول الكارت بلفة 3D كأنه بيترمى على الطرابيزة */
+            animation: cardReveal3D 0.7s cubic-bezier(0.34, 1.56, 0.64, 1) forwards; 
+            perspective: 1000px;
+        }
+        
+        @keyframes cardReveal3D { 
+            0% { opacity: 0; transform: rotateY(-90deg) scale(0.6) translateY(50px); } 
+            100% { opacity: 1; transform: rotateY(0deg) scale(1) translateY(0); } 
         }
         /* ======================================================== */
 
-        /* الزراير */
-        .btn-group { display: flex; gap: 10px; justify-content: center; margin-top: 10px; width: 100%; }
-        .action-btn { font-family: 'Tajawal', sans-serif; font-weight: 800; font-size: 14px; padding: 12px 5px; border-radius: 12px; cursor: pointer; transition: all 0.2s ease; flex: 1; }
-        .btn-primary { background: #f0f0f0; color: #4a4d9e; border: none; box-shadow: 0 5px 15px rgba(0,0,0,0.3); }
-        .btn-secondary { background: rgba(240, 240, 240, 0.1); color: #f0f0f0; border: 2px solid #f0f0f0; }
-        .action-btn:active { transform: scale(0.95); }
+        /* ====== 🚨 الزراير وتأثير النبض (Pulse) 🚨 ====== */
+        .btn-group { display: flex; gap: 10px; justify-content: center; margin-top: 5px; width: 100%; }
+        .action-btn { 
+            font-family: 'Tajawal', sans-serif; font-weight: 800; font-size: 15px; 
+            padding: 12px 5px; border-radius: 12px; cursor: pointer; 
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1); flex: 1; 
+        }
+        
+        .btn-primary { 
+            background: #f0f0f0; color: #4a4d9e; border: none; 
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            /* تأثير النبض للزرار الأساسي عشان يشد العين */
+            animation: pulseBtn 2s infinite cubic-bezier(0.66, 0, 0, 1);
+        }
+        
+        @keyframes pulseBtn {
+            0% { box-shadow: 0 0 0 0 rgba(240, 240, 240, 0.5); }
+            70% { box-shadow: 0 0 0 12px rgba(240, 240, 240, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(240, 240, 240, 0); }
+        }
 
-        /* الأنيميشن وشاشة التحميل */
+        .btn-secondary { background: rgba(240, 240, 240, 0.1); color: #f0f0f0; border: 2px solid #f0f0f0; }
+        
+        /* حركة ناعمة لما يدوس على الزرار */
+        .action-btn:active { transform: scale(0.92); }
+        /* ======================================================== */
+
+        /* شاشة التحميل والكارت المبدئي */
         .card-wrapper { position: relative; width: 65px; height: 95px; margin: 0 auto 25px auto; }
         .card-wrapper::before {
             content: ''; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
@@ -130,21 +161,28 @@
         .card-loader {
             width: 100%; height: 100%; background: rgba(240, 240, 240, 0.95); border-radius: 12px; 
             border: 2px solid #fff; box-shadow: 0 10px 20px rgba(0,0,0,0.3); display: flex; 
-            justify-content: center; align-items: center; animation: flipCard 2s infinite cubic-bezier(0.4, 0, 0.2, 1);
+            justify-content: center; align-items: center; 
+            /* لفة أهدى وأشيك للكارت الصغير */
+            animation: flipCard 2.5s cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite;
         }
         .card-loader::after { content: '🎲'; font-size: 25px; }
         @keyframes flipCard { 0% { transform: perspective(400px) rotateY(0deg); } 100% { transform: perspective(400px) rotateY(360deg); } }
 
-        .progress-container { width: 100%; height: 6px; background: rgba(240, 240, 240, 0.1); border-radius: 10px; margin-top: 25px; overflow: hidden; }
-        .progress-bar { height: 100%; width: 0%; background: #f0f0f0; border-radius: 10px; box-shadow: 0 0 10px rgba(240, 240, 240, 0.8); animation: loadProgress 3.5s cubic-bezier(0.4, 0, 0.2, 1) forwards; }
-        @keyframes loadProgress { 0% { width: 0%; } 30% { width: 40%; } 70% { width: 75%; } 100% { width: 100%; } }
-
-        .final-card-container { display: none; animation: cardReveal 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards; }
-        @keyframes cardReveal { 0% { opacity: 0; transform: scale(0.5) rotate(-5deg); } 100% { opacity: 1; transform: scale(1) rotate(0deg); } }
+        /* ====== 🚨 شريط تحميل بيلمع (Shimmer Effect) 🚨 ====== */
+        .progress-container { width: 100%; height: 6px; background: rgba(240, 240, 240, 0.1); border-radius: 10px; margin-top: 25px; overflow: hidden; position: relative; }
+        .progress-bar { 
+            height: 100%; width: 0%; border-radius: 10px; box-shadow: 0 0 10px rgba(240, 240, 240, 0.8); 
+            animation: loadProgress 3.5s cubic-bezier(0.4, 0, 0.2, 1) forwards; 
+            /* خلفية ميتاليك بتلمع */
+            background: linear-gradient(90deg, #f0f0f0 0%, #ffffff 50%, #f0f0f0 100%);
+            background-size: 200% 100%;
+        }
+        @keyframes loadProgress { 0% { width: 0%; background-position: 100% 0; } 50% { background-position: 0 0; } 100% { width: 100%; background-position: -100% 0; } }
+        /* ======================================================== */
 
         /* ستايل كاميرا الاسكانر الداخلي */
-        #scanner-state { display: none; animation: popUp 0.5s forwards; }
-        #reader { width: 100%; border-radius: 15px; overflow: hidden; background: #fff; border: 2px solid #f0f0f0; margin-top: 15px; color: #000; }
+        #scanner-state { display: none; animation: popUpBounce 0.5s forwards; }
+        #reader { width: 100%; border-radius: 15px; overflow: hidden; background: #fff; border: 2px solid #f0f0f0; margin-top: 15px; color: #000; box-shadow: 0 15px 30px rgba(0,0,0,0.5); }
         #reader img { display: none; }
         #reader video { object-fit: cover !important; }
     </style>
@@ -156,7 +194,6 @@
             if(e.keyCode == 123 || (e.ctrlKey && e.shiftKey && (e.keyCode == 'I'.charCodeAt(0) || e.keyCode == 'C'.charCodeAt(0) || e.keyCode == 'J'.charCodeAt(0))) || (e.ctrlKey && e.keyCode == 'U'.charCodeAt(0))) { return false; }
         };
 
-        // الكروت المشفرة
         const secureDB = {
             "1": "MXF1NllkWGxkZ18zeWZoUk5wQlNEY05iODEyalg2enNi", "2": "MXB0ZGM3bXczR1E4VUliYURxVFgyak1YY1QzbGpwM1kw",
             "3": "MW91Q3RDWWdmd1pwMEFUYUhRRUZuRW9SVlhPbE8ySm9t", "4": "MWJ5aGZaekFDcFdQcHRhZmE0TFlHU19GYjFIeUFuaEdw",
@@ -202,7 +239,6 @@
             `;
         }
 
-        // ====== الكاميرا الخلفية الإجبارية ======
         let html5QrCode;
         function scanAgain() {
             document.getElementById('card-display-state').style.display = 'none';
@@ -212,43 +248,35 @@
 
             if(!html5QrCode) {
                 html5QrCode = new Html5Qrcode("reader");
-                
                 html5QrCode.start(
-                    { facingMode: "environment" }, // الكاميرا الخلفية
+                    { facingMode: "environment" },
                     { fps: 15, qrbox: { width: 250, height: 250 } },
                     onScanSuccess,
                     onScanFailure
                 ).catch(err => {
-                    // بديل لو الموبايل معندوش كاميرا خلفية
                     html5QrCode.start({ facingMode: "user" }, { fps: 15, qrbox: { width: 250, height: 250 } }, onScanSuccess, onScanFailure);
                 });
             }
         }
 
         function onScanSuccess(decodedText, decodedResult) {
-            html5QrCode.stop().then(() => {
-                window.location.replace(decodedText);
-            }).catch(err => {
-                window.location.replace(decodedText);
-            });
+            html5QrCode.stop().then(() => { window.location.replace(decodedText); })
+            .catch(err => { window.location.replace(decodedText); });
         }
 
         function onScanFailure(error) { /* صامت */ }
 
-        // ====== شاشة النهاية الفخمة المتظبطة ======
         function closeCard() {
             if(typeof gtag === 'function') { gtag('event', 'card_closed'); }
 
             const contentBox = document.getElementById('content-box');
             contentBox.innerHTML = `
-                <div style="animation: popUp 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;">
-                    <div style="font-size: 65px; margin-bottom: 10px;">🏁</div>
+                <div style="animation: popUpBounce 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;">
+                    <div style="font-size: 65px; margin-bottom: 10px; filter: drop-shadow(0 4px 6px rgba(0,0,0,0.3));">🏁</div>
                     <h2 style="font-size: 30px; font-weight: 900; color: #f0f0f0; margin-bottom: 5px;">عاش يا بطل!</h2>
                     <div style="color: rgba(240, 240, 240, 0.8); font-size: 16px; font-weight: 500; margin-bottom: 25px; line-height: 1.6;">
                         دورك خلص في الكارت ده<br>تقدر تقفل الصفحة دلوقتي
                     </div>
-                    
-                    <!-- الزرار اتعدل عشان يفتح الكاميرا وميلخبطش اللاعب -->
                     <button class="action-btn btn-primary" onclick="scanAgain()" style="width: 80%; max-width: 200px; padding: 12px; margin: 0 auto; display: block;">سكان لكارت جديد</button>
                 </div>
             `;
@@ -260,14 +288,12 @@
         
         <img src="logo.png" alt="لوجو قعدة" class="game-logo" onerror="this.style.display='none'">
 
-        <!-- شاشة التحميل -->
         <div id="loading-state">
             <div class="card-wrapper"><div class="card-loader"></div></div>
             <h2>جاري فتح الكارت</h2>
             <div class="progress-container"><div class="progress-bar"></div></div>
         </div>
 
-        <!-- عرض الكارت -->
         <div id="card-display-state" class="final-card-container">
             <h2>كارتك جاهز</h2>
             <img id="game-card-img" src="" alt="كارت قعدة" class="display-card">
@@ -277,7 +303,6 @@
             </div>
         </div>
 
-        <!-- شاشة الكاميرا الداخلية -->
         <div id="scanner-state">
             <h2>وجه الكاميرا للكارت</h2>
             <div class="small-text">جاري تفعيل الكاميرا... وافق على الصلاحية</div>
