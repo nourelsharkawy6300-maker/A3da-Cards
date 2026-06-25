@@ -122,7 +122,7 @@
             100% { transform: perspective(400px) rotateY(360deg); } 
         }
 
-        /* ====== شريط التحميل السينمائي (متظبط على 3.5 ثانية بالظبط) ====== */
+        /* ====== شريط التحميل السينمائي ====== */
         .progress-container {
             width: 100%;
             height: 6px;
@@ -139,7 +139,6 @@
             background: #f0f0f0;
             border-radius: 10px;
             box-shadow: 0 0 10px rgba(240, 240, 240, 0.8);
-            /* السحر هنا: الشريط بيملا في 3.5 ثانية بالتزامن مع التحويل */
             animation: loadProgress 3.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
         }
 
@@ -153,24 +152,24 @@
 
     <script>
         const cardDatabase = {
-            "1": "1qu6YdXldg_3yfhRNpBSDcNb812jX6zsb",
-            "2": "1ptdc7mw3GQ8UIbaDqTX2jMXcQ3ljp3Y0",
-            "3": "1ouCtCYgfwZp0ATaHQEFnEoRVXOlO2Jom",
-            "4": "1byhfZzACpWPptafa4LYGS_Fb1HyAnhGp",
-            "5": "1ITTt6_ZHNhmfXG09I_zYC4ftKOXjAFH-",
-            "6": "1GwNJa4lkNRzefQOWKQcBWAPwAwH7igLP",
-            "7": "130XaQhjnOfIuDCKE7n2MH3FtPv4M0oWj",
-            "8": "12I12qhb_Q5giIJ8e9gRXRPWt-rwC1Hue",
-            "9": "1vSY7ZS04idHakI0bvjbt72dai68XSssJ",
-            "10": "1_fTvnOsMapXlwwFY3aDuK7Ob6nbZdOUG",
-            "11": "1U_wWI6Brz2GcVkFYHEckpvwM006CcoN0",
-            "12": "1IZt07iwzOs-BC98JuzzkGbJwm54qcwab",
-            "13": "16FluRYUyamXevZVDjVPhcRmtd9cq88Uf",
-            "14": "1GZTKXBogY0E_zHvagW3hDUmT67syCdqg",
-            "15": "1yLvyisdqn7J2ljMxG9dT5OKhXXsTXu7j",
-            "16": "1E6dzcfODGUn2-0tPZD7T9OMroeXUl4ez",
-            "17": "13EazBzOqqnjFpOW6ql-ByGniFhKD7POY",
-            "18": "1b7sv8YQZqPHYx9n7JCjzySxi50DJDn0B" 
+            "1": "1qu6YdXldg_3yfhRNpBSDcNb812jX6zsb", // بتاع الريتش
+            "2": "1ptdc7mw3GQ8UIbaDqTX2jMXcQ3ljp3Y0", // بتاع نظريات المؤامره
+            "3": "1ouCtCYgfwZp0ATaHQEFnEoRVXOlO2Jom", // صفحه الاخبار العاجله
+            "4": "1byhfZzACpWPptafa4LYGS_Fb1HyAnhGp", // اليوتيوبر
+            "5": "1ITTt6_ZHNhmfXG09I_zYC4ftKOXjAFH-", // موظف الكول سينتر
+            "6": "1GwNJa4lkNRzefQOWKQcBWAPwAwH7igLP", // شات جيبتي
+            "7": "130XaQhjnOfIuDCKE7n2MH3FtPv4M0oWj", // امهات التيك توك
+            "8": "12I12qhb_Q5giIJ8e9gRXRPWt-rwC1Hue", // مدرسين ثانويه
+            "9": "1vSY7ZS04idHakI0bvjbt72dai68XSssJ", // السرسجي
+            "10": "1_fTvnOsMapXlwwFY3aDuK7Ob6nbZdOUG", // الشخصيه المتنمره
+            "11": "1U_wWI6Brz2GcVkFYHEckpvwM006CcoN0", // اتسرونج اندبنت وومن
+            "12": "1IZt07iwzOs-BC98JuzzkGbJwm54qcwab", // الشخصية الصيوحه
+            "13": "16FluRYUyamXevZVDjVPhcRmtd9cq88Uf", // المحنك اللي بيتفزلك
+            "14": "1GZTKXBogY0E_zHvagW3hDUmT67syCdqg", // فوود بلوجر
+            "15": "1yLvyisdqn7J2ljMxG9dT5OKhXXsTXu7j", // لينكد ان
+            "16": "1E6dzcfODGUn2-0tPZD7T9OMroeXUl4ez", // كومنت تويتر
+            "17": "13EazBzOqqnjFpOW6ql-ByGniFhKD7POY", // شات خدمه العملاء
+            "18": "1b7sv8YQZqPHYx9n7JCjzySxi50DJDn0B"  // الشاي بلبن
         };
 
         window.onload = function() {
@@ -187,7 +186,7 @@
                 }, 3500);
 
             } else {
-                // لو الباركود غلط، هيخفي شريط التحميل ويجيب رسالة خطأ شيك
+                // لو الباركود غلط
                 document.getElementById('content-box').innerHTML = `
                     <div style="font-size: 50px; margin-bottom: 15px;">⚠️</div>
                     <h2>الكارت غير موجود</h2>
