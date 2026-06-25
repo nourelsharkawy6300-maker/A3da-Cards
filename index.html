@@ -3,24 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <!-- لون المتصفح فوق عشان يطقم مع لون اللعبة الأزرق -->
     <meta name="theme-color" content="#4a4d9e">
     
+    <!-- 🚨 طاقية الإخفاء لمنع إيرور جوجل درايف 🚨 -->
     <meta name="referrer" content="no-referrer">
     
     <title>لعبة قعدة 🎲</title>
     
+    <!-- استدعاء خط Tajawal بكل الأوزان المطلوبة (500, 700, 800, 900) -->
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@500;700;800;900&display=swap" rel="stylesheet">
     
     <style>
-        /* ================= الهوية البصرية (Colors & Typography) ================= */
+        /* ================= الهوية البصرية (Colors, Typography & Vibe) ================= */
         body { 
             margin: 0; 
             font-family: 'Tajawal', sans-serif; /* الخط الأساسي لكل حاجة */
+            background-color: #4a4d9e; /* لون البراند الأساسي */
             
-            /* خلفية اللعبة باللون الأساسي #4a4d9e مع تدرج شبابي */
-            background: linear-gradient(-45deg, #4a4d9e, #36387a, #2a2c66, #4a4d9e);
-            background-size: 400% 400%; 
-            animation: gradientBG 10s ease infinite;
+            /* 🚨 الصورة العشوائية اللي بتدي الفايب الشبابي (Chaotic Gen-Z) 🚨 */
+            background-image: url('image_23f560.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
             
             color: #f0f0f0; /* اللون الفاتح الأساسي للنصوص */
             display: flex; 
@@ -30,32 +35,26 @@
             text-align: center; 
             overflow: hidden; 
             position: relative;
-        }
-        @keyframes gradientBG { 
-            0% { background-position: 0% 50%; } 
-            50% { background-position: 100% 50%; } 
-            100% { background-position: 0% 50%; } 
+            letter-spacing: normal; /* ممنوع الـ letter-spacing في العربي */
         }
 
-        /* تأثير النقط في الخلفية (Chaotic Vibe) */
-        .particles {
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 0;
-            background-image: radial-gradient(rgba(240, 240, 240, 0.1) 2px, transparent 2px);
-            background-size: 40px 40px; animation: particleMove 15s linear infinite;
-        }
-        @keyframes particleMove { 
-            0% { transform: translateY(0); } 
-            100% { transform: translateY(-40px); } 
+        /* إضافة طبقة تعتيم خفيفة جداً فوق الخلفية عشان الكلام يقرأ بوضوح */
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(74, 77, 158, 0.4);
+            z-index: 0;
         }
 
         /* البوكس الزجاجي */
         .glass-box {
-            background: rgba(240, 240, 240, 0.1); 
-            backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
-            border: 2px solid rgba(240, 240, 240, 0.2); 
+            background: rgba(240, 240, 240, 0.08); 
+            backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
+            border: 2px solid rgba(240, 240, 240, 0.15); 
             border-radius: 30px; 
             padding: 40px 30px;
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3); 
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4); 
             width: 85%; 
             max-width: 400px; 
             z-index: 1;
@@ -66,50 +65,57 @@
             100% { opacity: 1; transform: scale(1) translateY(0); } 
         }
 
-        /* العناوين الكبيرة (ExtraBold / Black) */
+        /* 1- العناوين الكبيرة (ExtraBold / Black - Weight: 900) */
         h2 { 
-            font-size: 30px; 
-            margin-bottom: 5px; 
+            font-size: 32px; 
+            margin-bottom: 8px; 
             font-weight: 900; 
             color: #f0f0f0; 
             text-shadow: 0 4px 10px rgba(0,0,0,0.3); 
             line-height: 1.2;
         }
 
-        /* نصوص الشرح والمواقف (Bold) */
+        /* 3- نصوص الكروت والمواقف (Bold - Weight: 700) */
         .funny-quote { 
             color: #f0f0f0; 
             font-size: 18px; 
             font-weight: 700; 
-            min-height: 25px; 
-            opacity: 0.9;
+            line-height: 1.6; /* Line-height واسع ومريح */
+            min-height: 30px; 
+            opacity: 0.95;
         }
         
-        /* النصوص الصغيرة (Medium) للتنبيهات */
+        /* 4- النصوص الصغيرة (Medium - Weight: 500) */
         .small-text {
             font-weight: 500;
             font-size: 14px;
-            color: rgba(240, 240, 240, 0.7);
-            margin-top: 15px;
+            color: rgba(240, 240, 240, 0.7); /* لون أهدأ */
+            margin-top: 20px;
         }
 
-        /* كارت الـ 3D اللي بيلف (معدل عشان يناسب الألوان) */
+        /* لوجو اللعبة (حسب الملاحظات) */
+        .game-logo {
+            max-width: 120px;
+            margin-bottom: 15px;
+            display: none; /* تقدر تشيل سطر الإخفاء ده لو رفعت صورة logo.png وعايزها تظهر */
+        }
+
+        /* كارت الـ 3D اللي بيلف (معدل عشان يناسب الألوان الجديدة) */
         .card-loader {
-            width: 75px; height: 110px; margin: 0 auto 25px auto;
+            width: 75px; height: 110px; margin: 0 auto 20px auto;
             background: #f0f0f0; 
             border-radius: 12px; 
-            border: 4px solid #fff; 
+            border: 4px solid rgba(240,240,240,0.9); 
             box-shadow: 0 10px 25px rgba(0,0,0,0.4);
             position: relative;
             animation: flipCard3D 1.5s infinite ease-in-out;
+            display: flex; justify-content: center; align-items: center;
         }
-        /* ظهر الكارت الوهمي */
+        /* ظهر الكارت من جوه */
         .card-loader::after {
-            content: '';
-            position: absolute;
-            top: 6px; left: 6px; right: 6px; bottom: 6px;
-            border: 3px dashed #4a4d9e;
-            border-radius: 8px;
+            content: '🎲';
+            font-size: 35px;
+            color: #4a4d9e;
         }
         @keyframes flipCard3D { 
             0% { transform: perspective(400px) rotateY(0deg); } 
@@ -158,7 +164,6 @@
             if (cardId && cardDatabase[cardId]) {
                 const driveId = cardDatabase[cardId];
                 
-                // لينك عرض الصورة الخام بأعلى جودة
                 const directImgUrl = `https://drive.google.com/thumbnail?id=${driveId}&sz=w1000`;
                 
                 setTimeout(() => {
@@ -176,8 +181,10 @@
     </script>
 </head>
 <body>
-    <div class="particles"></div>
     <div class="glass-box" id="content-box">
+        <!-- لو عندك لوجو اسمه logo.png وحبيت تحطه في المستقبل -->
+        <img src="logo.png" alt="قعدة سكرول" class="game-logo" onerror="this.style.display='none'">
+        
         <div class="card-loader"></div>
         <h2>ثواني وكارتك يفتح...</h2>
         <div id="random-quote" class="funny-quote">جاري سحب الكارت...</div>
