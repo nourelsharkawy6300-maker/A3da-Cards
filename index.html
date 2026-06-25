@@ -11,6 +11,7 @@
     
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@500;700;800;900&display=swap" rel="stylesheet">
 
+    <!-- Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-RNZPERH684"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
@@ -19,6 +20,7 @@
       gtag('config', 'G-RNZPERH684');
     </script>
 
+    <!-- مكتبة الكاميرا للسكانر الداخلي -->
     <script src="https://unpkg.com/html5-qrcode"></script>
     
     <style>
@@ -26,14 +28,11 @@
             margin: 0; 
             font-family: 'Tajawal', sans-serif; 
             background-color: #4a4d9e; 
-            
-            /* خلفية بتتحرك ببطء شديد وانسيابية */
             background-image: url('image_23f560.jpg');
             background-size: 150%; 
             background-position: center;
             background-attachment: fixed;
             animation: panBackground 30s infinite alternate cubic-bezier(0.45, 0.05, 0.55, 0.95);
-            
             color: #f0f0f0; 
             display: flex; 
             justify-content: center; 
@@ -58,7 +57,6 @@
             background: rgba(74, 77, 158, 0.45); z-index: 0;
         }
 
-        /* البوكس الزجاجي الموسع للموبايل */
         .glass-box {
             background: rgba(240, 240, 240, 0.08); 
             backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
@@ -78,15 +76,10 @@
             100% { opacity: 1; transform: scale(1) translateY(0); } 
         }
 
-        .game-logo {
-            max-width: 100px; margin: 0 auto 10px auto; display: block;
-            filter: drop-shadow(0 4px 6px rgba(0,0,0,0.3));
-        }
-
+        .game-logo { max-width: 100px; margin: 0 auto 10px auto; display: block; filter: drop-shadow(0 4px 6px rgba(0,0,0,0.3)); }
         h2 { font-size: 24px; margin: 0 0 5px 0; font-weight: 900; color: #f0f0f0; text-shadow: 0 4px 10px rgba(0,0,0,0.3); }
         .small-text { font-weight: 500; font-size: 14px; color: rgba(240, 240, 240, 0.7); margin-bottom: 5px; }
 
-        /* الكارت (ثبات تام + لمعة فخمة) */
         .display-card {
             width: 100%; 
             max-height: 68vh; 
@@ -96,8 +89,6 @@
             margin: 5px auto 15px auto; 
             display: block; 
             pointer-events: none; 
-            
-            /* الأنيميشن: نبض ضوئي هادي ومريح للعين */
             animation: premiumGlow 4s ease-in-out infinite;
         }
 
@@ -107,69 +98,28 @@
             100% { box-shadow: 0 15px 35px rgba(0,0,0,0.6), 0 0 0px rgba(255,255,255,0); filter: brightness(1); }
         }
 
-        /* لفة الـ 3D عند ظهور الكارت لأول مرة */
-        .final-card-container { 
-            display: none; 
-            animation: cardReveal3D 0.7s cubic-bezier(0.34, 1.56, 0.64, 1) forwards; 
-            perspective: 1000px;
-        }
-        
-        @keyframes cardReveal3D { 
-            0% { opacity: 0; transform: rotateY(-90deg) scale(0.6) translateY(50px); } 
-            100% { opacity: 1; transform: rotateY(0deg) scale(1) translateY(0); } 
-        }
+        .final-card-container { display: none; animation: cardReveal3D 0.7s cubic-bezier(0.34, 1.56, 0.64, 1) forwards; perspective: 1000px; }
+        @keyframes cardReveal3D { 0% { opacity: 0; transform: rotateY(-90deg) scale(0.6) translateY(50px); } 100% { opacity: 1; transform: rotateY(0deg) scale(1) translateY(0); } }
 
-        /* الزراير وتأثير النبض (Pulse) */
         .btn-group { display: flex; gap: 10px; justify-content: center; margin-top: 5px; width: 100%; }
-        .action-btn { 
-            font-family: 'Tajawal', sans-serif; font-weight: 800; font-size: 15px; 
-            padding: 12px 5px; border-radius: 12px; cursor: pointer; 
-            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1); flex: 1; 
-        }
-        
-        .btn-primary { 
-            background: #f0f0f0; color: #4a4d9e; border: none; 
-            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
-            animation: pulseBtn 2s infinite cubic-bezier(0.66, 0, 0, 1);
-        }
-        
-        @keyframes pulseBtn {
-            0% { box-shadow: 0 0 0 0 rgba(240, 240, 240, 0.5); }
-            70% { box-shadow: 0 0 0 12px rgba(240, 240, 240, 0); }
-            100% { box-shadow: 0 0 0 0 rgba(240, 240, 240, 0); }
-        }
-
+        .action-btn { font-family: 'Tajawal', sans-serif; font-weight: 800; font-size: 15px; padding: 12px 5px; border-radius: 12px; cursor: pointer; transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1); flex: 1; }
+        .btn-primary { background: #f0f0f0; color: #4a4d9e; border: none; box-shadow: 0 5px 15px rgba(0,0,0,0.3); animation: pulseBtn 2s infinite cubic-bezier(0.66, 0, 0, 1); }
+        @keyframes pulseBtn { 0% { box-shadow: 0 0 0 0 rgba(240, 240, 240, 0.5); } 70% { box-shadow: 0 0 0 12px rgba(240, 240, 240, 0); } 100% { box-shadow: 0 0 0 0 rgba(240, 240, 240, 0); } }
         .btn-secondary { background: rgba(240, 240, 240, 0.1); color: #f0f0f0; border: 2px solid #f0f0f0; }
         .action-btn:active { transform: scale(0.92); }
 
-        /* شاشة التحميل وشريط التحميل الميتاليك */
         .card-wrapper { position: relative; width: 65px; height: 95px; margin: 0 auto 25px auto; }
-        .card-wrapper::before {
-            content: ''; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
-            width: 100%; height: 100%; background: #f0f0f0; border-radius: 12px; filter: blur(18px);
-            opacity: 0.5; animation: pulseGlow 1.5s infinite alternate ease-in-out; z-index: -1;
-        }
+        .card-wrapper::before { content: ''; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 100%; height: 100%; background: #f0f0f0; border-radius: 12px; filter: blur(18px); opacity: 0.5; animation: pulseGlow 1.5s infinite alternate ease-in-out; z-index: -1; }
         @keyframes pulseGlow { 0% { transform: translate(-50%, -50%) scale(1); opacity: 0.3; } 100% { transform: translate(-50%, -50%) scale(1.3); opacity: 0.7; } }
         
-        .card-loader {
-            width: 100%; height: 100%; background: rgba(240, 240, 240, 0.95); border-radius: 12px; 
-            border: 2px solid #fff; box-shadow: 0 10px 20px rgba(0,0,0,0.3); display: flex; 
-            justify-content: center; align-items: center; 
-            animation: flipCard 2.5s cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite;
-        }
+        .card-loader { width: 100%; height: 100%; background: rgba(240, 240, 240, 0.95); border-radius: 12px; border: 2px solid #fff; box-shadow: 0 10px 20px rgba(0,0,0,0.3); display: flex; justify-content: center; align-items: center; animation: flipCard 2.5s cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite; }
         .card-loader::after { content: '🎲'; font-size: 25px; }
         @keyframes flipCard { 0% { transform: perspective(400px) rotateY(0deg); } 100% { transform: perspective(400px) rotateY(360deg); } }
 
         .progress-container { width: 100%; height: 6px; background: rgba(240, 240, 240, 0.1); border-radius: 10px; margin-top: 25px; overflow: hidden; position: relative; }
-        .progress-bar { 
-            height: 100%; width: 0%; border-radius: 10px; box-shadow: 0 0 10px rgba(240, 240, 240, 0.8); 
-            animation: loadProgress 3.5s cubic-bezier(0.4, 0, 0.2, 1) forwards; 
-            background: linear-gradient(90deg, #f0f0f0 0%, #ffffff 50%, #f0f0f0 100%);
-            background-size: 200% 100%;
-        }
+        .progress-bar { height: 100%; width: 0%; border-radius: 10px; box-shadow: 0 0 10px rgba(240, 240, 240, 0.8); animation: loadProgress 3.5s cubic-bezier(0.4, 0, 0.2, 1) forwards; background: linear-gradient(90deg, #f0f0f0 0%, #ffffff 50%, #f0f0f0 100%); background-size: 200% 100%; }
         @keyframes loadProgress { 0% { width: 0%; background-position: 100% 0; } 50% { background-position: 0 0; } 100% { width: 100%; background-position: -100% 0; } }
 
-        /* ستايل كاميرا الاسكانر الداخلي */
         #scanner-state { display: none; animation: popUpBounce 0.5s forwards; }
         #reader { width: 100%; border-radius: 15px; overflow: hidden; background: #fff; border: 2px solid #f0f0f0; margin-top: 15px; color: #000; box-shadow: 0 15px 30px rgba(0,0,0,0.5); }
         #reader img { display: none; }
@@ -177,59 +127,55 @@
     </style>
 
     <script>
-        // الحماية لمنع سرقة الكروت
         document.addEventListener('contextmenu', event => event.preventDefault());
         document.onkeydown = function(e) {
             if(e.keyCode == 123 || (e.ctrlKey && e.shiftKey && (e.keyCode == 'I'.charCodeAt(0) || e.keyCode == 'C'.charCodeAt(0) || e.keyCode == 'J'.charCodeAt(0))) || (e.ctrlKey && e.keyCode == 'U'.charCodeAt(0))) { return false; }
         };
 
-        // ====== 🚨 قاعدة البيانات النهائية (بتشفير ديناميكي ضد الأخطاء) 🚨 ======
+        // ====== 🚨 الداتا بيز الخام بدون تشفير (لضمان عمل 100% بدون تعليق) 🚨 ======
         const secureDB = {
-            "1": btoa("1FIT9DQMzTSDYY1c80_V5R9TQ6rgjspFE"), // 1 بتاع الريتش
-            "2": btoa("1f48JxTbpjPk9kQEYBF9yDy-urDFuuG_p"), // 2 بتاع نظرية المؤامرات
-            "3": btoa("1GFBXZi6B5EMuhtYI2JG3TMiipWord_J6"), // 3 صفحة الاخبار العاجلة
-            "4": btoa("1n2GyRH3ylV90W-rrltVPDVsUuRJa9IRd"), // 4 شخصية اليوتيوب
-            "5": btoa("1ITTt6_ZHnhmfXG09I_zYC4ftKOXjAFH-"), // 5 موظف كول سينتر
-            "6": btoa("12JojP3lyglDLo5f0MfQ5F6TPTrYtx5oU"), // 6 شات جيبتي
-            "7": btoa("1iPqd3RsKZ_58npfNHjkNhNpxoloR707U"), // 7 امهات التيك توك
-            "8": btoa("1mFvK1g0SEwvRXjGavI8CQUlncbd3XQnb"), // 8 مدرسين ثانوية عامة
-            "9": btoa("1CwqeXmn4Y62aM6wrgJU26P0hEjZrxrK9"), // 9 السرسجي
-            "10": btoa("1Z6XzeKU19LmDig_t1MjBgJr8co-pBTXO"), // 10 الشخصية المتنمره
-            "11": btoa("1ymU5DbIyjX42UiG79eElyFjdl-oFSmFQ"), // 11 استرونج اندبندت وومن
-            "12": btoa("1NRiDZ8_n9EkizYzMSNMM7WQuI3SGFJav"), // 12 الشخصية الصيوحة
-            "13": btoa("1eXuTA7bCgvgDuAE4TEHvNSwlS4OUtYk6"), // 13 المحنك اللي بيستفزك
-            "14": btoa("1FXFDnu0WW3uTizC_kH9wJyrB-j1M1alm"), // 14 فوود بلوجر
-            "15": btoa("1IbSi94OVcuI2f5IrjWYMHl_puhd7van2"), // 15 لينكد ان
-            "16": btoa("1xDzfiEBEy-bTQfmF_r-8k2QFziBLDf3c"), // 16 كومنت تويتر
-            "17": btoa("1maWFoNb4lLuWZxa6_bJ6YBhRPz-Ov4NI"), // 17 خدمه العملاء
-            "18": btoa("1f7OCeOlIjK-VP6zXsB3NJHoOtjj3Xoh1")  // 18 شاي بلبن
+            "1": "1FIT9DQMzTSDYY1c80_V5R9TQ6rgjspFE", // 1 الريتش
+            "2": "1f48JxTbpjPk9kQEYBF9yDy-urDFuuG_p", // 2 المؤامره
+            "3": "1GFBXZi6B5EMuhtYI2JG3TMiipWord_J6", // 3 العاجله
+            "4": "1n2GyRH3ylV90W-rrltVPDVsUuRJa9IRd", // 4 يوتيوبر
+            "5": "1xDzfiEBEy-bTQfmF_r-8k2QFziBLDf3c", // 5 كول سينتر (محطوط لينك تويتر مؤقتاً عشان ميعلقش)
+            "6": "12JojP3lyglDLo5f0MfQ5F6TPTrYtx5oU", // 6 شات جيبتي
+            "7": "1iPqd3RsKZ_58npfNHjkNhNpxoloR707U", // 7 امهات التيك توك
+            "8": "1mFvK1g0SEwvRXjGavI8CQUlncbd3XQnb", // 8 ثانويه
+            "9": "1CwqeXmn4Y62aM6wrgJU26P0hEjZrxrK9", // 9 السرسجي
+            "10": "1Z6XzeKU19LmDig_t1MjBgJr8co-pBTXO", // 10 المتنمره
+            "11": "1ymU5DbIyjX42UiG79eElyFjdl-oFSmFQ", // 11 استرونج
+            "12": "1NRiDZ8_n9EkizYzMSNMM7WQuI3SGFJav", // 12 صيوحه
+            "13": "1eXuTA7bCgvgDuAE4TEHvNSwlS4OUtYk6", // 13 محنك
+            "14": "1FXFDnu0WW3uTizC_kH9wJyrB-j1M1alm", // 14 فوود بلوجر
+            "15": "1IbSi94OVcuI2f5IrjWYMHl_puhd7van2", // 15 لينكد ان
+            "16": "1xDzfiEBEy-bTQfmF_r-8k2QFziBLDf3c", // 16 تويتر
+            "17": "1maWFoNb4lLuWZxa6_bJ6YBhRPz-Ov4NI", // 17 خدمه العملاء
+            "18": "1f7OCeOlIjK-VP6zXsB3NJHoOtjj3Xoh1"  // 18 الشاي بلبن
         };
-        // ======================================================================
 
         window.onload = function() {
             const urlParams = new URLSearchParams(window.location.search);
             const cardId = urlParams.get('id');
 
             if (cardId && secureDB[cardId]) {
-                const driveId = atob(secureDB[cardId]);
+                const driveId = secureDB[cardId]; // سحبنا اللينك المباشر بدون فك تشفير عشان ميضربش
                 const mainImg = document.getElementById('game-card-img');
                 
-                // الطريقة الأساسية المعتمدة (الـ Thumbnail الأسرع)
+                // الطريقة الأساسية
                 const primaryUrl = `https://drive.google.com/thumbnail?id=${driveId}&sz=w1000`;
-                // خطة الإنقاذ البديلة المباشرة (في حال تعنت جوجل)
+                // خطة الإنقاذ البديلة
                 const fallbackUrl = `https://drive.google.com/uc?export=view&id=${driveId}`;
                 
-                // نبدأ بالطريقة الأساسية
                 mainImg.src = primaryUrl;
                 
-                // الـ Failover السحري: لو الصورة الأساسية معندتش في التحميل، حوّل فوراً عالبديل
+                // تفعيل الخطة البديلة لو الصورة الأساسية معلقتش
                 mainImg.onerror = function() {
                     if (mainImg.src !== fallbackUrl) {
                         mainImg.src = fallbackUrl;
                     }
                 };
 
-                // إظهار الشاشة بعد انتهاء الـ Loader الميتاليك الفخم
                 setTimeout(() => {
                     document.getElementById('loading-state').style.display = 'none';
                     document.getElementById('card-display-state').style.display = 'block';
@@ -297,7 +243,6 @@
 </head>
 <body>
     <div class="glass-box" id="content-box">
-        
         <img src="logo.png" alt="لوجو قعدة" class="game-logo" onerror="this.style.display='none'">
 
         <div id="loading-state">
@@ -320,7 +265,6 @@
             <div class="small-text">جاري تفعيل الكاميرا... وافق على الصلاحية</div>
             <div id="reader"></div>
         </div>
-
     </div>
 </body>
 </html>
