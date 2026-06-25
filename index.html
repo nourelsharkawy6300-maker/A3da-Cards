@@ -60,7 +60,6 @@
             background: rgba(74, 77, 158, 0.45); z-index: 0;
         }
 
-        /* البوكس الزجاجي (مع دخول بـ Bounce خفيف) */
         .glass-box {
             background: rgba(240, 240, 240, 0.08); 
             backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
@@ -88,7 +87,6 @@
         h2 { font-size: 24px; margin: 0 0 5px 0; font-weight: 900; color: #f0f0f0; text-shadow: 0 4px 10px rgba(0,0,0,0.3); }
         .small-text { font-weight: 500; font-size: 14px; color: rgba(240, 240, 240, 0.7); margin-bottom: 5px; }
 
-        /* ====== 🚨 الكارت (أنيميشن اللمعة والنبض الهادي) 🚨 ====== */
         .display-card {
             width: 100%; 
             max-height: 68vh; 
@@ -111,7 +109,6 @@
 
         .final-card-container { 
             display: none; 
-            /* دخول الكارت بلفة 3D كأنه بيترمى على الطرابيزة */
             animation: cardReveal3D 0.7s cubic-bezier(0.34, 1.56, 0.64, 1) forwards; 
             perspective: 1000px;
         }
@@ -120,9 +117,8 @@
             0% { opacity: 0; transform: rotateY(-90deg) scale(0.6) translateY(50px); } 
             100% { opacity: 1; transform: rotateY(0deg) scale(1) translateY(0); } 
         }
-        /* ======================================================== */
 
-        /* الزراير وتأثير النبض (Pulse) */
+        /* الزراير */
         .btn-group { display: flex; gap: 10px; justify-content: center; margin-top: 5px; width: 100%; }
         .action-btn { 
             font-family: 'Tajawal', sans-serif; font-weight: 800; font-size: 15px; 
@@ -145,7 +141,7 @@
         .btn-secondary { background: rgba(240, 240, 240, 0.1); color: #f0f0f0; border: 2px solid #f0f0f0; }
         .action-btn:active { transform: scale(0.92); }
 
-        /* شاشة التحميل والكارت المبدئي */
+        /* شاشة التحميل */
         .card-wrapper { position: relative; width: 65px; height: 95px; margin: 0 auto 25px auto; }
         .card-wrapper::before {
             content: ''; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
@@ -205,7 +201,9 @@
 
             if (cardId && secureDB[cardId]) {
                 const driveId = atob(secureDB[cardId]);
-                const directImgUrl = `https://drive.google.com/thumbnail?id=${driveId}&sz=w1000`;
+                
+                // 🚨 التعديل السحري: استخدام رابط الـ View المباشر بدل الـ Thumbnail 🚨
+                const directImgUrl = `https://drive.google.com/uc?export=view&id=${driveId}`;
                 
                 const imgPreloader = new Image();
                 imgPreloader.src = directImgUrl;
