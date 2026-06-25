@@ -11,6 +11,7 @@
     
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@500;700;800;900&display=swap" rel="stylesheet">
 
+    <!-- 🚨 Google Analytics (gtag.js) 🚨 -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-RNZPERH684"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
@@ -19,6 +20,7 @@
       gtag('config', 'G-RNZPERH684');
     </script>
 
+    <!-- 🚨 مكتبة الكاميرا للسكانر الداخلي 🚨 -->
     <script src="https://unpkg.com/html5-qrcode"></script>
     
     <style>
@@ -27,7 +29,7 @@
             font-family: 'Tajawal', sans-serif; 
             background-color: #4a4d9e; 
             
-            /* خلفية بتتحرك */
+            /* خلفية بتتحرك ببطء */
             background-image: url('image_23f560.jpg');
             background-size: 150%; 
             background-position: center;
@@ -87,12 +89,27 @@
         h2 { font-size: 24px; margin: 0 0 10px 0; font-weight: 900; color: #f0f0f0; text-shadow: 0 4px 10px rgba(0,0,0,0.3); }
         .small-text { font-weight: 500; font-size: 14px; color: rgba(240, 240, 240, 0.6); margin-bottom: 5px; }
 
-        /* الكارت المقاس الذكي للموبايل */
+        /* ====== 🚨 الكارت وهو بيلعب (الأنيميشن الجديد) 🚨 ====== */
         .display-card {
-            width: 100%; max-height: 55vh; object-fit: contain; 
-            border-radius: 12px; box-shadow: 0 15px 35px rgba(0,0,0,0.6);
-            border: 2px solid #f0f0f0; margin: 10px auto 20px auto; display: block; pointer-events: none; 
+            width: 100%; 
+            max-height: 55vh; 
+            object-fit: contain; 
+            border-radius: 12px; 
+            border: 2px solid #f0f0f0; 
+            margin: 10px auto 20px auto; 
+            display: block; 
+            pointer-events: none; 
+            
+            /* الأنيميشن اللي بيخلي الكارت يلعب باستمرار */
+            animation: floatCard 3.5s ease-in-out infinite;
         }
+
+        @keyframes floatCard {
+            0% { transform: translateY(0px) rotate(-1deg); box-shadow: 0 15px 35px rgba(0,0,0,0.6); }
+            50% { transform: translateY(-12px) rotate(1deg); box-shadow: 0 25px 50px rgba(0,0,0,0.8); }
+            100% { transform: translateY(0px) rotate(-1deg); box-shadow: 0 15px 35px rgba(0,0,0,0.6); }
+        }
+        /* ======================================================== */
 
         /* الزراير */
         .btn-group { display: flex; gap: 10px; justify-content: center; margin-top: 10px; width: 100%; }
@@ -218,7 +235,7 @@
 
         function onScanFailure(error) { /* صامت */ }
 
-        // ====== شاشة النهاية الفخمة (بديل الخروج) ======
+        // ====== شاشة النهاية الفخمة المتظبطة ======
         function closeCard() {
             if(typeof gtag === 'function') { gtag('event', 'card_closed'); }
 
@@ -230,7 +247,9 @@
                     <div style="color: rgba(240, 240, 240, 0.8); font-size: 16px; font-weight: 500; margin-bottom: 25px; line-height: 1.6;">
                         دورك خلص في الكارت ده<br>تقدر تقفل الصفحة دلوقتي
                     </div>
-                    <button class="action-btn btn-primary" onclick="location.reload()" style="width: 80%; max-width: 200px; padding: 12px; margin: 0 auto; display: block;">سحب كارت تاني</button>
+                    
+                    <!-- الزرار اتعدل عشان يفتح الكاميرا وميلخبطش اللاعب -->
+                    <button class="action-btn btn-primary" onclick="scanAgain()" style="width: 80%; max-width: 200px; padding: 12px; margin: 0 auto; display: block;">سكان لكارت جديد</button>
                 </div>
             `;
         }
@@ -241,12 +260,14 @@
         
         <img src="logo.png" alt="لوجو قعدة" class="game-logo" onerror="this.style.display='none'">
 
+        <!-- شاشة التحميل -->
         <div id="loading-state">
             <div class="card-wrapper"><div class="card-loader"></div></div>
             <h2>جاري فتح الكارت</h2>
             <div class="progress-container"><div class="progress-bar"></div></div>
         </div>
 
+        <!-- عرض الكارت -->
         <div id="card-display-state" class="final-card-container">
             <h2>كارتك جاهز</h2>
             <img id="game-card-img" src="" alt="كارت قعدة" class="display-card">
@@ -256,6 +277,7 @@
             </div>
         </div>
 
+        <!-- شاشة الكاميرا الداخلية -->
         <div id="scanner-state">
             <h2>وجه الكاميرا للكارت</h2>
             <div class="small-text">جاري تفعيل الكاميرا... وافق على الصلاحية</div>
