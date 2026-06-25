@@ -102,9 +102,9 @@
         }
 
         @keyframes premiumGlow {
-            0% { box-shadow: 0 15px 35px rgba(0,0,0,0.6), 0 0 0px rgba(255,255,255,0); filter: brightness(1); }
-            50% { box-shadow: 0 20px 45px rgba(0,0,0,0.8), 0 0 20px rgba(255,255,255,0.15); filter: brightness(1.08); }
-            100% { box-shadow: 0 15px 35px rgba(0,0,0,0.6), 0 0 0px rgba(255,255,255,0); filter: brightness(1); }
+            0% { box-shadow: 0 15px 35px rgba(0,0,0,0.6), 0 0px 0px rgba(255,255,255,0); filter: brightness(1); }
+            50% { box-shadow: 0 20px 45px rgba(0,0,0,0.8), 0 0px 20px rgba(255,255,255,0.15); filter: brightness(1.08); }
+            100% { box-shadow: 0 15px 35px rgba(0,0,0,0.6), 0 0px 0px rgba(255,255,255,0); filter: brightness(1); }
         }
 
         /* لفة الـ 3D عند ظهور الكارت لأول مرة */
@@ -212,16 +212,27 @@
 
             if (cardId && secureDB[cardId]) {
                 const driveId = atob(secureDB[cardId]);
+                const mainImg = document.getElementById('game-card-img');
                 
-                // الرابط المستقر والموثوق لجوجل درايف
-                const directImgUrl = `https://drive.google.com/thumbnail?id=${driveId}&sz=w1000`;
+                // الطريقة الأساسية المعتمدة (الـ Thumbnail الأسرع)
+                const primaryUrl = `https://drive.google.com/thumbnail?id=${driveId}&sz=w1000`;
+                // خطة الإنقاذ البديلة المباشرة (في حال تعنت جوجل)
+                const fallbackUrl = `https://drive.google.com/uc?export=view&id=${driveId}`;
                 
-                const imgPreloader = new Image();
-                imgPreloader.src = directImgUrl;
+                // نبدأ بالطريقة الأساسية
+                mainImg.src = primaryUrl;
+                
+                // 🚨 الـ Failover السحري: لو الصورة الأساسية معندتش في التحميل، حوّل فوراً عالبديل 🚨
+                mainImg.onerror = function() {
+                    if (mainImg.src !== fallbackUrl) {
+                        console.log("تم تفعيل خطة الإنقاذ البديلة للكارت بنجاح.");
+                        mainImg.src = fallbackUrl;
+                    }
+                };
 
+                // إظهار الشاشة بعد انتهاء الـ Loader الميتاليك الفخم
                 setTimeout(() => {
                     document.getElementById('loading-state').style.display = 'none';
-                    document.getElementById('game-card-img').src = directImgUrl;
                     document.getElementById('card-display-state').style.display = 'block';
                     
                     if(typeof gtag === 'function') { gtag('event', 'card_opened', { 'card_id': cardId }); }
