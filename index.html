@@ -17,22 +17,25 @@
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date());
-
-      // تفعيل التتبع على حسابك
       gtag('config', 'G-RNZPERH684');
     </script>
+
+    <!-- 🚨 مكتبة الكاميرا للسكانر الداخلي 🚨 -->
+    <script src="https://unpkg.com/html5-qrcode"></script>
     
     <style>
+        /* ====== 2️⃣ حل مشكلة الخلفية اللي بتلعب ====== */
         body { 
             margin: 0; 
             font-family: 'Tajawal', sans-serif; 
             background-color: #4a4d9e; 
             
-            /* خلفية الشخبطة */
+            /* تكبير الخلفية وتطبيق الأنيميشن */
             background-image: url('image_23f560.jpg');
-            background-size: cover;
+            background-size: 150%; /* متكبرة عشان تعرف تتحرك */
             background-position: center;
             background-attachment: fixed;
+            animation: panBackground 25s infinite alternate linear; /* الأنيميشن */
             
             color: #f0f0f0; 
             display: flex; 
@@ -48,6 +51,13 @@
             -webkit-user-select: none;
         }
 
+        /* حركة الخلفية الناعمة */
+        @keyframes panBackground {
+            0% { background-position: 0% 0%; }
+            50% { background-position: 100% 100%; }
+            100% { background-position: 0% 100%; }
+        }
+
         body::before {
             content: '';
             position: absolute;
@@ -56,34 +66,35 @@
             z-index: 0;
         }
 
-        /* البوكس الزجاجي الأساسي */
+        /* ====== 1️⃣ حل مشكلة المقاسات على الموبايل ====== */
         .glass-box {
             background: rgba(240, 240, 240, 0.08); 
             backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
             border: 1px solid rgba(240, 240, 240, 0.15); 
             border-radius: 24px; 
-            padding: 35px 25px;
+            padding: 25px 20px; /* تقليل البادينج عشان الموبايلات الصغيرة */
             box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5); 
-            width: 85%; 
+            width: 90%; 
             max-width: 380px; 
+            box-sizing: border-box;
             z-index: 1;
             animation: popUp 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
         }
+        
         @keyframes popUp { 
             0% { opacity: 0; transform: scale(0.9) translateY(20px); } 
             100% { opacity: 1; transform: scale(1) translateY(0); } 
         }
 
-        /* ستايل اللوجو */
         .game-logo {
-            max-width: 140px; 
-            margin: 0 auto 20px auto;
+            max-width: 110px; /* تصغير اللوجو سيكا لتوفير مساحة */
+            margin: 0 auto 15px auto;
             display: block;
             filter: drop-shadow(0 4px 6px rgba(0,0,0,0.3));
         }
 
         h2 { 
-            font-size: 28px; 
+            font-size: 24px; 
             margin: 0 0 10px 0; 
             font-weight: 900; 
             color: #f0f0f0; 
@@ -92,185 +103,94 @@
 
         .small-text {
             font-weight: 500;
-            font-size: 15px;
+            font-size: 14px;
             color: rgba(240, 240, 240, 0.6); 
             margin-bottom: 5px;
         }
 
-        /* ====== الكارت وهالة الطاقة (شاشة التحميل) ====== */
-        .card-wrapper {
-            position: relative;
-            width: 75px; 
-            height: 110px; 
-            margin: 0 auto 35px auto;
-        }
-
-        .card-wrapper::before {
-            content: '';
-            position: absolute;
-            top: 50%; left: 50%;
-            transform: translate(-50%, -50%);
-            width: 100%; height: 100%;
-            background: #f0f0f0;
-            border-radius: 12px;
-            filter: blur(18px);
-            opacity: 0.5;
-            animation: pulseGlow 1.5s infinite alternate ease-in-out;
-            z-index: -1;
-        }
-
-        @keyframes pulseGlow {
-            0% { transform: translate(-50%, -50%) scale(1); opacity: 0.3; }
-            100% { transform: translate(-50%, -50%) scale(1.3); opacity: 0.7; }
-        }
-
-        .card-loader {
-            width: 100%; 
-            height: 100%; 
-            background: rgba(240, 240, 240, 0.95); 
-            border-radius: 12px; 
-            border: 2px solid #fff; 
-            box-shadow: 0 10px 20px rgba(0,0,0,0.3);
-            display: flex; justify-content: center; align-items: center;
-            animation: flipCard 2s infinite cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        .card-loader::after {
-            content: '🎲';
-            font-size: 30px;
-        }
-
-        @keyframes flipCard { 
-            0% { transform: perspective(400px) rotateY(0deg); } 
-            100% { transform: perspective(400px) rotateY(360deg); } 
-        }
-
-        /* ====== شريط التحميل السينمائي ====== */
-        .progress-container {
-            width: 100%;
-            height: 6px;
-            background: rgba(240, 240, 240, 0.1);
-            border-radius: 10px;
-            margin-top: 25px;
-            overflow: hidden;
-            position: relative;
-        }
-
-        .progress-bar {
-            height: 100%;
-            width: 0%;
-            background: #f0f0f0;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(240, 240, 240, 0.8);
-            animation: loadProgress 3.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
-        }
-
-        @keyframes loadProgress {
-            0% { width: 0%; }
-            30% { width: 40%; }
-            70% { width: 75%; }
-            100% { width: 100%; }
-        }
-
-        /* ====== ستايل عرض كارت اللعبة النهائي جوه الموقع ====== */
-        .final-card-container {
-            display: none; 
-            animation: cardReveal 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
-        }
-
-        @keyframes cardReveal {
-            0% { opacity: 0; transform: scale(0.5) rotate(-5deg); }
-            100% { opacity: 1; transform: scale(1) rotate(0deg); }
-        }
-
         .display-card {
             width: 100%;
-            max-width: 280px;
-            border-radius: 16px;
+            max-height: 55vh; /* 🚨 السر هنا: الكارت مش هيتخطى 55% من طول الشاشة 🚨 */
+            object-fit: contain; /* عشان يحافظ على أبعاده بدون ما يمط */
+            border-radius: 12px;
             box-shadow: 0 15px 35px rgba(0,0,0,0.6);
-            border: 3px solid #f0f0f0;
-            margin: 15px auto 25px auto;
+            border: 2px solid #f0f0f0;
+            margin: 10px auto 20px auto;
             display: block;
             pointer-events: none; 
         }
 
-        /* ====== 🚨 ستايل مجموعة الزراير الجديدة 🚨 ====== */
+        /* زراير التحكم */
         .btn-group {
             display: flex;
-            gap: 12px;
+            gap: 10px;
             justify-content: center;
-            margin-top: 15px;
+            margin-top: 10px;
             width: 100%;
         }
 
         .action-btn {
             font-family: 'Tajawal', sans-serif;
             font-weight: 800;
-            font-size: 15px;
-            padding: 12px 10px;
+            font-size: 14px;
+            padding: 12px 5px;
             border-radius: 12px;
             cursor: pointer;
             transition: all 0.2s ease;
-            flex: 1; /* عشان الزرارين ياخدوا نفس المساحة */
+            flex: 1; 
         }
 
-        /* الزرار الأساسي (اسكان تاني) */
-        .btn-primary {
-            background: #f0f0f0;
-            color: #4a4d9e;
-            border: none;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
-        }
+        .btn-primary { background: #f0f0f0; color: #4a4d9e; border: none; box-shadow: 0 5px 15px rgba(0,0,0,0.3); }
+        .btn-secondary { background: rgba(240, 240, 240, 0.1); color: #f0f0f0; border: 2px solid #f0f0f0; }
+        .action-btn:active { transform: scale(0.95); }
 
-        /* الزرار الثانوي (قفل) */
-        .btn-secondary {
-            background: rgba(240, 240, 240, 0.1);
-            color: #f0f0f0;
-            border: 2px solid #f0f0f0;
+        /* شاشة التحميل (الكارت بيلف) */
+        .card-wrapper { position: relative; width: 65px; height: 95px; margin: 0 auto 25px auto; }
+        .card-wrapper::before {
+            content: ''; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+            width: 100%; height: 100%; background: #f0f0f0; border-radius: 12px; filter: blur(18px);
+            opacity: 0.5; animation: pulseGlow 1.5s infinite alternate ease-in-out; z-index: -1;
         }
+        @keyframes pulseGlow { 0% { transform: translate(-50%, -50%) scale(1); opacity: 0.3; } 100% { transform: translate(-50%, -50%) scale(1.3); opacity: 0.7; } }
+        
+        .card-loader {
+            width: 100%; height: 100%; background: rgba(240, 240, 240, 0.95); border-radius: 12px; 
+            border: 2px solid #fff; box-shadow: 0 10px 20px rgba(0,0,0,0.3); display: flex; 
+            justify-content: center; align-items: center; animation: flipCard 2s infinite cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .card-loader::after { content: '🎲'; font-size: 25px; }
+        @keyframes flipCard { 0% { transform: perspective(400px) rotateY(0deg); } 100% { transform: perspective(400px) rotateY(360deg); } }
 
-        .action-btn:active {
-            transform: scale(0.95);
-        }
+        .progress-container { width: 100%; height: 6px; background: rgba(240, 240, 240, 0.1); border-radius: 10px; margin-top: 25px; overflow: hidden; }
+        .progress-bar { height: 100%; width: 0%; background: #f0f0f0; border-radius: 10px; box-shadow: 0 0 10px rgba(240, 240, 240, 0.8); animation: loadProgress 3.5s cubic-bezier(0.4, 0, 0.2, 1) forwards; }
+        @keyframes loadProgress { 0% { width: 0%; } 30% { width: 40%; } 70% { width: 75%; } 100% { width: 100%; } }
 
-        /* شاشة الاستعداد للسكان الجديد */
-        #scan-again-state {
-            display: none;
-            animation: popUp 0.5s forwards;
-        }
+        .final-card-container { display: none; animation: cardReveal 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards; }
+        @keyframes cardReveal { 0% { opacity: 0; transform: scale(0.5) rotate(-5deg); } 100% { opacity: 1; transform: scale(1) rotate(0deg); } }
+
+        /* ستايل كاميرا الاسكانر الداخلي */
+        #scanner-state { display: none; }
+        #reader { width: 100%; border-radius: 15px; overflow: hidden; background: #fff; border: 2px solid #f0f0f0; margin-top: 15px; color: #000; }
+        #reader img { display: none; } /* إخفاء لوجو المكتبة */
+        #reader button { font-family: 'Tajawal', sans-serif; background: #4a4d9e; color: #fff; border: none; padding: 8px 15px; border-radius: 8px; margin: 10px; cursor: pointer; }
     </style>
 
     <script>
-        // منع كليك يمين وزراير التفتيش للحماية
         document.addEventListener('contextmenu', event => event.preventDefault());
         document.onkeydown = function(e) {
-            if(e.keyCode == 123) { return false; }
-            if(e.ctrlKey && e.shiftKey && e.keyCode == 'I'.charCodeAt(0)) { return false; }
-            if(e.ctrlKey && e.shiftKey && e.keyCode == 'C'.charCodeAt(0)) { return false; }
-            if(e.ctrlKey && e.shiftKey && e.keyCode == 'J'.charCodeAt(0)) { return false; }
-            if(e.ctrlKey && e.keyCode == 'U'.charCodeAt(0)) { return false; }
+            if(e.keyCode == 123 || (e.ctrlKey && e.shiftKey && (e.keyCode == 'I'.charCodeAt(0) || e.keyCode == 'C'.charCodeAt(0) || e.keyCode == 'J'.charCodeAt(0))) || (e.ctrlKey && e.keyCode == 'U'.charCodeAt(0))) { return false; }
         };
 
-        // داتا بيز الكروت المشفرة (Base64)
         const secureDB = {
-            "1": "MXF1NllkWGxkZ18zeWZoUk5wQlNEY05iODEyalg2enNi", // الريتش
-            "2": "MXB0ZGM3bXczR1E4VUliYURxVFgyak1YY1QzbGpwM1kw", // نظريات المؤامره
-            "3": "MW91Q3RDWWdmd1pwMEFUYUhRRUZuRW9SVlhPbE8ySm9t", // الاخبار العاجله
-            "4": "MWJ5aGZaekFDcFdQcHRhZmE0TFlHU19GYjFIeUFuaEdw", // اليوتيوبر
-            "5": "MUlUVHQ2X1pITmhtZlhHMDlJX3pZQzRmdEtPWGpBRkgt", // الكول سينتر
-            "6": "MUd3TkphNGxrTlJ6ZWZRT1dLUWNCV0FQd0F3SDdpZ0xQ", // شات جيبتي
-            "7": "MTMwWGFRaGpuT2ZJdURDS0U3bjJNSDNGdFB2NE0wb1dq", // امهات التيك توك
-            "8": "MTJJMTJxaGJfUTVnaUlKOGU5Z1JYUlBXdC1yd0MxSHVl", // مدرسين ثانويه
-            "9": "MXZTWTdaUzA0aWRIYWtJMGJ2amJ0NzJkYWk2OFhTc3NK", // السرسجي
-            "10": "MV9mVHZuT3NNYXBYbHd3RlkzYUR1SzdPYjZuYlpkT1VH", // المتنمره
-            "11": "MVVfd1dJNkJyejJHY1ZrRllIRWNrcHZ3TTAwNkNjb04w", // سترونج اندبنت
-            "12": "MUladDA3aXd6T3MtQkM5OEp1enprR2JKd201NHFjd2Fi", // الصيوحه
-            "13": "MTZGbHVSWVV5YW1YZXZaVkRqVlBoY1JtdGQ5Y3E4OFVm", // المحنك
-            "14": "MUdaVEtYQm9nWTBFX3pIdmFnVzNoRFVtVDY3c3lDZHFn", // فوود بلوجر
-            "15": "MXlMdnlpc2RxbjdKMmxqTXhHOWRUNU9LaFhYc1RYdTdq", // لينكد ان
-            "16": "MUU2ZHpjZk9ER1VuMi0wdFBaRDdUTTlPTXJvZVhVbDRleg==", // كومنت تويتر
-            "17": "MTNFYXpCek9xcW5qRnBPVzZxbC1CeUduaUZoS0Q3UE9Z", // خدمه العملاء
-            "18": "MWI3c3Y4WVFacVBIWXg5bjdKQ2p6eVN4aTUwREpEbjBC"  // الشاي بلبن
+            "1": "MXF1NllkWGxkZ18zeWZoUk5wQlNEY05iODEyalg2enNi", "2": "MXB0ZGM3bXczR1E4VUliYURxVFgyak1YY1QzbGpwM1kw",
+            "3": "MW91Q3RDWWdmd1pwMEFUYUhRRUZuRW9SVlhPbE8ySm9t", "4": "MWJ5aGZaekFDcFdQcHRhZmE0TFlHU19GYjFIeUFuaEdw",
+            "5": "MUlUVHQ2X1pITmhtZlhHMDlJX3pZQzRmdEtPWGpBRkgt", "6": "MUd3TkphNGxrTlJ6ZWZRT1dLUWNCV0FQd0F3SDdpZ0xQ",
+            "7": "MTMwWGFRaGpuT2ZJdURDS0U3bjJNSDNGdFB2NE0wb1dq", "8": "MTJJMTJxaGJfUTVnaUlKOGU5Z1JYUlBXdC1yd0MxSHVl",
+            "9": "MXZTWTdaUzA0aWRIYWtJMGJ2amJ0NzJkYWk2OFhTc3NK", "10": "MV9mVHZuT3NNYXBYbHd3RlkzYUR1SzdPYjZuYlpkT1VH",
+            "11": "MVVfd1dJNkJyejJHY1ZrRllIRWNrcHZ3TTAwNkNjb04w", "12": "MUladDA3aXd6T3MtQkM5OEp1enprR2JKd201NHFjd2Fi",
+            "13": "MTZGbHVSWVV5YW1YZXZaVkRqVlBoY1JtdGQ5Y3E4OFVm", "14": "MUdaVEtYQm9nWTBFX3pIdmFnVzNoRFVtVDY3c3lDZHFn",
+            "15": "MXlMdnlpc2RxbjdKMmxqTXhHOWRUNU9LaFhYc1RYdTdq", "16": "MUU2ZHpjZk9ER1VuMi0wdFBaRDdUTTlPTXJvZVhVbDRleg==",
+            "17": "MTNFYXpCek9xcW5qRnBPVzZxbC1CeUduaUZoS0Q3UE9Z", "18": "MWI3c3Y4WVFacVBIWXg5bjdKQ2p6eVN4aTUwREpEbjBC"
         };
 
         window.onload = function() {
@@ -289,11 +209,7 @@
                     document.getElementById('game-card-img').src = directImgUrl;
                     document.getElementById('card-display-state').style.display = 'block';
                     
-                    if(typeof gtag === 'function') {
-                        gtag('event', 'card_opened', {
-                            'card_id': cardId
-                        });
-                    }
+                    if(typeof gtag === 'function') { gtag('event', 'card_opened', { 'card_id': cardId }); }
                 }, 3500);
 
             } else {
@@ -304,72 +220,76 @@
         function showError() {
             document.getElementById('loading-state').style.display = 'none';
             document.getElementById('card-display-state').style.display = 'none';
-            document.getElementById('scan-again-state').style.display = 'block';
-            document.getElementById('scan-again-state').innerHTML = `
+            document.getElementById('content-box').innerHTML += `
                 <div style="font-size: 50px; margin-bottom: 15px;">⚠️</div>
                 <h2>الكارت غير موجود</h2>
-                <div class="small-text" style="margin-top: 10px;">يرجى التأكد من مسح الـ QR الصحيح</div>
             `;
         }
 
-        // 🚨 دالة زرار "اسكان كارت تاني" 🚨
+        // ====== 3️⃣ تشغيل الكاميرا الداخلية ======
+        let html5QrcodeScanner;
         function scanAgain() {
             document.getElementById('card-display-state').style.display = 'none';
-            document.getElementById('scan-again-state').style.display = 'block';
+            document.getElementById('scanner-state').style.display = 'block';
             
-            // إرسال Event إن اللاعب هيكمل لعب
-            if(typeof gtag === 'function') {
-                gtag('event', 'scan_again_clicked');
+            if(typeof gtag === 'function') { gtag('event', 'scan_again_clicked'); }
+
+            if(!html5QrcodeScanner) {
+                // تفعيل مكتبة قراءة الباركود
+                html5QrcodeScanner = new Html5QrcodeScanner(
+                    "reader", { fps: 10, qrbox: {width: 250, height: 250} }, false);
+                html5QrcodeScanner.render(onScanSuccess, onScanFailure);
             }
         }
 
-        // 🚨 دالة زرار "قفل الكارت" 🚨
+        function onScanSuccess(decodedText, decodedResult) {
+            // أول ما الكاميرا تلقط اللينك، هتوجه اللاعب للكارت الجديد فوراً
+            html5QrcodeScanner.clear();
+            window.location.replace(decodedText);
+        }
+
+        function onScanFailure(error) { /* صامت عشان ميزعجش اللاعب */ }
+
+        // ====== 4️⃣ كود الخروج الإجباري من اللعبة ======
         function closeCard() {
+            // محاولة الخروج الطبيعية
+            window.open('', '_self', '');
             window.close();
-            // لو المتصفح رفض يقفل التاب كحماية، هنحوله لشاشة الإسكان كبديل
-            setTimeout(scanAgain, 150);
+            
+            // النواة: لو المتصفح رفض يقفل التاب، هيطيره لصفحة بيضا فاضية كأنه قفل
+            setTimeout(() => {
+                window.location.replace("about:blank");
+            }, 100);
         }
     </script>
 </head>
 <body>
     <div class="glass-box" id="content-box">
         
-        <!-- اللوجو الثابت -->
         <img src="logo.png" alt="لوجو قعدة" class="game-logo" onerror="this.style.display='none'">
 
-        <!-- الحالة 1: شاشة التحميل -->
+        <!-- شاشة التحميل -->
         <div id="loading-state">
-            <div class="card-wrapper">
-                <div class="card-loader"></div>
-            </div>
+            <div class="card-wrapper"><div class="card-loader"></div></div>
             <h2>جاري فتح الكارت</h2>
-            <div class="small-text">قعدة سكرول</div>
-            <div class="progress-container">
-                <div class="progress-bar"></div>
-            </div>
+            <div class="progress-container"><div class="progress-bar"></div></div>
         </div>
 
-        <!-- الحالة 2: عرض الكارت والزراير -->
+        <!-- عرض الكارت -->
         <div id="card-display-state" class="final-card-container">
-            <div class="small-text">قعدة سكرول</div>
             <h2>كارتك جاهز</h2>
-            
             <img id="game-card-img" src="" alt="كارت قعدة" class="display-card">
-            
-            <!-- مجموعة الزراير الجديدة -->
             <div class="btn-group">
                 <button class="action-btn btn-primary" onclick="scanAgain()">اسكان تاني</button>
-                <button class="action-btn btn-secondary" onclick="closeCard()">قفل الكارت</button>
+                <button class="action-btn btn-secondary" onclick="closeCard()">خروج</button>
             </div>
         </div>
 
-        <!-- الحالة 3: شاشة التوجيه عشان يعمل سكان جديد -->
-        <div id="scan-again-state">
-            <div style="font-size: 55px; margin-bottom: 15px;">📱</div>
-            <h2>جاهز للجولة الجاية؟</h2>
-            <div class="small-text" style="margin-top: 10px; line-height: 1.6;">
-                افتح كاميرا الموبايل <br> واعمل سكان لباركود الكارت الجديد
-            </div>
+        <!-- شاشة الكاميرا الداخلية -->
+        <div id="scanner-state">
+            <h2>وجه الكاميرا للكارت</h2>
+            <div class="small-text">جاري تفعيل الكاميرا... وافق على الصلاحية</div>
+            <div id="reader"></div>
         </div>
 
     </div>
