@@ -3,31 +3,28 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <!-- لون المتصفح فوق عشان يطقم مع لون اللعبة الأزرق -->
     <meta name="theme-color" content="#4a4d9e">
     
-    <!-- 🚨 طاقية الإخفاء لمنع إيرور جوجل درايف 🚨 -->
+    <!-- طاقية الإخفاء لمنع إيرور جوجل درايف -->
     <meta name="referrer" content="no-referrer">
     
-    <title>لعبة قعدة 🎲</title>
+    <title>لعبة قعدة</title>
     
-    <!-- استدعاء خط Tajawal بكل الأوزان المطلوبة (500, 700, 800, 900) -->
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@500;700;800;900&display=swap" rel="stylesheet">
     
     <style>
-        /* ================= الهوية البصرية (Colors, Typography & Vibe) ================= */
         body { 
             margin: 0; 
-            font-family: 'Tajawal', sans-serif; /* الخط الأساسي لكل حاجة */
-            background-color: #4a4d9e; /* لون البراند الأساسي */
+            font-family: 'Tajawal', sans-serif; 
+            background-color: #4a4d9e; 
             
-            /* 🚨 الصورة العشوائية اللي بتدي الفايب الشبابي (Chaotic Gen-Z) 🚨 */
+            /* خلفية الشخبطة */
             background-image: url('image_23f560.jpg');
             background-size: cover;
             background-position: center;
             background-attachment: fixed;
             
-            color: #f0f0f0; /* اللون الفاتح الأساسي للنصوص */
+            color: #f0f0f0; 
             display: flex; 
             justify-content: center; 
             align-items: center;
@@ -35,10 +32,9 @@
             text-align: center; 
             overflow: hidden; 
             position: relative;
-            letter-spacing: normal; /* ممنوع الـ letter-spacing في العربي */
+            letter-spacing: normal; 
         }
 
-        /* إضافة طبقة تعتيم خفيفة جداً فوق الخلفية عشان الكلام يقرأ بوضوح */
         body::before {
             content: '';
             position: absolute;
@@ -47,7 +43,6 @@
             z-index: 0;
         }
 
-        /* البوكس الزجاجي */
         .glass-box {
             background: rgba(240, 240, 240, 0.08); 
             backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
@@ -65,7 +60,6 @@
             100% { opacity: 1; transform: scale(1) translateY(0); } 
         }
 
-        /* 1- العناوين الكبيرة (ExtraBold / Black - Weight: 900) */
         h2 { 
             font-size: 32px; 
             margin-bottom: 8px; 
@@ -75,57 +69,61 @@
             line-height: 1.2;
         }
 
-        /* 3- نصوص الكروت والمواقف (Bold - Weight: 700) */
         .funny-quote { 
             color: #f0f0f0; 
             font-size: 18px; 
             font-weight: 700; 
-            line-height: 1.6; /* Line-height واسع ومريح */
+            line-height: 1.6; 
             min-height: 30px; 
             opacity: 0.95;
         }
         
-        /* 4- النصوص الصغيرة (Medium - Weight: 500) */
         .small-text {
             font-weight: 500;
             font-size: 14px;
-            color: rgba(240, 240, 240, 0.7); /* لون أهدأ */
+            color: rgba(240, 240, 240, 0.7); 
             margin-top: 20px;
         }
 
-        /* لوجو اللعبة (حسب الملاحظات) */
-        .game-logo {
-            max-width: 120px;
-            margin-bottom: 15px;
-            display: none; /* تقدر تشيل سطر الإخفاء ده لو رفعت صورة logo.png وعايزها تظهر */
+        /* ====== الأنيميشن الجديد (Scanner Card) ====== */
+        .card-loader {
+            width: 75px; 
+            height: 110px; 
+            margin: 0 auto 20px auto;
+            background: rgba(240, 240, 240, 0.1); 
+            border-radius: 12px; 
+            border: 3px solid rgba(240,240,240,0.8); 
+            box-shadow: 0 10px 25px rgba(0,0,0,0.4), inset 0 0 15px rgba(240,240,240,0.2);
+            position: relative;
+            overflow: hidden;
+            animation: float 3s ease-in-out infinite;
         }
 
-        /* كارت الـ 3D اللي بيلف (معدل عشان يناسب الألوان الجديدة) */
-        .card-loader {
-            width: 75px; height: 110px; margin: 0 auto 20px auto;
-            background: #f0f0f0; 
-            border-radius: 12px; 
-            border: 4px solid rgba(240,240,240,0.9); 
-            box-shadow: 0 10px 25px rgba(0,0,0,0.4);
-            position: relative;
-            animation: flipCard3D 1.5s infinite ease-in-out;
-            display: flex; justify-content: center; align-items: center;
+        /* خط الإضاءة اللي بيمسح الكارت */
+        .card-loader::before {
+            content: '';
+            position: absolute;
+            top: -50%; left: 0; width: 100%; height: 50%;
+            background: linear-gradient(to bottom, transparent, rgba(240, 240, 240, 0.9));
+            animation: scan 1.5s linear infinite;
         }
-        /* ظهر الكارت من جوه */
-        .card-loader::after {
-            content: '🎲';
-            font-size: 35px;
-            color: #4a4d9e;
+
+        @keyframes scan {
+            0% { top: -50%; opacity: 0; }
+            20% { opacity: 1; }
+            80% { opacity: 1; }
+            100% { top: 100%; opacity: 0; }
         }
-        @keyframes flipCard3D { 
-            0% { transform: perspective(400px) rotateY(0deg); } 
-            50% { transform: perspective(400px) rotateY(180deg); } 
-            100% { transform: perspective(400px) rotateY(360deg); } 
+
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
         }
     </style>
 
     <script>
-        // 🚨 الداتا بيز بتاعة الـ 18 كارت 🚨
+        // داتا بيز الكروت
         const cardDatabase = {
             "1": "1qu6YdXldg_3yfhRNpBSDcNb812jX6zsb",
             "2": "1ptdc7mw3GQ8UIbaDqTX2jMXcQ3ljp3Y0",
@@ -147,12 +145,16 @@
             "18": "1b7sv8YQZqPHYx9n7JCjzySxi50DJDn0B" 
         };
 
+        // الجمل الكريتيف الجديدة بدون أي إيموجيز
         const funnyQuotes = [
-            "يا ترى هتطلع أم خالد ولا إياد الموجي؟ 👀",
-            "استرها علينا يارب من كارت الدبيس... 💸",
-            "جهز نفسك لتقليد الدكتور! 👨‍🏫",
-            "يا ساتر.. شكلها فيها كارت قفلنا المايك 🤐",
-            "اسحب كارتك وواجه مصيرك يا معلم! ⚡"
+            "جاري سحب الكارت وتحديد المصير",
+            "يا ترى حظك حلو ولا هتشيل الليلة",
+            "يا ساتر شكلها فيها أحكام قاسية",
+            "استرها علينا يارب من كارت الدبيس",
+            "الورق مش بيكدب استعد للصدمة",
+            "سحب الكارت ده محتاج شجاعة",
+            "بنقلب في الورق عشان نجيبلك الخلاصة",
+            "الموقف محتاج ثبات انفعالي"
         ];
 
         window.onload = function() {
@@ -166,15 +168,16 @@
                 
                 const directImgUrl = `https://drive.google.com/thumbnail?id=${driveId}&sz=w1000`;
                 
+                // تم زيادة الوقت لـ 3.5 ثانية (3500 ملي ثانية)
                 setTimeout(() => {
                     window.location.replace(directImgUrl);
-                }, 2000);
+                }, 3500);
 
             } else {
                 document.getElementById('content-box').innerHTML = `
-                    <div style="font-size: 60px; margin-bottom: 15px; animation: popUp 0.5s;">⚠️</div>
-                    <h2>الكارت ده مش موجود!</h2>
-                    <p class="funny-quote" style="font-size: 16px;">شكلك ضربت باركود غلط يا معلم.</p>
+                    <div style="font-size: 60px; margin-bottom: 15px; animation: popUp 0.5s;">!</div>
+                    <h2>الكارت ده مش موجود</h2>
+                    <p class="funny-quote" style="font-size: 16px;">شكلك ضربت باركود غلط يا معلم</p>
                 `;
             }
         }
@@ -182,13 +185,10 @@
 </head>
 <body>
     <div class="glass-box" id="content-box">
-        <!-- لو عندك لوجو اسمه logo.png وحبيت تحطه في المستقبل -->
-        <img src="logo.png" alt="قعدة سكرول" class="game-logo" onerror="this.style.display='none'">
-        
         <div class="card-loader"></div>
-        <h2>ثواني وكارتك يفتح...</h2>
-        <div id="random-quote" class="funny-quote">جاري سحب الكارت...</div>
-        <div class="small-text">قعدة سكرول 🎮</div>
+        <h2>ثواني وكارتك يفتح</h2>
+        <div id="random-quote" class="funny-quote">جاري سحب الكارت</div>
+        <div class="small-text">لعبة قعدة سكرول</div>
     </div>
 </body>
 </html>
