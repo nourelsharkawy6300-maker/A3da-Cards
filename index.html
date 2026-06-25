@@ -32,6 +32,9 @@
             overflow: hidden; 
             position: relative;
             letter-spacing: normal; 
+            
+            user-select: none; 
+            -webkit-user-select: none;
         }
 
         body::before {
@@ -42,6 +45,7 @@
             z-index: 0;
         }
 
+        /* البوكس الزجاجي الأساسي */
         .glass-box {
             background: rgba(240, 240, 240, 0.08); 
             backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
@@ -71,9 +75,10 @@
             font-weight: 500;
             font-size: 15px;
             color: rgba(240, 240, 240, 0.6); 
+            margin-bottom: 5px;
         }
 
-        /* ====== الكارت وهالة الطاقة ====== */
+        /* ====== الكارت وهالة الطاقة (شاشة التحميل) ====== */
         .card-wrapper {
             position: relative;
             width: 75px; 
@@ -81,7 +86,6 @@
             margin: 0 auto 35px auto;
         }
 
-        /* الإضاءة اللي بتنور ورا الكارت */
         .card-wrapper::before {
             content: '';
             position: absolute;
@@ -148,66 +152,158 @@
             70% { width: 75%; }
             100% { width: 100%; }
         }
+
+        /* ====== 🚨 ستايل عرض كارت اللعبة النهائي جوه الموقع 🚨 ====== */
+        .final-card-container {
+            display: none; /* مخفي في الأول ويظهر بالجافا سكريبت */
+            animation: cardReveal 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+        }
+
+        @keyframes cardReveal {
+            0% { opacity: 0; transform: scale(0.5) rotate(-5deg); }
+            100% { opacity: 1; transform: scale(1) rotate(0deg); }
+        }
+
+        .display-card {
+            width: 100%;
+            max-width: 280px;
+            border-radius: 16px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.6);
+            border: 3px solid #f0f0f0;
+            margin: 15px auto 25px auto;
+            display: block;
+            pointer-events: none; /* منع الحفظ أو النسخ */
+        }
+
+        /* زرار الرجوع البروفيشنال (Tajawal Bold - Weight: 900) */
+        .close-btn {
+            font-family: 'Tajawal', sans-serif;
+            font-weight: 900;
+            font-size: 16px;
+            background: #f0f0f0;
+            color: #4a4d9e;
+            border: none;
+            padding: 12px 35px;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            transition: all 0.2s ease;
+            width: 80%;
+            max-width: 200px;
+            margin: 0 auto;
+        }
+        .close-btn:active {
+            transform: scale(0.95);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
     </style>
 
     <script>
-        const cardDatabase = {
-            "1": "1qu6YdXldg_3yfhRNpBSDcNb812jX6zsb", // بتاع الريتش
-            "2": "1ptdc7mw3GQ8UIbaDqTX2jMXcQ3ljp3Y0", // بتاع نظريات المؤامره
-            "3": "1ouCtCYgfwZp0ATaHQEFnEoRVXOlO2Jom", // صفحه الاخبار العاجله
-            "4": "1byhfZzACpWPptafa4LYGS_Fb1HyAnhGp", // اليوتيوبر
-            "5": "1ITTt6_ZHNhmfXG09I_zYC4ftKOXjAFH-", // موظف الكول سينتر
-            "6": "1GwNJa4lkNRzefQOWKQcBWAPwAwH7igLP", // شات جيبتي
-            "7": "130XaQhjnOfIuDCKE7n2MH3FtPv4M0oWj", // امهات التيك توك
-            "8": "12I12qhb_Q5giIJ8e9gRXRPWt-rwC1Hue", // مدرسين ثانويه
-            "9": "1vSY7ZS04idHakI0bvjbt72dai68XSssJ", // السرسجي
-            "10": "1_fTvnOsMapXlwwFY3aDuK7Ob6nbZdOUG", // الشخصيه المتنمره
-            "11": "1U_wWI6Brz2GcVkFYHEckpvwM006CcoN0", // اتسرونج اندبنت وومن
-            "12": "1IZt07iwzOs-BC98JuzzkGbJwm54qcwab", // الشخصية الصيوحه
-            "13": "16FluRYUyamXevZVDjVPhcRmtd9cq88Uf", // المحنك اللي بيتفزلك
-            "14": "1GZTKXBogY0E_zHvagW3hDUmT67syCdqg", // فوود بلوجر
-            "15": "1yLvyisdqn7J2ljMxG9dT5OKhXXsTXu7j", // لينكد ان
-            "16": "1E6dzcfODGUn2-0tPZD7T9OMroeXUl4ez", // كومنت تويتر
-            "17": "13EazBzOqqnjFpOW6ql-ByGniFhKD7POY", // شات خدمه العملاء
-            "18": "1b7sv8YQZqPHYx9n7JCjzySxi50DJDn0B"  // الشاي بلبن
+        // منع كليك يمين وزراير التفتيش للحماية
+        document.addEventListener('contextmenu', event => event.preventDefault());
+        document.onkeydown = function(e) {
+            if(e.keyCode == 123) { return false; }
+            if(e.ctrlKey && e.shiftKey && e.keyCode == 'I'.charCodeAt(0)) { return false; }
+            if(e.ctrlKey && e.shiftKey && e.keyCode == 'C'.charCodeAt(0)) { return false; }
+            if(e.ctrlKey && e.shiftKey && e.keyCode == 'J'.charCodeAt(0)) { return false; }
+            if(e.ctrlKey && e.keyCode == 'U'.charCodeAt(0)) { return false; }
+        };
+
+        // داتا بيز الكروت المشفرة (Base64)
+        const secureDB = {
+            "1": "MXF1NllkWGxkZ18zeWZoUk5wQlNEY05iODEyalg2enNi", // الريتش
+            "2": "MXB0ZGM3bXczR1E4VUliYURxVFgyak1YY1QzbGpwM1kw", // نظريات المؤامره
+            "3": "MW91Q3RDWWdmd1pwMEFUYUhRRUZuRW9SVlhPbE8ySm9t", // الاخبار العاجله
+            "4": "MWJ5aGZaekFDcFdQcHRhZmE0TFlHU19GYjFIeUFuaEdw", // اليوتيوبر
+            "5": "MUlUVHQ2X1pITmhtZlhHMDlJX3pZQzRmdEtPWGpBRkgt", // الكول سينتر
+            "6": "MUd3TkphNGxrTlJ6ZWZRT1dLUWNCV0FQd0F3SDdpZ0xQ", // شات جيبتي
+            "7": "MTMwWGFRaGpuT2ZJdURDS0U3bjJNSDNGdFB2NE0wb1dq", // امهات التيك توك
+            "8": "MTJJMTJxaGJfUTVnaUlKOGU5Z1JYUlBXdC1yd0MxSHVl", // مدرسين ثانويه
+            "9": "MXZTWTdaUzA0aWRIYWtJMGJ2amJ0NzJkYWk2OFhTc3NK", // السرسجي
+            "10": "MV9mVHZuT3NNYXBYbHd3RlkzYUR1SzdPYjZuYlpkT1VH", // المتنمره
+            "11": "MVVfd1dJNkJyejJHY1ZrRllIRWNrcHZ3TTAwNkNjb04w", // سترونج اندبنت
+            "12": "MUladDA3aXd6T3MtQkM5OEp1enprR2JKd201NHFjd2Fi", // الصيوحه
+            "13": "MTZGbHVSWVV5YW1YZXZaVkRqVlBoY1JtdGQ5Y3E4OFVm", // المحنك
+            "14": "MUdaVEtYQm9nWTBFX3pIdmFnVzNoRFVtVDY3c3lDZHFn", // فوود بلوجر
+            "15": "MXlMdnlpc2RxbjdKMmxqTXhHOWRUNU9LaFhYc1RYdTdq", // لينكد ان
+            "16": "MUU2ZHpjZk9ER1VuMi0wdFBaRDdUTTlPTXJvZVhVbDRleg==", // كومنت تويتر
+            "17": "MTNFYXpCek9xcW5qRnBPVzZxbC1CeUduaUZoS0Q3UE9Z", // خدمه العملاء
+            "18": "MWI3c3Y4WVFacVBIWXg5bjdKQ2p6eVN4aTUwREpEbjBC"  // الشاي بلبن
         };
 
         window.onload = function() {
             const urlParams = new URLSearchParams(window.location.search);
             const cardId = urlParams.get('id');
 
-            if (cardId && cardDatabase[cardId]) {
-                const driveId = cardDatabase[cardId];
+            if (cardId && secureDB[cardId]) {
+                const driveId = atob(secureDB[cardId]);
+                // استخدام المقاس w1000 المظبوط لإجبار الموبايل على الحفظ الفوري للصورة
                 const directImgUrl = `https://drive.google.com/thumbnail?id=${driveId}&sz=w1000`;
                 
-                // تحويل بعد 3.5 ثانية (بالضبط مع نهاية شريط التحميل)
+                // 🚨 خطوة ذكية: نبدأ نحمل الصورة في الخلفية فوراً واللاعب بيتفرج على شريط التحميل 🚨
+                const imgPreloader = new Image();
+                imgPreloader.src = directImgUrl;
+
+                // بعد انتهاء شريط التحميل (3.5 ثانية)
                 setTimeout(() => {
-                    window.location.replace(directImgUrl);
+                    // إخفاء شاشة التحميل القديمة تماماً
+                    document.getElementById('loading-state').style.display = 'none';
+                    
+                    // حط سورس الصورة واظهر الحاوية الجديدة جوه الصفحة
+                    document.getElementById('game-card-img').src = directImgUrl;
+                    document.getElementById('card-display-state').style.display = 'block';
                 }, 3500);
 
             } else {
-                // لو الباركود غلط
-                document.getElementById('content-box').innerHTML = `
-                    <div style="font-size: 50px; margin-bottom: 15px;">⚠️</div>
-                    <h2>الكارت غير موجود</h2>
-                    <div class="small-text" style="margin-top: 10px;">يرجى التأكد من مسح الـ QR الصحيح</div>
-                `;
+                showError();
             }
+        }
+
+        function showError() {
+            document.getElementById('content-box').innerHTML = `
+                <div style="font-size: 50px; margin-bottom: 15px;">⚠️</div>
+                <h2>الكارت غير موجود</h2>
+                <div class="small-text" style="margin-top: 10px;">يرجى التأكد من مسح الـ QR الصحيح</div>
+            `;
+        }
+
+        // دالة زرار القفل عشان يقفل التاب ويرجعوا للقعدة
+        function closeCard() {
+            window.close();
+            // لو الموبايل رفض يقفل التاب كحماية، بنحولهم لصفحة ترحيبية شيك باسم اللعبة
+            setTimeout(() => {
+                document.getElementById('content-box').innerHTML = `
+                    <div style="font-size: 50px; margin-bottom: 15px;">🎲</div>
+                    <h2>جاهز للجولة الجاية؟</h2>
+                    <div class="small-text" style="margin-top: 10px;">اقلب الكارت اللي عليه الدور واعمل سكان</div>
+                `;
+            }, 100);
         }
     </script>
 </head>
 <body>
     <div class="glass-box" id="content-box">
-        <div class="card-wrapper">
-            <div class="card-loader"></div>
-        </div>
-        <h2>جاري فتح الكارت</h2>
-        <div class="small-text">قعدة سكرول</div>
         
-        <!-- شريط التحميل السينمائي -->
-        <div class="progress-container">
-            <div class="progress-bar"></div>
+        <div id="loading-state">
+            <div class="card-wrapper">
+                <div class="card-loader"></div>
+            </div>
+            <h2>جاري فتح الكارت</h2>
+            <div class="small-text">قعدة سكرول</div>
+            <div class="progress-container">
+                <div class="progress-bar"></div>
+            </div>
         </div>
+
+        <div id="card-display-state" class="final-card-container">
+            <div class="small-text">قعدة سكرول</div>
+            <h2>كارتك جاهز</h2>
+            
+            <img id="game-card-img" src="" alt="كارت قعدة" class="display-card">
+            
+            <button class="close-btn" onclick="closeCard()">قفل الكارت</button>
+        </div>
+
     </div>
 </body>
 </html>
