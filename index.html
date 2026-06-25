@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="theme-color" content="#4a4d9e">
     
-    <!-- طاقية الإخفاء لمنع إيرور جوجل درايف -->
     <meta name="referrer" content="no-referrer">
     
     <title>لعبة قعدة</title>
@@ -39,91 +38,120 @@
             content: '';
             position: absolute;
             top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(74, 77, 158, 0.4);
+            background: rgba(74, 77, 158, 0.45);
             z-index: 0;
         }
 
         .glass-box {
             background: rgba(240, 240, 240, 0.08); 
-            backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
-            border: 2px solid rgba(240, 240, 240, 0.15); 
-            border-radius: 30px; 
-            padding: 40px 30px;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4); 
+            backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(240, 240, 240, 0.15); 
+            border-radius: 24px; 
+            padding: 45px 30px;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5); 
             width: 85%; 
-            max-width: 400px; 
+            max-width: 380px; 
             z-index: 1;
             animation: popUp 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
         }
         @keyframes popUp { 
-            0% { opacity: 0; transform: scale(0.8) translateY(30px); } 
+            0% { opacity: 0; transform: scale(0.9) translateY(20px); } 
             100% { opacity: 1; transform: scale(1) translateY(0); } 
         }
 
         h2 { 
-            font-size: 32px; 
-            margin-bottom: 8px; 
+            font-size: 28px; 
+            margin: 0 0 10px 0; 
             font-weight: 900; 
             color: #f0f0f0; 
             text-shadow: 0 4px 10px rgba(0,0,0,0.3); 
-            line-height: 1.2;
         }
 
-        .funny-quote { 
-            color: #f0f0f0; 
-            font-size: 18px; 
-            font-weight: 700; 
-            line-height: 1.6; 
-            min-height: 30px; 
-            opacity: 0.95;
-        }
-        
         .small-text {
             font-weight: 500;
-            font-size: 14px;
-            color: rgba(240, 240, 240, 0.7); 
-            margin-top: 20px;
+            font-size: 15px;
+            color: rgba(240, 240, 240, 0.6); 
         }
 
-        /* ====== الأنيميشن الجديد (Scanner Card) ====== */
-        .card-loader {
+        /* ====== الكارت وهالة الطاقة ====== */
+        .card-wrapper {
+            position: relative;
             width: 75px; 
             height: 110px; 
-            margin: 0 auto 20px auto;
-            background: rgba(240, 240, 240, 0.1); 
-            border-radius: 12px; 
-            border: 3px solid rgba(240,240,240,0.8); 
-            box-shadow: 0 10px 25px rgba(0,0,0,0.4), inset 0 0 15px rgba(240,240,240,0.2);
-            position: relative;
-            overflow: hidden;
-            animation: float 3s ease-in-out infinite;
+            margin: 0 auto 35px auto;
         }
 
-        /* خط الإضاءة اللي بيمسح الكارت */
-        .card-loader::before {
+        /* الإضاءة اللي بتنور ورا الكارت */
+        .card-wrapper::before {
             content: '';
             position: absolute;
-            top: -50%; left: 0; width: 100%; height: 50%;
-            background: linear-gradient(to bottom, transparent, rgba(240, 240, 240, 0.9));
-            animation: scan 1.5s linear infinite;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            width: 100%; height: 100%;
+            background: #f0f0f0;
+            border-radius: 12px;
+            filter: blur(18px);
+            opacity: 0.5;
+            animation: pulseGlow 1.5s infinite alternate ease-in-out;
+            z-index: -1;
         }
 
-        @keyframes scan {
-            0% { top: -50%; opacity: 0; }
-            20% { opacity: 1; }
-            80% { opacity: 1; }
-            100% { top: 100%; opacity: 0; }
+        @keyframes pulseGlow {
+            0% { transform: translate(-50%, -50%) scale(1); opacity: 0.3; }
+            100% { transform: translate(-50%, -50%) scale(1.3); opacity: 0.7; }
         }
 
-        @keyframes float {
-            0% { transform: translateY(0px); }
-            50% { transform: translateY(-10px); }
-            100% { transform: translateY(0px); }
+        .card-loader {
+            width: 100%; 
+            height: 100%; 
+            background: rgba(240, 240, 240, 0.95); 
+            border-radius: 12px; 
+            border: 2px solid #fff; 
+            box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+            display: flex; justify-content: center; align-items: center;
+            animation: flipCard 2s infinite cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .card-loader::after {
+            content: '🎲';
+            font-size: 30px;
+        }
+
+        @keyframes flipCard { 
+            0% { transform: perspective(400px) rotateY(0deg); } 
+            100% { transform: perspective(400px) rotateY(360deg); } 
+        }
+
+        /* ====== شريط التحميل السينمائي (متظبط على 3.5 ثانية بالظبط) ====== */
+        .progress-container {
+            width: 100%;
+            height: 6px;
+            background: rgba(240, 240, 240, 0.1);
+            border-radius: 10px;
+            margin-top: 25px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .progress-bar {
+            height: 100%;
+            width: 0%;
+            background: #f0f0f0;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(240, 240, 240, 0.8);
+            /* السحر هنا: الشريط بيملا في 3.5 ثانية بالتزامن مع التحويل */
+            animation: loadProgress 3.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+        }
+
+        @keyframes loadProgress {
+            0% { width: 0%; }
+            30% { width: 40%; }
+            70% { width: 75%; }
+            100% { width: 100%; }
         }
     </style>
 
     <script>
-        // داتا بيز الكروت
         const cardDatabase = {
             "1": "1qu6YdXldg_3yfhRNpBSDcNb812jX6zsb",
             "2": "1ptdc7mw3GQ8UIbaDqTX2jMXcQ3ljp3Y0",
@@ -145,39 +173,25 @@
             "18": "1b7sv8YQZqPHYx9n7JCjzySxi50DJDn0B" 
         };
 
-        // الجمل الكريتيف الجديدة بدون أي إيموجيز
-        const funnyQuotes = [
-            "جاري سحب الكارت وتحديد المصير",
-            "يا ترى حظك حلو ولا هتشيل الليلة",
-            "يا ساتر شكلها فيها أحكام قاسية",
-            "استرها علينا يارب من كارت الدبيس",
-            "الورق مش بيكدب استعد للصدمة",
-            "سحب الكارت ده محتاج شجاعة",
-            "بنقلب في الورق عشان نجيبلك الخلاصة",
-            "الموقف محتاج ثبات انفعالي"
-        ];
-
         window.onload = function() {
-            document.getElementById('random-quote').innerText = funnyQuotes[Math.floor(Math.random() * funnyQuotes.length)];
-            
             const urlParams = new URLSearchParams(window.location.search);
             const cardId = urlParams.get('id');
 
             if (cardId && cardDatabase[cardId]) {
                 const driveId = cardDatabase[cardId];
-                
                 const directImgUrl = `https://drive.google.com/thumbnail?id=${driveId}&sz=w1000`;
                 
-                // تم زيادة الوقت لـ 3.5 ثانية (3500 ملي ثانية)
+                // تحويل بعد 3.5 ثانية (بالضبط مع نهاية شريط التحميل)
                 setTimeout(() => {
                     window.location.replace(directImgUrl);
                 }, 3500);
 
             } else {
+                // لو الباركود غلط، هيخفي شريط التحميل ويجيب رسالة خطأ شيك
                 document.getElementById('content-box').innerHTML = `
-                    <div style="font-size: 60px; margin-bottom: 15px; animation: popUp 0.5s;">!</div>
-                    <h2>الكارت ده مش موجود</h2>
-                    <p class="funny-quote" style="font-size: 16px;">شكلك ضربت باركود غلط يا معلم</p>
+                    <div style="font-size: 50px; margin-bottom: 15px;">⚠️</div>
+                    <h2>الكارت غير موجود</h2>
+                    <div class="small-text" style="margin-top: 10px;">يرجى التأكد من مسح الـ QR الصحيح</div>
                 `;
             }
         }
@@ -185,10 +199,16 @@
 </head>
 <body>
     <div class="glass-box" id="content-box">
-        <div class="card-loader"></div>
-        <h2>ثواني وكارتك يفتح</h2>
-        <div id="random-quote" class="funny-quote">جاري سحب الكارت</div>
-        <div class="small-text">لعبة قعدة سكرول</div>
+        <div class="card-wrapper">
+            <div class="card-loader"></div>
+        </div>
+        <h2>جاري فتح الكارت</h2>
+        <div class="small-text">قعدة سكرول</div>
+        
+        <!-- شريط التحميل السينمائي -->
+        <div class="progress-container">
+            <div class="progress-bar"></div>
+        </div>
     </div>
 </body>
 </html>
