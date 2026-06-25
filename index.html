@@ -43,7 +43,6 @@
             overflow: hidden; 
             position: relative;
             letter-spacing: normal; 
-            
             user-select: none; 
             -webkit-user-select: none;
         }
@@ -59,7 +58,7 @@
             background: rgba(74, 77, 158, 0.45); z-index: 0;
         }
 
-        /* البوكس الزجاجي الموسع */
+        /* البوكس الزجاجي الموسع للموبايل */
         .glass-box {
             background: rgba(240, 240, 240, 0.08); 
             backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
@@ -87,7 +86,7 @@
         h2 { font-size: 24px; margin: 0 0 5px 0; font-weight: 900; color: #f0f0f0; text-shadow: 0 4px 10px rgba(0,0,0,0.3); }
         .small-text { font-weight: 500; font-size: 14px; color: rgba(240, 240, 240, 0.7); margin-bottom: 5px; }
 
-        /* ====== الكارت (ثبات تام + لمعة فخمة) ====== */
+        /* الكارت (ثبات تام + لمعة فخمة) */
         .display-card {
             width: 100%; 
             max-height: 68vh; 
@@ -119,7 +118,6 @@
             0% { opacity: 0; transform: rotateY(-90deg) scale(0.6) translateY(50px); } 
             100% { opacity: 1; transform: rotateY(0deg) scale(1) translateY(0); } 
         }
-        /* ======================================================== */
 
         /* الزراير وتأثير النبض (Pulse) */
         .btn-group { display: flex; gap: 10px; justify-content: center; margin-top: 5px; width: 100%; }
@@ -185,26 +183,26 @@
             if(e.keyCode == 123 || (e.ctrlKey && e.shiftKey && (e.keyCode == 'I'.charCodeAt(0) || e.keyCode == 'C'.charCodeAt(0) || e.keyCode == 'J'.charCodeAt(0))) || (e.ctrlKey && e.keyCode == 'U'.charCodeAt(0))) { return false; }
         };
 
-        // ====== 🚨 قاعدة البيانات المشفرة (تم إصلاح تكرار الكول سنتر بنجاح) 🚨 ======
+        // ====== 🚨 قاعدة البيانات النهائية والمطابقة للترتيب الجديد 100% 🚨 ======
         const secureDB = {
-            "1": "MUlUVHQ2X1pITmhtZlhHMDlJX3pZQzRmdEtPWGpBRkgt", // موظف كول سينتر (تم الإصلاح والربط بالملف المستقل بالمللي)
-            "2": "MXhEemZpRUJFeS1iVFFmbUZfci04azJRRnppQkxEZjNj", // كومنت تويتر
-            "3": "MWY0OEp4VGJwalBrOWtRRVlCRjl5RHktdXJERnV1R19w", // بتاع نظرية المؤامرات
-            "4": "MW1hV0ZvTmI0bEx1V1p4YTZfYko2WUJoUlB6LU92NE5J", // خدمه العملاء
-            "5": "MUliU2k5NE9WY3VJMmY1SXJqV1lNSGxfcHVoZDd2YW4y", // لينكد ان
-            "6": "MUZYRkRudTBXVzN1VGl6Q19rSDl3SnlyQi1qMU0xYWxt", // فوود بلوجر
-            "7": "MWVYdVRBN2JDZ3ZnRHVBRTRURUh2TlN3bFM0T1V0WWs2", // المحنك اللي بيستفزك
-            "8": "MU5SaURaOF9uOUVraXpZek1TTk1NN1dRdUkzU0dGSmF2", // الشخصية الصيوحة
-            "9": "MXltVTVEYkl5alg0MlVpRzc5TabElyRmpkbC1vRlNtRlE=", // استرونج اندبندت وومن
-            "10": "MVo2WHplS1UxOUxtRGlnX3QxTWpCZ0pyOGNvLXBCVFhP", // الشخصية المتنمره
-            "11": "MUN3cWVYbW40WTYyYU02d3JnSlUyNlAwaEVqWnJ4cks5", // السرسجي
-            "12": "MW1GdksxZzBTRXd2UlhqR2F2SThDUVVsbmNiZDNYUW5i", // مدرسين ثانوية عامة
-            "13": "MWlQcWQzUnNLWl81OG5wZk5IamtOaE5weG9sb1I3MDdV", // امهات التيك توك
-            "14": "MTJKb2pQM2x5Z2xETG81ZjBNZlE1RjZUUFRyWXR4NW9V", // شات جيبتي
-            "15": "MW4yR3lSSDN5bFY5MFctcnJsdFZQRFZzVXVSSmE5SVJk", // شخصية اليوتيوب
-            "16": "MUdFQlhaaTZCNUVNdWh0WUkxSkczVE1paXBXb3JkX0o2", // صفحة الاخبار العاجلة
-            "17": "MUZJVDlEUU16VFNEWVkxYzgwX1Y1UjlUUTZyZ2pzcEZF", // بتاع الريتش
-            "18": "MWY3T0NlT2xJakstVlA2elhTQjNOSkhvT3RqajNYb2gx"  // شاي بلبن
+            "1": "MUZJVDlEUU16VFNEWVkxYzgwX1Y1UjlUUTZyZ2pzcEZF", // 1 بتاع الريتش
+            "2": "MWY0OEp4VGJwalBrOWtRRVlCRjl5RHktdXJERnV1R19w", // 2 بتاع نظرية المؤامرات
+            "3": "MUdFQlhaaTZCNUVNdWh0WUkxSkczVE1paXBXb3JkX0o2", // 3 صفحة الاخبار العاجلة
+            "4": "MW4yR3lSSDN5bFY5MFctcnJsdFZQRFZzVXVSSmE5SVJk", // 4 شخصية اليوتيوب
+            "5": "MUlUVHQ2X1pITmhtZlhHMDlJX3pZQzRmdEtPWGpBRkgt", // 5 موظف كول سينتر
+            "6": "MTJKb2pQM2x5Z2xETG81ZjBNZlE1RjZUUFRyWXR4NW9V", // 6 شات جيبتي
+            "7": "MWlQcWQzUnNLWl81OG5wZk5IamtOaE5weG9sb1I3MDdV", // 7 امهات التيك توك
+            "8": "MW1GdksxZzBTRXd2UlhqR2F2SThDUVVsbmNiZDNYUW5i", // 8 مدرسين ثانوية عامة
+            "9": "MUN3cWVYbW40WTYyYU02d3JnSlUyNlAwaEVqWnJ4cks5", // 9 السرسجي
+            "10": "MVo2WHplS1UxOUxtRGlnX3QxTWpCZ0pyOGNvLXBCVFhP", // 10 الشخصية المتنمره
+            "11": "MXltVTVEYkl5alg0MlVpRzc5ZUVseUZqZGwtb0ZTbUZR", // 11 استرونج اندبندت وومن
+            "12": "MU5SaURaOF9uOUVraXpZek1TTk1NN1dRdUkzU0dGSmF2", // 12 الشخصية الصيوحة
+            "13": "MWVYdVRBN2JDZ3ZnRHVBRTRURUh2TlN3bFM0T1V0WWs2", // 13 المحنك اللي بيستفزك
+            "14": "MUZYRkRudTBXVzN1VGl6Q19rSDl3SnlyQi1qMU0xYWxt", // 14 فوود بلوجر
+            "15": "MUliU2k5NE9WY3VJMmY1SXJqV1lNSGxfcHVoZDd2YW4y", // 15 لينكد ان
+            "16": "MXhEemZpRUJFeS1iVFFmbUZfci04azJRRnppQkxEZjNj", // 16 كومنت تويتر
+            "17": "MW1hV0ZvTmI0bEx1V1p4YTZfYko2WUJoUlB6LU92NE5J", // 17 خدمه العملاء
+            "18": "MWY3T0NlT2xJakstVlA2elhTQjNOSkhvT3RqajNYb2gx"  // 18 شاي بلبن
         };
         // ======================================================================
 
@@ -215,7 +213,7 @@
             if (cardId && secureDB[cardId]) {
                 const driveId = atob(secureDB[cardId]);
                 
-                // الرابط المستقر لجوجل درايف (Thumbnail API)
+                // الرابط المستقر والموثوق لجوجل درايف
                 const directImgUrl = `https://drive.google.com/thumbnail?id=${driveId}&sz=w1000`;
                 
                 const imgPreloader = new Image();
