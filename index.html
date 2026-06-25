@@ -11,6 +11,7 @@
     
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@500;700;800;900&display=swap" rel="stylesheet">
 
+    <!-- Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-RNZPERH684"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
@@ -19,6 +20,7 @@
       gtag('config', 'G-RNZPERH684');
     </script>
 
+    <!-- مكتبة الكاميرا للسكانر الداخلي -->
     <script src="https://unpkg.com/html5-qrcode"></script>
     
     <style>
@@ -58,7 +60,7 @@
             background: rgba(74, 77, 158, 0.45); z-index: 0;
         }
 
-        /* 🚨 البوكس الزجاجي (مع دخول بـ Bounce خفيف) 🚨 */
+        /* البوكس الزجاجي (مع دخول بـ Bounce خفيف) */
         .glass-box {
             background: rgba(240, 240, 240, 0.08); 
             backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
@@ -70,7 +72,6 @@
             max-width: 420px; 
             box-sizing: border-box;
             z-index: 1;
-            /* Bounce Entrance */
             animation: popUpBounce 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
         }
         
@@ -87,7 +88,7 @@
         h2 { font-size: 24px; margin: 0 0 5px 0; font-weight: 900; color: #f0f0f0; text-shadow: 0 4px 10px rgba(0,0,0,0.3); }
         .small-text { font-weight: 500; font-size: 14px; color: rgba(240, 240, 240, 0.7); margin-bottom: 5px; }
 
-        /* ====== 🚨 الكارت (أنيميشن الدخول 3D واللعب المستمر) 🚨 ====== */
+        /* ====== 🚨 الكارت (أنيميشن اللمعة والنبض الهادي) 🚨 ====== */
         .display-card {
             width: 100%; 
             max-height: 68vh; 
@@ -97,16 +98,15 @@
             margin: 5px auto 15px auto; 
             display: block; 
             pointer-events: none; 
-            transform-origin: center center;
             
-            /* الكارت بيلعب بنعومة بعد ما يدخل */
-            animation: floatCard 4s ease-in-out infinite;
+            /* الأنيميشن الجديد: ثبات تام مع نبض ضوئي فخم */
+            animation: premiumGlow 4s ease-in-out infinite;
         }
 
-        @keyframes floatCard {
-            0% { transform: translateY(0px) rotate(-1.5deg); box-shadow: 0 15px 25px rgba(0,0,0,0.4); }
-            50% { transform: translateY(-12px) rotate(1.5deg); box-shadow: 0 30px 45px rgba(0,0,0,0.7); }
-            100% { transform: translateY(0px) rotate(-1.5deg); box-shadow: 0 15px 25px rgba(0,0,0,0.4); }
+        @keyframes premiumGlow {
+            0% { box-shadow: 0 15px 35px rgba(0,0,0,0.6), 0 0 0px rgba(255,255,255,0); filter: brightness(1); }
+            50% { box-shadow: 0 20px 45px rgba(0,0,0,0.8), 0 0 20px rgba(255,255,255,0.15); filter: brightness(1.08); }
+            100% { box-shadow: 0 15px 35px rgba(0,0,0,0.6), 0 0 0px rgba(255,255,255,0); filter: brightness(1); }
         }
 
         .final-card-container { 
@@ -122,7 +122,7 @@
         }
         /* ======================================================== */
 
-        /* ====== 🚨 الزراير وتأثير النبض (Pulse) 🚨 ====== */
+        /* الزراير وتأثير النبض (Pulse) */
         .btn-group { display: flex; gap: 10px; justify-content: center; margin-top: 5px; width: 100%; }
         .action-btn { 
             font-family: 'Tajawal', sans-serif; font-weight: 800; font-size: 15px; 
@@ -133,7 +133,6 @@
         .btn-primary { 
             background: #f0f0f0; color: #4a4d9e; border: none; 
             box-shadow: 0 5px 15px rgba(0,0,0,0.3);
-            /* تأثير النبض للزرار الأساسي عشان يشد العين */
             animation: pulseBtn 2s infinite cubic-bezier(0.66, 0, 0, 1);
         }
         
@@ -144,10 +143,7 @@
         }
 
         .btn-secondary { background: rgba(240, 240, 240, 0.1); color: #f0f0f0; border: 2px solid #f0f0f0; }
-        
-        /* حركة ناعمة لما يدوس على الزرار */
         .action-btn:active { transform: scale(0.92); }
-        /* ======================================================== */
 
         /* شاشة التحميل والكارت المبدئي */
         .card-wrapper { position: relative; width: 65px; height: 95px; margin: 0 auto 25px auto; }
@@ -162,23 +158,20 @@
             width: 100%; height: 100%; background: rgba(240, 240, 240, 0.95); border-radius: 12px; 
             border: 2px solid #fff; box-shadow: 0 10px 20px rgba(0,0,0,0.3); display: flex; 
             justify-content: center; align-items: center; 
-            /* لفة أهدى وأشيك للكارت الصغير */
             animation: flipCard 2.5s cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite;
         }
         .card-loader::after { content: '🎲'; font-size: 25px; }
         @keyframes flipCard { 0% { transform: perspective(400px) rotateY(0deg); } 100% { transform: perspective(400px) rotateY(360deg); } }
 
-        /* ====== 🚨 شريط تحميل بيلمع (Shimmer Effect) 🚨 ====== */
+        /* شريط تحميل بيلمع */
         .progress-container { width: 100%; height: 6px; background: rgba(240, 240, 240, 0.1); border-radius: 10px; margin-top: 25px; overflow: hidden; position: relative; }
         .progress-bar { 
             height: 100%; width: 0%; border-radius: 10px; box-shadow: 0 0 10px rgba(240, 240, 240, 0.8); 
             animation: loadProgress 3.5s cubic-bezier(0.4, 0, 0.2, 1) forwards; 
-            /* خلفية ميتاليك بتلمع */
             background: linear-gradient(90deg, #f0f0f0 0%, #ffffff 50%, #f0f0f0 100%);
             background-size: 200% 100%;
         }
         @keyframes loadProgress { 0% { width: 0%; background-position: 100% 0; } 50% { background-position: 0 0; } 100% { width: 100%; background-position: -100% 0; } }
-        /* ======================================================== */
 
         /* ستايل كاميرا الاسكانر الداخلي */
         #scanner-state { display: none; animation: popUpBounce 0.5s forwards; }
@@ -288,12 +281,14 @@
         
         <img src="logo.png" alt="لوجو قعدة" class="game-logo" onerror="this.style.display='none'">
 
+        <!-- شاشة التحميل -->
         <div id="loading-state">
             <div class="card-wrapper"><div class="card-loader"></div></div>
             <h2>جاري فتح الكارت</h2>
             <div class="progress-container"><div class="progress-bar"></div></div>
         </div>
 
+        <!-- عرض الكارت -->
         <div id="card-display-state" class="final-card-container">
             <h2>كارتك جاهز</h2>
             <img id="game-card-img" src="" alt="كارت قعدة" class="display-card">
@@ -303,6 +298,7 @@
             </div>
         </div>
 
+        <!-- شاشة الكاميرا -->
         <div id="scanner-state">
             <h2>وجه الكاميرا للكارت</h2>
             <div class="small-text">جاري تفعيل الكاميرا... وافق على الصلاحية</div>
