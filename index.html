@@ -10,6 +10,17 @@
     <title>لعبة قعدة</title>
     
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@500;700;800;900&display=swap" rel="stylesheet">
+
+    <!-- 🚨 Google Analytics (gtag.js) 🚨 -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-RNZPERH684"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      // تفعيل التتبع على حسابك
+      gtag('config', 'G-RNZPERH684');
+    </script>
     
     <style>
         body { 
@@ -51,7 +62,7 @@
             backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
             border: 1px solid rgba(240, 240, 240, 0.15); 
             border-radius: 24px; 
-            padding: 45px 30px;
+            padding: 35px 25px;
             box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5); 
             width: 85%; 
             max-width: 380px; 
@@ -61,6 +72,14 @@
         @keyframes popUp { 
             0% { opacity: 0; transform: scale(0.9) translateY(20px); } 
             100% { opacity: 1; transform: scale(1) translateY(0); } 
+        }
+
+        /* ستايل اللوجو */
+        .game-logo {
+            max-width: 140px; 
+            margin: 0 auto 20px auto;
+            display: block;
+            filter: drop-shadow(0 4px 6px rgba(0,0,0,0.3));
         }
 
         h2 { 
@@ -153,9 +172,9 @@
             100% { width: 100%; }
         }
 
-        /* ====== 🚨 ستايل عرض كارت اللعبة النهائي جوه الموقع 🚨 ====== */
+        /* ====== ستايل عرض كارت اللعبة النهائي جوه الموقع ====== */
         .final-card-container {
-            display: none; /* مخفي في الأول ويظهر بالجافا سكريبت */
+            display: none; 
             animation: cardReveal 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
         }
 
@@ -172,29 +191,52 @@
             border: 3px solid #f0f0f0;
             margin: 15px auto 25px auto;
             display: block;
-            pointer-events: none; /* منع الحفظ أو النسخ */
+            pointer-events: none; 
         }
 
-        /* زرار الرجوع البروفيشنال (Tajawal Bold - Weight: 900) */
-        .close-btn {
+        /* ====== 🚨 ستايل مجموعة الزراير الجديدة 🚨 ====== */
+        .btn-group {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            margin-top: 15px;
+            width: 100%;
+        }
+
+        .action-btn {
             font-family: 'Tajawal', sans-serif;
-            font-weight: 900;
-            font-size: 16px;
+            font-weight: 800;
+            font-size: 15px;
+            padding: 12px 10px;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            flex: 1; /* عشان الزرارين ياخدوا نفس المساحة */
+        }
+
+        /* الزرار الأساسي (اسكان تاني) */
+        .btn-primary {
             background: #f0f0f0;
             color: #4a4d9e;
             border: none;
-            padding: 12px 35px;
-            border-radius: 50px;
-            cursor: pointer;
             box-shadow: 0 5px 15px rgba(0,0,0,0.3);
-            transition: all 0.2s ease;
-            width: 80%;
-            max-width: 200px;
-            margin: 0 auto;
         }
-        .close-btn:active {
+
+        /* الزرار الثانوي (قفل) */
+        .btn-secondary {
+            background: rgba(240, 240, 240, 0.1);
+            color: #f0f0f0;
+            border: 2px solid #f0f0f0;
+        }
+
+        .action-btn:active {
             transform: scale(0.95);
-            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+
+        /* شاشة الاستعداد للسكان الجديد */
+        #scan-again-state {
+            display: none;
+            animation: popUp 0.5s forwards;
         }
     </style>
 
@@ -237,21 +279,21 @@
 
             if (cardId && secureDB[cardId]) {
                 const driveId = atob(secureDB[cardId]);
-                // استخدام المقاس w1000 المظبوط لإجبار الموبايل على الحفظ الفوري للصورة
                 const directImgUrl = `https://drive.google.com/thumbnail?id=${driveId}&sz=w1000`;
                 
-                // 🚨 خطوة ذكية: نبدأ نحمل الصورة في الخلفية فوراً واللاعب بيتفرج على شريط التحميل 🚨
                 const imgPreloader = new Image();
                 imgPreloader.src = directImgUrl;
 
-                // بعد انتهاء شريط التحميل (3.5 ثانية)
                 setTimeout(() => {
-                    // إخفاء شاشة التحميل القديمة تماماً
                     document.getElementById('loading-state').style.display = 'none';
-                    
-                    // حط سورس الصورة واظهر الحاوية الجديدة جوه الصفحة
                     document.getElementById('game-card-img').src = directImgUrl;
                     document.getElementById('card-display-state').style.display = 'block';
+                    
+                    if(typeof gtag === 'function') {
+                        gtag('event', 'card_opened', {
+                            'card_id': cardId
+                        });
+                    }
                 }, 3500);
 
             } else {
@@ -260,30 +302,42 @@
         }
 
         function showError() {
-            document.getElementById('content-box').innerHTML = `
+            document.getElementById('loading-state').style.display = 'none';
+            document.getElementById('card-display-state').style.display = 'none';
+            document.getElementById('scan-again-state').style.display = 'block';
+            document.getElementById('scan-again-state').innerHTML = `
                 <div style="font-size: 50px; margin-bottom: 15px;">⚠️</div>
                 <h2>الكارت غير موجود</h2>
                 <div class="small-text" style="margin-top: 10px;">يرجى التأكد من مسح الـ QR الصحيح</div>
             `;
         }
 
-        // دالة زرار القفل عشان يقفل التاب ويرجعوا للقعدة
+        // 🚨 دالة زرار "اسكان كارت تاني" 🚨
+        function scanAgain() {
+            document.getElementById('card-display-state').style.display = 'none';
+            document.getElementById('scan-again-state').style.display = 'block';
+            
+            // إرسال Event إن اللاعب هيكمل لعب
+            if(typeof gtag === 'function') {
+                gtag('event', 'scan_again_clicked');
+            }
+        }
+
+        // 🚨 دالة زرار "قفل الكارت" 🚨
         function closeCard() {
             window.close();
-            // لو الموبايل رفض يقفل التاب كحماية، بنحولهم لصفحة ترحيبية شيك باسم اللعبة
-            setTimeout(() => {
-                document.getElementById('content-box').innerHTML = `
-                    <div style="font-size: 50px; margin-bottom: 15px;">🎲</div>
-                    <h2>جاهز للجولة الجاية؟</h2>
-                    <div class="small-text" style="margin-top: 10px;">اقلب الكارت اللي عليه الدور واعمل سكان</div>
-                `;
-            }, 100);
+            // لو المتصفح رفض يقفل التاب كحماية، هنحوله لشاشة الإسكان كبديل
+            setTimeout(scanAgain, 150);
         }
     </script>
 </head>
 <body>
     <div class="glass-box" id="content-box">
         
+        <!-- اللوجو الثابت -->
+        <img src="logo.png" alt="لوجو قعدة" class="game-logo" onerror="this.style.display='none'">
+
+        <!-- الحالة 1: شاشة التحميل -->
         <div id="loading-state">
             <div class="card-wrapper">
                 <div class="card-loader"></div>
@@ -295,13 +349,27 @@
             </div>
         </div>
 
+        <!-- الحالة 2: عرض الكارت والزراير -->
         <div id="card-display-state" class="final-card-container">
             <div class="small-text">قعدة سكرول</div>
             <h2>كارتك جاهز</h2>
             
             <img id="game-card-img" src="" alt="كارت قعدة" class="display-card">
             
-            <button class="close-btn" onclick="closeCard()">قفل الكارت</button>
+            <!-- مجموعة الزراير الجديدة -->
+            <div class="btn-group">
+                <button class="action-btn btn-primary" onclick="scanAgain()">اسكان تاني</button>
+                <button class="action-btn btn-secondary" onclick="closeCard()">قفل الكارت</button>
+            </div>
+        </div>
+
+        <!-- الحالة 3: شاشة التوجيه عشان يعمل سكان جديد -->
+        <div id="scan-again-state">
+            <div style="font-size: 55px; margin-bottom: 15px;">📱</div>
+            <h2>جاهز للجولة الجاية؟</h2>
+            <div class="small-text" style="margin-top: 10px; line-height: 1.6;">
+                افتح كاميرا الموبايل <br> واعمل سكان لباركود الكارت الجديد
+            </div>
         </div>
 
     </div>
