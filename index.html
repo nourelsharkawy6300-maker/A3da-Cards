@@ -102,9 +102,9 @@
         }
 
         @keyframes premiumGlow {
-            0% { box-shadow: 0 15px 35px rgba(0,0,0,0.6), 0 0px 0px rgba(255,255,255,0); filter: brightness(1); }
-            50% { box-shadow: 0 20px 45px rgba(0,0,0,0.8), 0 0px 20px rgba(255,255,255,0.15); filter: brightness(1.08); }
-            100% { box-shadow: 0 15px 35px rgba(0,0,0,0.6), 0 0px 0px rgba(255,255,255,0); filter: brightness(1); }
+            0% { box-shadow: 0 15px 35px rgba(0,0,0,0.6), 0 0 0px rgba(255,255,255,0); filter: brightness(1); }
+            50% { box-shadow: 0 20px 45px rgba(0,0,0,0.8), 0 0 20px rgba(255,255,255,0.15); filter: brightness(1.08); }
+            100% { box-shadow: 0 15px 35px rgba(0,0,0,0.6), 0 0 0px rgba(255,255,255,0); filter: brightness(1); }
         }
 
         /* لفة الـ 3D عند ظهور الكارت لأول مرة */
@@ -183,26 +183,26 @@
             if(e.keyCode == 123 || (e.ctrlKey && e.shiftKey && (e.keyCode == 'I'.charCodeAt(0) || e.keyCode == 'C'.charCodeAt(0) || e.keyCode == 'J'.charCodeAt(0))) || (e.ctrlKey && e.keyCode == 'U'.charCodeAt(0))) { return false; }
         };
 
-        // ====== 🚨 قاعدة البيانات النهائية والمطابقة للترتيب الجديد 100% 🚨 ======
+        // ====== 🚨 قاعدة البيانات النهائية (بتشفير ديناميكي ضد الأخطاء) 🚨 ======
         const secureDB = {
-            "1": "MUZJVDlEUU16VFNEWVkxYzgwX1Y1UjlUUTZyZ2pzcEZF", // 1 بتاع الريتش
-            "2": "MWY0OEp4VGJwalBrOWtRRVlCRjl5RHktdXJERnV1R19w", // 2 بتاع نظرية المؤامرات
-            "3": "MUdFQlhaaTZCNUVNdWh0WUkxSkczVE1paXBXb3JkX0o2", // 3 صفحة الاخبار العاجلة
-            "4": "MW4yR3lSSDN5bFY5MFctcnJsdFZQRFZzVXVSSmE5SVJk", // 4 شخصية اليوتيوب
-            "5": "MUlUVHQ2X1pITmhtZlhHMDlJX3pZQzRmdEtPWGpBRkgt", // 5 موظف كول سينتر
-            "6": "MTJKb2pQM2x5Z2xETG81ZjBNZlE1RjZUUFRyWXR4NW9V", // 6 شات جيبتي
-            "7": "MWlQcWQzUnNLWl81OG5wZk5IamtOaE5weG9sb1I3MDdV", // 7 امهات التيك توك
-            "8": "MW1GdksxZzBTRXd2UlhqR2F2SThDUVVsbmNiZDNYUW5i", // 8 مدرسين ثانوية عامة
-            "9": "MUN3cWVYbW40WTYyYU02d3JnSlUyNlAwaEVqWnJ4cks5", // 9 السرسجي
-            "10": "MVo2WHplS1UxOUxtRGlnX3QxTWpCZ0pyOGNvLXBCVFhP", // 10 الشخصية المتنمره
-            "11": "MXltVTVEYkl5alg0MlVpRzc5ZUVseUZqZGwtb0ZTbUZR", // 11 استرونج اندبندت وومن
-            "12": "MU5SaURaOF9uOUVraXpZek1TTk1NN1dRdUkzU0dGSmF2", // 12 الشخصية الصيوحة
-            "13": "MWVYdVRBN2JDZ3ZnRHVBRTRURUh2TlN3bFM0T1V0WWs2", // 13 المحنك اللي بيستفزك
-            "14": "MUZYRkRudTBXVzN1VGl6Q19rSDl3SnlyQi1qMU0xYWxt", // 14 فوود بلوجر
-            "15": "MUliU2k5NE9WY3VJMmY1SXJqV1lNSGxfcHVoZDd2YW4y", // 15 لينكد ان
-            "16": "MXhEemZpRUJFeS1iVFFmbUZfci04azJRRnppQkxEZjNj", // 16 كومنت تويتر
-            "17": "MW1hV0ZvTmI0bEx1V1p4YTZfYko2WUJoUlB6LU92NE5J", // 17 خدمه العملاء
-            "18": "MWY3T0NlT2xJakstVlA2elhTQjNOSkhvT3RqajNYb2gx"  // 18 شاي بلبن
+            "1": btoa("1FIT9DQMzTSDYY1c80_V5R9TQ6rgjspFE"), // 1 بتاع الريتش
+            "2": btoa("1f48JxTbpjPk9kQEYBF9yDy-urDFuuG_p"), // 2 بتاع نظرية المؤامرات
+            "3": btoa("1GFBXZi6B5EMuhtYI2JG3TMiipWord_J6"), // 3 صفحة الاخبار العاجلة
+            "4": btoa("1n2GyRH3ylV90W-rrltVPDVsUuRJa9IRd"), // 4 شخصية اليوتيوب
+            "5": btoa("1ITTt6_ZHnhmfXG09I_zYC4ftKOXjAFH-"), // 5 موظف كول سينتر
+            "6": btoa("12JojP3lyglDLo5f0MfQ5F6TPTrYtx5oU"), // 6 شات جيبتي
+            "7": btoa("1iPqd3RsKZ_58npfNHjkNhNpxoloR707U"), // 7 امهات التيك توك
+            "8": btoa("1mFvK1g0SEwvRXjGavI8CQUlncbd3XQnb"), // 8 مدرسين ثانوية عامة
+            "9": btoa("1CwqeXmn4Y62aM6wrgJU26P0hEjZrxrK9"), // 9 السرسجي
+            "10": btoa("1Z6XzeKU19LmDig_t1MjBgJr8co-pBTXO"), // 10 الشخصية المتنمره
+            "11": btoa("1ymU5DbIyjX42UiG79eElyFjdl-oFSmFQ"), // 11 استرونج اندبندت وومن
+            "12": btoa("1NRiDZ8_n9EkizYzMSNMM7WQuI3SGFJav"), // 12 الشخصية الصيوحة
+            "13": btoa("1eXuTA7bCgvgDuAE4TEHvNSwlS4OUtYk6"), // 13 المحنك اللي بيستفزك
+            "14": btoa("1FXFDnu0WW3uTizC_kH9wJyrB-j1M1alm"), // 14 فوود بلوجر
+            "15": btoa("1IbSi94OVcuI2f5IrjWYMHl_puhd7van2"), // 15 لينكد ان
+            "16": btoa("1xDzfiEBEy-bTQfmF_r-8k2QFziBLDf3c"), // 16 كومنت تويتر
+            "17": btoa("1maWFoNb4lLuWZxa6_bJ6YBhRPz-Ov4NI"), // 17 خدمه العملاء
+            "18": btoa("1f7OCeOlIjK-VP6zXsB3NJHoOtjj3Xoh1")  // 18 شاي بلبن
         };
         // ======================================================================
 
@@ -222,10 +222,9 @@
                 // نبدأ بالطريقة الأساسية
                 mainImg.src = primaryUrl;
                 
-                // 🚨 الـ Failover السحري: لو الصورة الأساسية معندتش في التحميل، حوّل فوراً عالبديل 🚨
+                // الـ Failover السحري: لو الصورة الأساسية معندتش في التحميل، حوّل فوراً عالبديل
                 mainImg.onerror = function() {
                     if (mainImg.src !== fallbackUrl) {
-                        console.log("تم تفعيل خطة الإنقاذ البديلة للكارت بنجاح.");
                         mainImg.src = fallbackUrl;
                     }
                 };
