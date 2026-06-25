@@ -11,7 +11,6 @@
     
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@500;700;800;900&display=swap" rel="stylesheet">
 
-    <!-- Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-RNZPERH684"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
@@ -20,7 +19,6 @@
       gtag('config', 'G-RNZPERH684');
     </script>
 
-    <!-- مكتبة الكاميرا للسكانر الداخلي -->
     <script src="https://unpkg.com/html5-qrcode"></script>
     
     <style>
@@ -29,7 +27,7 @@
             font-family: 'Tajawal', sans-serif; 
             background-color: #4a4d9e; 
             
-            /* الأنيميشن بتاع الخلفية شغال زي ما هو */
+            /* خلفية بتتحرك */
             background-image: url('image_23f560.jpg');
             background-size: 150%; 
             background-position: center;
@@ -45,6 +43,7 @@
             overflow: hidden; 
             position: relative;
             letter-spacing: normal; 
+            
             user-select: none; 
             -webkit-user-select: none;
         }
@@ -60,6 +59,7 @@
             background: rgba(74, 77, 158, 0.45); z-index: 0;
         }
 
+        /* البوكس الزجاجي */
         .glass-box {
             background: rgba(240, 240, 240, 0.08); 
             backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
@@ -87,18 +87,21 @@
         h2 { font-size: 24px; margin: 0 0 10px 0; font-weight: 900; color: #f0f0f0; text-shadow: 0 4px 10px rgba(0,0,0,0.3); }
         .small-text { font-weight: 500; font-size: 14px; color: rgba(240, 240, 240, 0.6); margin-bottom: 5px; }
 
+        /* الكارت المقاس الذكي للموبايل */
         .display-card {
             width: 100%; max-height: 55vh; object-fit: contain; 
             border-radius: 12px; box-shadow: 0 15px 35px rgba(0,0,0,0.6);
             border: 2px solid #f0f0f0; margin: 10px auto 20px auto; display: block; pointer-events: none; 
         }
 
+        /* الزراير */
         .btn-group { display: flex; gap: 10px; justify-content: center; margin-top: 10px; width: 100%; }
         .action-btn { font-family: 'Tajawal', sans-serif; font-weight: 800; font-size: 14px; padding: 12px 5px; border-radius: 12px; cursor: pointer; transition: all 0.2s ease; flex: 1; }
         .btn-primary { background: #f0f0f0; color: #4a4d9e; border: none; box-shadow: 0 5px 15px rgba(0,0,0,0.3); }
         .btn-secondary { background: rgba(240, 240, 240, 0.1); color: #f0f0f0; border: 2px solid #f0f0f0; }
         .action-btn:active { transform: scale(0.95); }
 
+        /* الأنيميشن وشاشة التحميل */
         .card-wrapper { position: relative; width: 65px; height: 95px; margin: 0 auto 25px auto; }
         .card-wrapper::before {
             content: ''; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
@@ -123,18 +126,20 @@
         @keyframes cardReveal { 0% { opacity: 0; transform: scale(0.5) rotate(-5deg); } 100% { opacity: 1; transform: scale(1) rotate(0deg); } }
 
         /* ستايل كاميرا الاسكانر الداخلي */
-        #scanner-state { display: none; }
+        #scanner-state { display: none; animation: popUp 0.5s forwards; }
         #reader { width: 100%; border-radius: 15px; overflow: hidden; background: #fff; border: 2px solid #f0f0f0; margin-top: 15px; color: #000; }
         #reader img { display: none; }
         #reader video { object-fit: cover !important; }
     </style>
 
     <script>
+        // الحماية
         document.addEventListener('contextmenu', event => event.preventDefault());
         document.onkeydown = function(e) {
             if(e.keyCode == 123 || (e.ctrlKey && e.shiftKey && (e.keyCode == 'I'.charCodeAt(0) || e.keyCode == 'C'.charCodeAt(0) || e.keyCode == 'J'.charCodeAt(0))) || (e.ctrlKey && e.keyCode == 'U'.charCodeAt(0))) { return false; }
         };
 
+        // الكروت المشفرة
         const secureDB = {
             "1": "MXF1NllkWGxkZ18zeWZoUk5wQlNEY05iODEyalg2enNi", "2": "MXB0ZGM3bXczR1E4VUliYURxVFgyak1YY1QzbGpwM1kw",
             "3": "MW91Q3RDWWdmd1pwMEFUYUhRRUZuRW9SVlhPbE8ySm9t", "4": "MWJ5aGZaekFDcFdQcHRhZmE0TFlHU19GYjFIeUFuaEdw",
@@ -180,7 +185,7 @@
             `;
         }
 
-        // ====== إجبار الموبايل على الكاميرا الخلفية (Environment) ======
+        // ====== الكاميرا الخلفية الإجبارية ======
         let html5QrCode;
         function scanAgain() {
             document.getElementById('card-display-state').style.display = 'none';
@@ -191,21 +196,19 @@
             if(!html5QrCode) {
                 html5QrCode = new Html5Qrcode("reader");
                 
-                // استخدام الـ facingMode الإجباري للكاميرا الخلفية
                 html5QrCode.start(
-                    { facingMode: "environment" }, 
+                    { facingMode: "environment" }, // الكاميرا الخلفية
                     { fps: 15, qrbox: { width: 250, height: 250 } },
                     onScanSuccess,
                     onScanFailure
                 ).catch(err => {
-                    // لو الموبايل مفهوش كاميرا خلفية (أو معلق)، هيفتح الأمامية كبديل
+                    // بديل لو الموبايل معندوش كاميرا خلفية
                     html5QrCode.start({ facingMode: "user" }, { fps: 15, qrbox: { width: 250, height: 250 } }, onScanSuccess, onScanFailure);
                 });
             }
         }
 
         function onScanSuccess(decodedText, decodedResult) {
-            // يقفل الكاميرا ويدخل ع الكارت الجديد
             html5QrCode.stop().then(() => {
                 window.location.replace(decodedText);
             }).catch(err => {
@@ -215,22 +218,21 @@
 
         function onScanFailure(error) { /* صامت */ }
 
-        // ====== الحل الجذري لزرار الخروج (Kill Switch) ======
+        // ====== شاشة النهاية الفخمة (بديل الخروج) ======
         function closeCard() {
-            // 1. هنمسح كل حاجة في الصفحة ونخليها "نهاية اللعبة"
-            document.body.innerHTML = `
-                <div style="display:flex; flex-direction:column; justify-content:center; align-items:center; height:100vh; text-align:center; padding: 20px;">
-                    <div style="font-size: 70px; margin-bottom: 15px;">👋</div>
-                    <h2 style="font-size: 30px; font-weight: 900; color: #f0f0f0; margin: 0 0 10px 0;">تم الخروج من اللعبة</h2>
-                    <div style="color: rgba(240, 240, 240, 0.7); font-size: 16px; font-weight: 500;">تقدر تقفل الصفحة دي براحتك دلوقتي</div>
+            if(typeof gtag === 'function') { gtag('event', 'card_closed'); }
+
+            const contentBox = document.getElementById('content-box');
+            contentBox.innerHTML = `
+                <div style="animation: popUp 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;">
+                    <div style="font-size: 65px; margin-bottom: 10px;">🏁</div>
+                    <h2 style="font-size: 30px; font-weight: 900; color: #f0f0f0; margin-bottom: 5px;">عاش يا بطل!</h2>
+                    <div style="color: rgba(240, 240, 240, 0.8); font-size: 16px; font-weight: 500; margin-bottom: 25px; line-height: 1.6;">
+                        دورك خلص في الكارت ده<br>تقدر تقفل الصفحة دلوقتي
+                    </div>
+                    <button class="action-btn btn-primary" onclick="location.reload()" style="width: 80%; max-width: 200px; padding: 12px; margin: 0 auto; display: block;">سحب كارت تاني</button>
                 </div>
             `;
-            
-            // 2. محاولة قفل التاب بعد مسح الشاشة
-            setTimeout(() => {
-                window.open('', '_self', '');
-                window.close();
-            }, 500);
         }
     </script>
 </head>
@@ -239,14 +241,12 @@
         
         <img src="logo.png" alt="لوجو قعدة" class="game-logo" onerror="this.style.display='none'">
 
-        <!-- شاشة التحميل -->
         <div id="loading-state">
             <div class="card-wrapper"><div class="card-loader"></div></div>
             <h2>جاري فتح الكارت</h2>
             <div class="progress-container"><div class="progress-bar"></div></div>
         </div>
 
-        <!-- عرض الكارت -->
         <div id="card-display-state" class="final-card-container">
             <h2>كارتك جاهز</h2>
             <img id="game-card-img" src="" alt="كارت قعدة" class="display-card">
@@ -256,7 +256,6 @@
             </div>
         </div>
 
-        <!-- شاشة الكاميرا الداخلية -->
         <div id="scanner-state">
             <h2>وجه الكاميرا للكارت</h2>
             <div class="small-text">جاري تفعيل الكاميرا... وافق على الصلاحية</div>
