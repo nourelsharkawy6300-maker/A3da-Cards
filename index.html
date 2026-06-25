@@ -43,6 +43,7 @@
             overflow: hidden; 
             position: relative;
             letter-spacing: normal; 
+            
             user-select: none; 
             -webkit-user-select: none;
         }
@@ -58,6 +59,7 @@
             background: rgba(74, 77, 158, 0.45); z-index: 0;
         }
 
+        /* البوكس الزجاجي الموسع */
         .glass-box {
             background: rgba(240, 240, 240, 0.08); 
             backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
@@ -85,6 +87,7 @@
         h2 { font-size: 24px; margin: 0 0 5px 0; font-weight: 900; color: #f0f0f0; text-shadow: 0 4px 10px rgba(0,0,0,0.3); }
         .small-text { font-weight: 500; font-size: 14px; color: rgba(240, 240, 240, 0.7); margin-bottom: 5px; }
 
+        /* ====== الكارت (ثبات تام + لمعة فخمة) ====== */
         .display-card {
             width: 100%; 
             max-height: 68vh; 
@@ -95,7 +98,7 @@
             display: block; 
             pointer-events: none; 
             
-            /* الأنيميشن الجديد: ثبات تام مع نبض ضوئي فخم */
+            /* الأنيميشن: نبض ضوئي هادي ومريح للعين */
             animation: premiumGlow 4s ease-in-out infinite;
         }
 
@@ -105,6 +108,7 @@
             100% { box-shadow: 0 15px 35px rgba(0,0,0,0.6), 0 0 0px rgba(255,255,255,0); filter: brightness(1); }
         }
 
+        /* لفة الـ 3D عند ظهور الكارت لأول مرة */
         .final-card-container { 
             display: none; 
             animation: cardReveal3D 0.7s cubic-bezier(0.34, 1.56, 0.64, 1) forwards; 
@@ -115,8 +119,9 @@
             0% { opacity: 0; transform: rotateY(-90deg) scale(0.6) translateY(50px); } 
             100% { opacity: 1; transform: rotateY(0deg) scale(1) translateY(0); } 
         }
+        /* ======================================================== */
 
-        /* الزراير */
+        /* الزراير وتأثير النبض (Pulse) */
         .btn-group { display: flex; gap: 10px; justify-content: center; margin-top: 5px; width: 100%; }
         .action-btn { 
             font-family: 'Tajawal', sans-serif; font-weight: 800; font-size: 15px; 
@@ -139,7 +144,7 @@
         .btn-secondary { background: rgba(240, 240, 240, 0.1); color: #f0f0f0; border: 2px solid #f0f0f0; }
         .action-btn:active { transform: scale(0.92); }
 
-        /* شاشة التحميل */
+        /* شاشة التحميل وشريط التحميل الميتاليك */
         .card-wrapper { position: relative; width: 65px; height: 95px; margin: 0 auto 25px auto; }
         .card-wrapper::before {
             content: ''; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
@@ -157,7 +162,6 @@
         .card-loader::after { content: '🎲'; font-size: 25px; }
         @keyframes flipCard { 0% { transform: perspective(400px) rotateY(0deg); } 100% { transform: perspective(400px) rotateY(360deg); } }
 
-        /* شريط تحميل بيلمع */
         .progress-container { width: 100%; height: 6px; background: rgba(240, 240, 240, 0.1); border-radius: 10px; margin-top: 25px; overflow: hidden; position: relative; }
         .progress-bar { 
             height: 100%; width: 0%; border-radius: 10px; box-shadow: 0 0 10px rgba(240, 240, 240, 0.8); 
@@ -175,33 +179,34 @@
     </style>
 
     <script>
-        // الحماية
+        // الحماية لمنع سرقة الكروت
         document.addEventListener('contextmenu', event => event.preventDefault());
         document.onkeydown = function(e) {
             if(e.keyCode == 123 || (e.ctrlKey && e.shiftKey && (e.keyCode == 'I'.charCodeAt(0) || e.keyCode == 'C'.charCodeAt(0) || e.keyCode == 'J'.charCodeAt(0))) || (e.ctrlKey && e.keyCode == 'U'.charCodeAt(0))) { return false; }
         };
 
-        // الداتا بيز (تم تحديث كارت 2 و 16 باللينكات الجديدة الشغالة 100%)
+        // ====== 🚨 قاعدة البيانات المشفرة (تم إصلاح تكرار الكول سنتر بنجاح) 🚨 ======
         const secureDB = {
-            "1": "MXF1NllkWGxkZ18zeWZoUk5wQlNEY05iODEyalg2enNi", 
-            "2": "MWY0OEp4VGJwalBrOWtRRVlCRjl5RHktdXJERnV1R19w", // 🚨 اتحدث هنا 🚨
-            "3": "MW91Q3RDWWdmd1pwMEFUYUhRRUZuRW9SVlhPbE8ySm9t", 
-            "4": "MWJ5aGZaekFDcFdQcHRhZmE0TFlHU19GYjFIeUFuaEdw",
-            "5": "MUlUVHQ2X1pITmhtZlhHMDlJX3pZQzRmdEtPWGpBRkgt", 
-            "6": "MUd3TkphNGxrTlJ6ZWZRT1dLUWNCV0FQd0F3SDdpZ0xQ",
-            "7": "MTMwWGFRaGpuT2ZJdURDS0U3bjJNSDNGdFB2NE0wb1dq", 
-            "8": "MTJJMTJxaGJfUTVnaUlKOGU5Z1JYUlBXdC1yd0MxSHVl",
-            "9": "MXZTWTdaUzA0aWRIYWtJMGJ2amJ0NzJkYWk2OFhTc3NK", 
-            "10": "MV9mVHZuT3NNYXBYbHd3RlkzYUR1SzdPYjZuYlpkT1VH",
-            "11": "MVVfd1dJNkJyejJHY1ZrRllIRWNrcHZ3TTAwNkNjb04w", 
-            "12": "MUladDA3aXd6T3MtQkM5OEp1enprR2JKd201NHFjd2Fi",
-            "13": "MTZGbHVSWVV5YW1YZXZaVkRqVlBoY1JtdGQ5Y3E4OFVm", 
-            "14": "MUdaVEtYQm9nWTBFX3pIdmFnVzNoRFVtVDY3c3lDZHFn",
-            "15": "MXlMdnlpc2RxbjdKMmxqTXhHOWRUNU9LaFhYc1RYdTdq", 
-            "16": "MXhEemZpRUJFeS1iVFFmbUZfci04azJRRnppQkxEZjNj", // 🚨 اتحدث هنا 🚨
-            "17": "MTNFYXpCek9xcW5qRnBPVzZxbC1CeUduaUZoS0Q3UE9Z", 
-            "18": "MWI3c3Y4WVFacVBIWXg5bjdKQ2p6eVN4aTUwREpEbjBC"
+            "1": "MUlUVHQ2X1pITmhtZlhHMDlJX3pZQzRmdEtPWGpBRkgt", // موظف كول سينتر (تم الإصلاح والربط بالملف المستقل بالمللي)
+            "2": "MXhEemZpRUJFeS1iVFFmbUZfci04azJRRnppQkxEZjNj", // كومنت تويتر
+            "3": "MWY0OEp4VGJwalBrOWtRRVlCRjl5RHktdXJERnV1R19w", // بتاع نظرية المؤامرات
+            "4": "MW1hV0ZvTmI0bEx1V1p4YTZfYko2WUJoUlB6LU92NE5J", // خدمه العملاء
+            "5": "MUliU2k5NE9WY3VJMmY1SXJqV1lNSGxfcHVoZDd2YW4y", // لينكد ان
+            "6": "MUZYRkRudTBXVzN1VGl6Q19rSDl3SnlyQi1qMU0xYWxt", // فوود بلوجر
+            "7": "MWVYdVRBN2JDZ3ZnRHVBRTRURUh2TlN3bFM0T1V0WWs2", // المحنك اللي بيستفزك
+            "8": "MU5SaURaOF9uOUVraXpZek1TTk1NN1dRdUkzU0dGSmF2", // الشخصية الصيوحة
+            "9": "MXltVTVEYkl5alg0MlVpRzc5TabElyRmpkbC1vRlNtRlE=", // استرونج اندبندت وومن
+            "10": "MVo2WHplS1UxOUxtRGlnX3QxTWpCZ0pyOGNvLXBCVFhP", // الشخصية المتنمره
+            "11": "MUN3cWVYbW40WTYyYU02d3JnSlUyNlAwaEVqWnJ4cks5", // السرسجي
+            "12": "MW1GdksxZzBTRXd2UlhqR2F2SThDUVVsbmNiZDNYUW5i", // مدرسين ثانوية عامة
+            "13": "MWlQcWQzUnNLWl81OG5wZk5IamtOaE5weG9sb1I3MDdV", // امهات التيك توك
+            "14": "MTJKb2pQM2x5Z2xETG81ZjBNZlE1RjZUUFRyWXR4NW9V", // شات جيبتي
+            "15": "MW4yR3lSSDN5bFY5MFctcnJsdFZQRFZzVXVSSmE5SVJk", // شخصية اليوتيوب
+            "16": "MUdFQlhaaTZCNUVNdWh0WUkxSkczVE1paXBXb3JkX0o2", // صفحة الاخبار العاجلة
+            "17": "MUZJVDlEUU16VFNEWVkxYzgwX1Y1UjlUUTZyZ2pzcEZF", // بتاع الريتش
+            "18": "MWY3T0NlT2xJakstVlA2elhTQjNOSkhvT3RqajNYb2gx"  // شاي بلبن
         };
+        // ======================================================================
 
         window.onload = function() {
             const urlParams = new URLSearchParams(window.location.search);
@@ -210,7 +215,7 @@
             if (cardId && secureDB[cardId]) {
                 const driveId = atob(secureDB[cardId]);
                 
-                // الرابط المستقر الموثوق 100%
+                // الرابط المستقر لجوجل درايف (Thumbnail API)
                 const directImgUrl = `https://drive.google.com/thumbnail?id=${driveId}&sz=w1000`;
                 
                 const imgPreloader = new Image();
