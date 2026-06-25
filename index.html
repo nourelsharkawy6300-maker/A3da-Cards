@@ -11,7 +11,6 @@
     
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@500;700;800;900&display=swap" rel="stylesheet">
 
-    <!-- Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-RNZPERH684"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
@@ -20,7 +19,6 @@
       gtag('config', 'G-RNZPERH684');
     </script>
 
-    <!-- مكتبة الكاميرا للسكانر الداخلي -->
     <script src="https://unpkg.com/html5-qrcode"></script>
     
     <style>
@@ -183,16 +181,26 @@
             if(e.keyCode == 123 || (e.ctrlKey && e.shiftKey && (e.keyCode == 'I'.charCodeAt(0) || e.keyCode == 'C'.charCodeAt(0) || e.keyCode == 'J'.charCodeAt(0))) || (e.ctrlKey && e.keyCode == 'U'.charCodeAt(0))) { return false; }
         };
 
+        // الداتا بيز (تم تحديث كارت 2 و 16 باللينكات الجديدة الشغالة 100%)
         const secureDB = {
-            "1": "MXF1NllkWGxkZ18zeWZoUk5wQlNEY05iODEyalg2enNi", "2": "MXB0ZGM3bXczR1E4VUliYURxVFgyak1YY1QzbGpwM1kw",
-            "3": "MW91Q3RDWWdmd1pwMEFUYUhRRUZuRW9SVlhPbE8ySm9t", "4": "MWJ5aGZaekFDcFdQcHRhZmE0TFlHU19GYjFIeUFuaEdw",
-            "5": "MUlUVHQ2X1pITmhtZlhHMDlJX3pZQzRmdEtPWGpBRkgt", "6": "MUd3TkphNGxrTlJ6ZWZRT1dLUWNCV0FQd0F3SDdpZ0xQ",
-            "7": "MTMwWGFRaGpuT2ZJdURDS0U3bjJNSDNGdFB2NE0wb1dq", "8": "MTJJMTJxaGJfUTVnaUlKOGU5Z1JYUlBXdC1yd0MxSHVl",
-            "9": "MXZTWTdaUzA0aWRIYWtJMGJ2amJ0NzJkYWk2OFhTc3NK", "10": "MV9mVHZuT3NNYXBYbHd3RlkzYUR1SzdPYjZuYlpkT1VH",
-            "11": "MVVfd1dJNkJyejJHY1ZrRllIRWNrcHZ3TTAwNkNjb04w", "12": "MUladDA3aXd6T3MtQkM5OEp1enprR2JKd201NHFjd2Fi",
-            "13": "MTZGbHVSWVV5YW1YZXZaVkRqVlBoY1JtdGQ5Y3E4OFVm", "14": "MUdaVEtYQm9nWTBFX3pIdmFnVzNoRFVtVDY3c3lDZHFn",
-            "15": "MXlMdnlpc2RxbjdKMmxqTXhHOWRUNU9LaFhYc1RYdTdq", "16": "MUU2ZHpjZk9ER1VuMi0wdFBaRDdUTTlPTXJvZVhVbDRleg==",
-            "17": "MTNFYXpCek9xcW5qRnBPVzZxbC1CeUduaUZoS0Q3UE9Z", "18": "MWI3c3Y4WVFacVBIWXg5bjdKQ2p6eVN4aTUwREpEbjBC"
+            "1": "MXF1NllkWGxkZ18zeWZoUk5wQlNEY05iODEyalg2enNi", 
+            "2": "MWY0OEp4VGJwalBrOWtRRVlCRjl5RHktdXJERnV1R19w", // 🚨 اتحدث هنا 🚨
+            "3": "MW91Q3RDWWdmd1pwMEFUYUhRRUZuRW9SVlhPbE8ySm9t", 
+            "4": "MWJ5aGZaekFDcFdQcHRhZmE0TFlHU19GYjFIeUFuaEdw",
+            "5": "MUlUVHQ2X1pITmhtZlhHMDlJX3pZQzRmdEtPWGpBRkgt", 
+            "6": "MUd3TkphNGxrTlJ6ZWZRT1dLUWNCV0FQd0F3SDdpZ0xQ",
+            "7": "MTMwWGFRaGpuT2ZJdURDS0U3bjJNSDNGdFB2NE0wb1dq", 
+            "8": "MTJJMTJxaGJfUTVnaUlKOGU5Z1JYUlBXdC1yd0MxSHVl",
+            "9": "MXZTWTdaUzA0aWRIYWtJMGJ2amJ0NzJkYWk2OFhTc3NK", 
+            "10": "MV9mVHZuT3NNYXBYbHd3RlkzYUR1SzdPYjZuYlpkT1VH",
+            "11": "MVVfd1dJNkJyejJHY1ZrRllIRWNrcHZ3TTAwNkNjb04w", 
+            "12": "MUladDA3aXd6T3MtQkM5OEp1enprR2JKd201NHFjd2Fi",
+            "13": "MTZGbHVSWVV5YW1YZXZaVkRqVlBoY1JtdGQ5Y3E4OFVm", 
+            "14": "MUdaVEtYQm9nWTBFX3pIdmFnVzNoRFVtVDY3c3lDZHFn",
+            "15": "MXlMdnlpc2RxbjdKMmxqTXhHOWRUNU9LaFhYc1RYdTdq", 
+            "16": "MXhEemZpRUJFeS1iVFFmbUZfci04azJRRnppQkxEZjNj", // 🚨 اتحدث هنا 🚨
+            "17": "MTNFYXpCek9xcW5qRnBPVzZxbC1CeUduaUZoS0Q3UE9Z", 
+            "18": "MWI3c3Y4WVFacVBIWXg5bjdKQ2p6eVN4aTUwREpEbjBC"
         };
 
         window.onload = function() {
@@ -202,8 +210,8 @@
             if (cardId && secureDB[cardId]) {
                 const driveId = atob(secureDB[cardId]);
                 
-                // 🚨 التعديل السحري: استخدام رابط الـ View المباشر بدل الـ Thumbnail 🚨
-                const directImgUrl = `https://drive.google.com/uc?export=view&id=${driveId}`;
+                // الرابط المستقر الموثوق 100%
+                const directImgUrl = `https://drive.google.com/thumbnail?id=${driveId}&sz=w1000`;
                 
                 const imgPreloader = new Image();
                 imgPreloader.src = directImgUrl;
@@ -279,14 +287,12 @@
         
         <img src="logo.png" alt="لوجو قعدة" class="game-logo" onerror="this.style.display='none'">
 
-        <!-- شاشة التحميل -->
         <div id="loading-state">
             <div class="card-wrapper"><div class="card-loader"></div></div>
             <h2>جاري فتح الكارت</h2>
             <div class="progress-container"><div class="progress-bar"></div></div>
         </div>
 
-        <!-- عرض الكارت -->
         <div id="card-display-state" class="final-card-container">
             <h2>كارتك جاهز</h2>
             <img id="game-card-img" src="" alt="كارت قعدة" class="display-card">
@@ -296,7 +302,6 @@
             </div>
         </div>
 
-        <!-- شاشة الكاميرا -->
         <div id="scanner-state">
             <h2>وجه الكاميرا للكارت</h2>
             <div class="small-text">جاري تفعيل الكاميرا... وافق على الصلاحية</div>
