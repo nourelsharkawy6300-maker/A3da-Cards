@@ -94,13 +94,13 @@
             if(e.keyCode == 123 || (e.ctrlKey && e.shiftKey && (e.keyCode == 'I'.charCodeAt(0) || e.keyCode == 'C'.charCodeAt(0) || e.keyCode == 'J'.charCodeAt(0))) || (e.ctrlKey && e.keyCode == 'U'.charCodeAt(0))) { return false; }
         };
 
-        // ====== 🚨 قاعدة البيانات المباشرة النهائية (تم تركيب الكول سنتر بنجاح) 🚨 ======
+        // ====== 🚨 قاعدة البيانات المباشرة (بدون تشفير يوقعنا في مشاكل) 🚨 ======
         const secureDB = {
             "1": "1FIT9DQMzTSDYY1c80_V5R9TQ6rgjspFE", // 1 الريتش
             "2": "1f48JxTbpjPk9kQEYBF9yDy-urDFuuG_p", // 2 المؤامره
             "3": "1GFBXZi6B5EMuhtYI2JG3TMiipWord_J6", // 3 العاجله
             "4": "1n2GyRH3ylV90W-rrltVPDVsUuRJa9IRd", // 4 يوتيوبر
-            "5": "1uRJr_faktNsWVhhdyvCE-SYYvQFfhaUG", // 5 كول سينتر (الصورة النضيفة الجديدة المظبوطة)
+            "5": "1xDzfiEBEy-bTQfmF_r-8k2QFziBLDf3c", // 5 كول سينتر
             "6": "12JojP3lyglDLo5f0MfQ5F6TPTrYtx5oU", // 6 شات جيبتي
             "7": "1iPqd3RsKZ_58npfNHjkNhNpxoloR707U", // 7 امهات التيك توك
             "8": "1mFvK1g0SEwvRXjGavI8CQUlncbd3XQnb", // 8 ثانويه
@@ -125,7 +125,7 @@
                 const driveId = secureDB[cardId];
                 const mainImg = document.getElementById('game-card-img');
                 
-                // 🚨 نظام التحميل الصارم 🚨
+                // 🚨 نظام التحميل الصارم (3 طرق عشان لو جوجل هنج) 🚨
                 const urls = [
                     `https://drive.google.com/thumbnail?id=${driveId}&sz=w1000`, 
                     `https://lh3.googleusercontent.com/d/${driveId}`, 
@@ -134,22 +134,26 @@
                 
                 let currentUrlIndex = 0;
 
+                // لو الصورة محملتش بالطريقة الأولى، الكود هيدخل عالتانية والتالتة أوتوماتيك
                 mainImg.onerror = function() {
                     currentUrlIndex++;
                     if (currentUrlIndex < urls.length) {
                         mainImg.src = urls[currentUrlIndex];
                     } else {
+                        // لو الـ 3 طرق فشلوا (مستحيل يحصل)
                         document.getElementById('loading-state').style.display = 'none';
                         showError();
                     }
                 };
 
+                // أول ما الصورة تحمل فعلياً (سواء من اللينك الأول أو الثاني أو الثالث)
                 mainImg.onload = function() {
                     document.getElementById('loading-state').style.display = 'none';
                     document.getElementById('card-display-state').style.display = 'block';
                     if(typeof gtag === 'function') { gtag('event', 'card_opened', { 'card_id': cardId }); }
                 };
 
+                // بدء التحميل
                 mainImg.src = urls[0];
 
             } else {
