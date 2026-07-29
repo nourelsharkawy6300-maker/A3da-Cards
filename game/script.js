@@ -31,7 +31,7 @@ window.onload = function() {
     const urlParams = new URLSearchParams(window.location.search);
     const cardId = urlParams.get('id');
 
-    // -------- 🚨 كود قعدة السري: حماية من الغش وتثبيت الشخصية 🚨 --------
+    // -------- 🚨 كود قعدة السري: حماية من الغش (مع استثناء الاسكان الشرعي) 🚨 --------
     if (cardId) {
         let savedId = localStorage.getItem('qaada_character_id');
         let savedTime = localStorage.getItem('qaada_scan_time');
@@ -39,6 +39,7 @@ window.onload = function() {
 
         if (savedId && savedTime && (now - savedTime < 6 * 60 * 60 * 1000)) {
             if (cardId !== savedId) {
+                // لو غير اللينك بايده في المتصفح، يتقفش:
                 alert('قفشناك يا غشاش! 🚨 فاكر إنك هتبدل شخصيتك؟ هترجع لشخصيتك الأصلية غصب عنك!');
                 window.location.replace(`?id=${savedId}`); 
                 return; 
@@ -115,6 +116,10 @@ function scanAgain() {
 }
 
 function onScanSuccess(decodedText, decodedResult) {
+    // 🚨 التكاية هنا: بما إنه عمل سكان حقيقي بالكاميرا، بنمسح الـ ID القديم عشان نسمح بالكارت الجديد 
+    localStorage.removeItem('qaada_character_id');
+    localStorage.removeItem('qaada_scan_time');
+
     html5QrCode.stop().then(() => { window.location.replace(decodedText); })
     .catch(err => { window.location.replace(decodedText); });
 }
