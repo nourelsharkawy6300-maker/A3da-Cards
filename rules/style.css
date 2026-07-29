@@ -1,11 +1,11 @@
 :root {
-    /* ألوان البراند الأصلية بتاعة قعدة */
-    --brand-dark: #0f172a;
+    /* ألوان قعدة الأصلية على الماية بيضا */
     --brand-primary: #4a4d9e;
-    --text-light: #f0f0f0;
-    --glass-bg: rgba(255, 255, 255, 0.05);
-    --glass-border: rgba(255, 255, 255, 0.1);
+    --brand-dark: #0a0f18;
+    --text-light: #ffffff;
     --accent: #f1c40f;
+    
+    /* ألوان الكروت */
     --character: #9b59b6;
     --situation: #3498db;
     --warning: #e67e22;
@@ -16,7 +16,7 @@
     margin: 0; 
     padding: 0; 
     box-sizing: border-box; 
-    /* منع النسخ عشان السكيورتي */
+    /* سكيورتي: منع النسخ */
     -webkit-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
@@ -25,8 +25,11 @@
 
 body {
     font-family: 'Tajawal', sans-serif;
-    /* خلفية متدرجة بألوان البراند */
-    background: linear-gradient(135deg, var(--brand-dark), var(--brand-primary), #1a1a2e);
+    /* هنا الصياعة: بنسحب خلفية قعدة الأصلية من الفولدر اللي بره ونحط عليها فلتر كحلي شفاف */
+    background: linear-gradient(135deg, rgba(10, 15, 24, 0.92), rgba(74, 77, 158, 0.85)), url('../game-bg.jpg');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
     color: var(--text-light);
     line-height: 1.6;
     min-height: 100vh;
@@ -34,39 +37,55 @@ body {
 }
 
 .container {
-    width: 90%;
+    width: 92%;
     max-width: 600px;
     margin: 0 auto;
 }
 
 header {
     text-align: center;
-    margin-bottom: 30px;
+    margin-bottom: 35px;
 }
 
-header h1 { color: var(--accent); font-weight: 900; font-size: 32px; text-shadow: 0 4px 10px rgba(0,0,0,0.5); }
-header p { opacity: 0.9; font-size: 18px; font-weight: 700; }
+header h1 { 
+    color: var(--accent); 
+    font-weight: 900; 
+    font-size: 34px; 
+    text-shadow: 0 4px 15px rgba(0,0,0,0.6); 
+    letter-spacing: 1px;
+}
+
+header p { 
+    color: #cbd5e1; 
+    font-size: 18px; 
+    font-weight: 700; 
+    margin-top: 5px;
+}
 
 h2 {
-    font-size: 22px;
-    margin-bottom: 15px;
-    border-right: 4px solid var(--accent);
-    padding-right: 10px;
+    font-size: 24px;
+    margin-bottom: 20px;
+    color: #fff;
+    border-right: 5px solid var(--accent);
+    padding-right: 12px;
+    text-shadow: 0 2px 5px rgba(0,0,0,0.3);
 }
 
-/* Glassmorphism Sections - تأثير الإزاز الاحترافي */
+/* الشغل العالي: تأثير الزجاج البريميوم */
 section {
-    background: var(--glass-bg);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    border: 1px solid var(--glass-border);
-    border-radius: 20px;
-    padding: 25px 20px;
-    margin-bottom: 25px;
-    box-shadow: 0 15px 35px rgba(0,0,0,0.4);
+    background: rgba(255, 255, 255, 0.03);
+    backdrop-filter: blur(25px);
+    -webkit-backdrop-filter: blur(25px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-top: 1px solid rgba(255, 255, 255, 0.15); /* إضاءة علوية خفيفة */
+    border-left: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 24px;
+    padding: 30px 20px;
+    margin-bottom: 30px;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.5), inset 0 0 15px rgba(74, 77, 158, 0.1);
 }
 
-/* Cards Grid */
+/* الكروت */
 .cards-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -74,42 +93,53 @@ section {
 }
 
 .card-item {
-    background: rgba(0,0,0,0.4);
-    padding: 15px;
-    border-radius: 15px;
+    background: rgba(0, 0, 0, 0.4);
+    padding: 18px 12px;
+    border-radius: 16px;
     text-align: center;
+    border: 1px solid rgba(255, 255, 255, 0.05);
     border-top: 3px solid transparent;
-    transition: transform 0.3s;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+    transition: all 0.3s ease;
 }
 
-.card-item:hover { transform: translateY(-5px); }
+.card-item:hover { 
+    transform: translateY(-5px); 
+    background: rgba(0, 0, 0, 0.6);
+    box-shadow: 0 12px 25px rgba(0,0,0,0.5);
+}
 
-.card-item.character { border-color: var(--character); }
-.card-item.situation { border-color: var(--situation); }
-.card-item.warning { border-color: var(--warning); }
-.card-item.action { border-color: var(--action); }
+.card-item.character { border-top-color: var(--character); }
+.card-item.situation { border-top-color: var(--situation); }
+.card-item.warning { border-top-color: var(--warning); }
+.card-item.action { border-top-color: var(--action); }
 
-.card-item .icon { font-size: 30px; display: block; margin-bottom: 5px; }
-.card-item h3 { font-size: 18px; margin-bottom: 5px; }
-.card-item p { font-size: 13px; opacity: 0.85; line-height: 1.4; }
+.card-item .icon { font-size: 32px; display: block; margin-bottom: 8px; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.5)); }
+.card-item h3 { font-size: 17px; margin-bottom: 6px; color: #fff; }
+.card-item p { font-size: 13px; color: #94a3b8; line-height: 1.5; }
 
-/* Accordion (Timeline) */
-.subtitle { text-align: center; font-size: 15px; opacity: 0.8; margin-bottom: 20px; }
+/* التايم لاين (الراوندات) */
+.subtitle { text-align: center; font-size: 15px; color: #94a3b8; margin-bottom: 25px; }
 
 .accordion-item {
     margin-bottom: 12px;
-    border-radius: 12px;
+    border-radius: 14px;
     overflow: hidden;
-    background: rgba(0,0,0,0.3);
-    border: 1px solid rgba(255,255,255,0.05);
+    background: rgba(0, 0, 0, 0.35);
+    border: 1px solid rgba(255,255,255,0.06);
+    transition: all 0.3s ease;
+}
+
+.accordion-item:hover {
+    border-color: rgba(255,255,255,0.15);
 }
 
 .accordion-header {
     width: 100%;
-    padding: 18px;
+    padding: 18px 20px;
     background: transparent;
     border: none;
-    color: white;
+    color: #f1f5f9;
     font-family: inherit;
     font-size: 16px;
     font-weight: 700;
@@ -120,49 +150,59 @@ section {
     justify-content: space-between;
 }
 
-.accordion-header:hover, .accordion-header.active {
-    background: rgba(255,255,255,0.1);
+.accordion-header.active {
+    background: linear-gradient(90deg, rgba(74, 77, 158, 0.2), transparent);
     color: var(--accent);
+    border-bottom: 1px solid rgba(255,255,255,0.05);
 }
 
 .accordion-content {
     max-height: 0;
     overflow: hidden;
-    transition: max-height 0.4s ease-out;
-    padding: 0 15px;
+    transition: max-height 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    padding: 0 20px;
     font-size: 15px;
-    color: #e0e0e0;
+    color: #cbd5e1;
 }
 
-.accordion-content ul { padding-right: 25px; margin: 10px 0; }
-.accordion-content li { margin-bottom: 10px; }
-.accordion-content p { margin: 10px 0; }
+.accordion-content ul { padding-right: 25px; margin: 15px 0; }
+.accordion-content li { margin-bottom: 12px; position: relative; }
+.accordion-content p { margin: 15px 0; }
 
-/* Scoring Box */
-.score-box { background: rgba(0,0,0,0.3); padding: 20px; border-radius: 15px; }
+/* بوكس النتيجة */
+.score-box { 
+    background: rgba(0, 0, 0, 0.4); 
+    padding: 20px; 
+    border-radius: 16px; 
+    border: 1px solid rgba(255,255,255,0.05);
+}
 .score-box ul { list-style: none; padding: 0; margin: 15px 0; }
 .score-box li { margin-bottom: 12px; font-size: 16px; }
+
 .final-result {
-    margin-top: 20px;
-    padding-top: 15px;
-    border-top: 1px dashed rgba(255,255,255,0.2);
+    margin-top: 25px;
+    padding-top: 20px;
+    border-top: 1px dashed rgba(255,255,255,0.15);
     text-align: center;
     font-size: 18px;
+    background: rgba(74, 77, 158, 0.1);
+    border-radius: 12px;
+    padding-bottom: 20px;
 }
-.final-result p:first-child { color: #2ecc71; font-weight: bold; }
-.final-result p:last-child { color: var(--action); font-weight: bold; margin-top: 8px;}
+.final-result p:first-child { color: #4ade80; font-weight: 900; }
+.final-result p:last-child { color: var(--action); font-weight: 900; margin-top: 10px; }
 
-/* Animations */
+/* أنيميشن الدخول */
 .fade-in {
     opacity: 0;
     transform: translateY(30px);
-    animation: fadeInUp 0.7s forwards;
+    animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
 @keyframes fadeInUp {
     to { opacity: 1; transform: translateY(0); }
 }
 
-section:nth-child(2) { animation-delay: 0.1s; }
-section:nth-child(3) { animation-delay: 0.2s; }
-section:nth-child(4) { animation-delay: 0.3s; }
+section:nth-child(2) { animation-delay: 0.15s; }
+section:nth-child(3) { animation-delay: 0.3s; }
+section:nth-child(4) { animation-delay: 0.45s; }
