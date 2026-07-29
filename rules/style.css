@@ -1,24 +1,36 @@
 :root {
-    --bg-color: #0f2027;
+    /* ألوان البراند الأصلية بتاعة قعدة */
+    --brand-dark: #0f172a;
+    --brand-primary: #4a4d9e;
     --text-light: #f0f0f0;
-    --glass-bg: rgba(255, 255, 255, 0.07);
-    --glass-border: rgba(255, 255, 255, 0.15);
-    --primary: #f1c40f;
+    --glass-bg: rgba(255, 255, 255, 0.05);
+    --glass-border: rgba(255, 255, 255, 0.1);
+    --accent: #f1c40f;
     --character: #9b59b6;
     --situation: #3498db;
     --warning: #e67e22;
     --action: #e74c3c;
 }
 
-* { margin: 0; padding: 0; box-sizing: border-box; }
+* { 
+    margin: 0; 
+    padding: 0; 
+    box-sizing: border-box; 
+    /* منع النسخ عشان السكيورتي */
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
 
 body {
     font-family: 'Tajawal', sans-serif;
-    background: linear-gradient(135deg, var(--bg-color), #203a43, #2c5364);
+    /* خلفية متدرجة بألوان البراند */
+    background: linear-gradient(135deg, var(--brand-dark), var(--brand-primary), #1a1a2e);
     color: var(--text-light);
     line-height: 1.6;
     min-height: 100vh;
-    padding: 20px 0;
+    padding: 30px 0;
 }
 
 .container {
@@ -32,26 +44,26 @@ header {
     margin-bottom: 30px;
 }
 
-header h1 { color: var(--primary); font-weight: 900; font-size: 32px; }
-header p { opacity: 0.8; font-size: 16px; }
+header h1 { color: var(--accent); font-weight: 900; font-size: 32px; text-shadow: 0 4px 10px rgba(0,0,0,0.5); }
+header p { opacity: 0.9; font-size: 18px; font-weight: 700; }
 
 h2 {
     font-size: 22px;
     margin-bottom: 15px;
-    border-right: 4px solid var(--primary);
+    border-right: 4px solid var(--accent);
     padding-right: 10px;
 }
 
-/* Glassmorphism Sections */
+/* Glassmorphism Sections - تأثير الإزاز الاحترافي */
 section {
     background: var(--glass-bg);
-    backdrop-filter: blur(15px);
-    -webkit-backdrop-filter: blur(15px);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
     border: 1px solid var(--glass-border);
     border-radius: 20px;
     padding: 25px 20px;
     margin-bottom: 25px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    box-shadow: 0 15px 35px rgba(0,0,0,0.4);
 }
 
 /* Cards Grid */
@@ -62,12 +74,15 @@ section {
 }
 
 .card-item {
-    background: rgba(0,0,0,0.3);
+    background: rgba(0,0,0,0.4);
     padding: 15px;
     border-radius: 15px;
     text-align: center;
     border-top: 3px solid transparent;
+    transition: transform 0.3s;
 }
+
+.card-item:hover { transform: translateY(-5px); }
 
 .card-item.character { border-color: var(--character); }
 .card-item.situation { border-color: var(--situation); }
@@ -75,22 +90,23 @@ section {
 .card-item.action { border-color: var(--action); }
 
 .card-item .icon { font-size: 30px; display: block; margin-bottom: 5px; }
-.card-item h3 { font-size: 16px; margin-bottom: 5px; }
-.card-item p { font-size: 12px; opacity: 0.8; }
+.card-item h3 { font-size: 18px; margin-bottom: 5px; }
+.card-item p { font-size: 13px; opacity: 0.85; line-height: 1.4; }
 
 /* Accordion (Timeline) */
-.subtitle { text-align: center; font-size: 14px; opacity: 0.7; margin-bottom: 20px; }
+.subtitle { text-align: center; font-size: 15px; opacity: 0.8; margin-bottom: 20px; }
 
 .accordion-item {
-    margin-bottom: 10px;
-    border-radius: 10px;
+    margin-bottom: 12px;
+    border-radius: 12px;
     overflow: hidden;
-    background: rgba(0,0,0,0.2);
+    background: rgba(0,0,0,0.3);
+    border: 1px solid rgba(255,255,255,0.05);
 }
 
 .accordion-header {
     width: 100%;
-    padding: 15px;
+    padding: 18px;
     background: transparent;
     border: none;
     color: white;
@@ -106,6 +122,7 @@ section {
 
 .accordion-header:hover, .accordion-header.active {
     background: rgba(255,255,255,0.1);
+    color: var(--accent);
 }
 
 .accordion-content {
@@ -113,16 +130,18 @@ section {
     overflow: hidden;
     transition: max-height 0.4s ease-out;
     padding: 0 15px;
-    font-size: 14px;
+    font-size: 15px;
+    color: #e0e0e0;
 }
 
-.accordion-content ul { padding-right: 20px; margin: 10px 0; }
-.accordion-content li { margin-bottom: 8px; }
+.accordion-content ul { padding-right: 25px; margin: 10px 0; }
+.accordion-content li { margin-bottom: 10px; }
+.accordion-content p { margin: 10px 0; }
 
 /* Scoring Box */
-.score-box { background: rgba(0,0,0,0.2); padding: 15px; border-radius: 15px; }
+.score-box { background: rgba(0,0,0,0.3); padding: 20px; border-radius: 15px; }
 .score-box ul { list-style: none; padding: 0; margin: 15px 0; }
-.score-box li { margin-bottom: 10px; font-size: 15px; }
+.score-box li { margin-bottom: 12px; font-size: 16px; }
 .final-result {
     margin-top: 20px;
     padding-top: 15px;
@@ -130,13 +149,14 @@ section {
     text-align: center;
     font-size: 18px;
 }
-.final-result p:last-child { color: var(--action); font-weight: bold; margin-top: 5px;}
+.final-result p:first-child { color: #2ecc71; font-weight: bold; }
+.final-result p:last-child { color: var(--action); font-weight: bold; margin-top: 8px;}
 
 /* Animations */
 .fade-in {
     opacity: 0;
-    transform: translateY(20px);
-    animation: fadeInUp 0.6s forwards;
+    transform: translateY(30px);
+    animation: fadeInUp 0.7s forwards;
 }
 
 @keyframes fadeInUp {
