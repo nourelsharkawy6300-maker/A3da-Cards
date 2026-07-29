@@ -87,6 +87,7 @@
     </style>
 
     <script>
+        // سكيورتي منع التفتيش
         document.addEventListener('contextmenu', event => event.preventDefault());
         document.onkeydown = function(e) {
             if(e.keyCode == 123 || (e.ctrlKey && e.shiftKey && (e.keyCode == 'I'.charCodeAt(0) || e.keyCode == 'C'.charCodeAt(0) || e.keyCode == 'J'.charCodeAt(0))) || (e.ctrlKey && e.keyCode == 'U'.charCodeAt(0))) { return false; }
@@ -118,6 +119,28 @@
         window.onload = function() {
             const urlParams = new URLSearchParams(window.location.search);
             const cardId = urlParams.get('id');
+
+            // -------- 🚨 كود قعدة السري: حماية من الغش وتثبيت الشخصية 🚨 --------
+            if (cardId) {
+                let savedId = localStorage.getItem('qaada_character_id');
+                let savedTime = localStorage.getItem('qaada_scan_time');
+                let now = new Date().getTime(); // الوقت دلوقتي
+
+                // لو مسجل شخصية قبل كده، وعدى عليها أقل من 6 ساعات (مدة القعدة)
+                if (savedId && savedTime && (now - savedTime < 6 * 60 * 60 * 1000)) {
+                    if (cardId !== savedId) {
+                        // قفشناه بيغش وبيغير الرقم!
+                        alert('قفشناك يا غشاش! 🚨 فاكر إنك هتبدل شخصيتك؟ هترجع لشخصيتك الأصلية غصب عنك!');
+                        window.location.replace(`?id=${savedId}`); // بيرجعه فوراً
+                        return; // وقف الكود هنا عشان ميكملش تحميل الشخصية الغلط
+                    }
+                } else {
+                    // لو أول مرة يسحب، أو عدى 6 ساعات (قعدة جديدة)، بنسجل الشخصية الجديدة
+                    localStorage.setItem('qaada_character_id', cardId);
+                    localStorage.setItem('qaada_scan_time', now);
+                }
+            }
+            // --------------------------------------------------------------
 
             if (cardId && secureDB[cardId]) {
                 const driveId = secureDB[cardId];
