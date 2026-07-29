@@ -1,0 +1,148 @@
+:root {
+    --bg-color: #0f2027;
+    --text-light: #f0f0f0;
+    --glass-bg: rgba(255, 255, 255, 0.07);
+    --glass-border: rgba(255, 255, 255, 0.15);
+    --primary: #f1c40f;
+    --character: #9b59b6;
+    --situation: #3498db;
+    --warning: #e67e22;
+    --action: #e74c3c;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+    font-family: 'Tajawal', sans-serif;
+    background: linear-gradient(135deg, var(--bg-color), #203a43, #2c5364);
+    color: var(--text-light);
+    line-height: 1.6;
+    min-height: 100vh;
+    padding: 20px 0;
+}
+
+.container {
+    width: 90%;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+header {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+header h1 { color: var(--primary); font-weight: 900; font-size: 32px; }
+header p { opacity: 0.8; font-size: 16px; }
+
+h2 {
+    font-size: 22px;
+    margin-bottom: 15px;
+    border-right: 4px solid var(--primary);
+    padding-right: 10px;
+}
+
+/* Glassmorphism Sections */
+section {
+    background: var(--glass-bg);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    border: 1px solid var(--glass-border);
+    border-radius: 20px;
+    padding: 25px 20px;
+    margin-bottom: 25px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+}
+
+/* Cards Grid */
+.cards-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+}
+
+.card-item {
+    background: rgba(0,0,0,0.3);
+    padding: 15px;
+    border-radius: 15px;
+    text-align: center;
+    border-top: 3px solid transparent;
+}
+
+.card-item.character { border-color: var(--character); }
+.card-item.situation { border-color: var(--situation); }
+.card-item.warning { border-color: var(--warning); }
+.card-item.action { border-color: var(--action); }
+
+.card-item .icon { font-size: 30px; display: block; margin-bottom: 5px; }
+.card-item h3 { font-size: 16px; margin-bottom: 5px; }
+.card-item p { font-size: 12px; opacity: 0.8; }
+
+/* Accordion (Timeline) */
+.subtitle { text-align: center; font-size: 14px; opacity: 0.7; margin-bottom: 20px; }
+
+.accordion-item {
+    margin-bottom: 10px;
+    border-radius: 10px;
+    overflow: hidden;
+    background: rgba(0,0,0,0.2);
+}
+
+.accordion-header {
+    width: 100%;
+    padding: 15px;
+    background: transparent;
+    border: none;
+    color: white;
+    font-family: inherit;
+    font-size: 16px;
+    font-weight: 700;
+    text-align: right;
+    cursor: pointer;
+    transition: 0.3s;
+    display: flex;
+    justify-content: space-between;
+}
+
+.accordion-header:hover, .accordion-header.active {
+    background: rgba(255,255,255,0.1);
+}
+
+.accordion-content {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s ease-out;
+    padding: 0 15px;
+    font-size: 14px;
+}
+
+.accordion-content ul { padding-right: 20px; margin: 10px 0; }
+.accordion-content li { margin-bottom: 8px; }
+
+/* Scoring Box */
+.score-box { background: rgba(0,0,0,0.2); padding: 15px; border-radius: 15px; }
+.score-box ul { list-style: none; padding: 0; margin: 15px 0; }
+.score-box li { margin-bottom: 10px; font-size: 15px; }
+.final-result {
+    margin-top: 20px;
+    padding-top: 15px;
+    border-top: 1px dashed rgba(255,255,255,0.2);
+    text-align: center;
+    font-size: 18px;
+}
+.final-result p:last-child { color: var(--action); font-weight: bold; margin-top: 5px;}
+
+/* Animations */
+.fade-in {
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeInUp 0.6s forwards;
+}
+
+@keyframes fadeInUp {
+    to { opacity: 1; transform: translateY(0); }
+}
+
+section:nth-child(2) { animation-delay: 0.1s; }
+section:nth-child(3) { animation-delay: 0.2s; }
+section:nth-child(4) { animation-delay: 0.3s; }
