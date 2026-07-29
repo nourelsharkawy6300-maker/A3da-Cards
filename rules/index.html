@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>قعدة - طريقة اللعب</title>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header class="fade-in">
+            <h1>📜 إزاي تلعب "قعدة"؟</h1>
+            <p>الخلاصة عشان متتغفلش!</p>
+        </header>
+
+        <section class="card-types fade-in">
+            <h2>🃏 أنواع الكروت (4 أنواع)</h2>
+            <div class="cards-grid">
+                <div class="card-item character">
+                    <span class="icon">🎭</span>
+                    <h3>شخصيات</h3>
+                    <p>بتحدد الدور اللي هتلعب بيه أول راوند، ومالهاش نقط.</p>
+                </div>
+                <div class="card-item situation">
+                    <span class="icon">🎬</span>
+                    <h3>مواقف</h3>
+                    <p>كروت مواقف وتمثيل، كل كارت بـ 5 نقط.</p>
+                </div>
+                <div class="card-item warning">
+                    <span class="icon">⚠️</span>
+                    <h3>حاسب</h3>
+                    <p>بتديك شرط تلتزم بيه لمدة راوند واحد، بـ 5 نقط.</p>
+                </div>
+                <div class="card-item action">
+                    <span class="icon">💥</span>
+                    <h3>أكشن</h3>
+                    <p>تحديات وتنفيذ مفيهاش هزار، بـ 10 نقط.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="gameplay fade-in">
+            <h2>⏱️ نظام اللعب (4 راوندات)</h2>
+            <p class="subtitle">كل لاعب بيسحب كارت في كل راوند بالدور</p>
+
+            <div class="timeline">
+                <div class="accordion-item">
+                    <button class="accordion-header">🚀 قبل ما تبدأوا</button>
+                    <div class="accordion-content">
+                        <p>كل لاعب يسحب كارت شخصية ويعمله سكان بالموبايل عشان يعرف دوره.</p>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <button class="accordion-header">1️⃣ الراوند الأول: مواقف بالشخصية</button>
+                    <div class="accordion-content">
+                        <ul>
+                            <li>كل لاعب يسحب كارت <strong>مواقف</strong>.</li>
+                            <li>لازم ينفذ أو يرد وهو متقمص الشخصية اللي سحبها في البداية.</li>
+                            <li>لو نفذ والقعدة اقتنعت 👈 يحط الكارت <strong>معدول</strong> (+5).</li>
+                            <li>لو منفذش أو القعدة ما اقتنعتش 👈 يحط الكارت <strong>مقلوب</strong> (-5).</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <button class="accordion-header">2️⃣ الراوند الثاني: مواقف عادي</button>
+                    <div class="accordion-content">
+                        <ul>
+                            <li>كل لاعب يسحب كارت <strong>مواقف</strong> جديد.</li>
+                            <li>المرة دي بتمثل بشخصيتك العادية، انسى كارت الشخصية خلاص.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <button class="accordion-header">🛑 بعد الراوند التاني (فاصل)</button>
+                    <div class="accordion-content">
+                        <p>كل لاعب يسحب كارت <strong>حاسب</strong>. الكارت ده بيشتغل في الراوند اللي بعده بس (راوند الأكشن الأول).</p>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <button class="accordion-header">3️⃣ الراوند الثالث: أكشن بس تحاسب</button>
+                    <div class="accordion-content">
+                        <ul>
+                            <li>كل لاعب يسحب كارت <strong>أكشن</strong> وينفذ المطلوب.</li>
+                            <li><strong>في نفس الوقت:</strong> لازم يفضل ملتزم بكارت "حاسب" اللي معاه!</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <button class="accordion-header">4️⃣ الراوند الرابع: أكشن عادي</button>
+                    <div class="accordion-content">
+                        <ul>
+                            <li>كل لاعب يسحب كارت <strong>أكشن</strong> جديد وينفذه.</li>
+                            <li>الراوند ده من غير كروت حاسب، نفذ الأكشن بس.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="scoring fade-in">
+            <h2>🏆 الحساب يجمع</h2>
+            <div class="score-box">
+                <p>في آخر اللعبة، كل لاعب يجمع الكروت اللي قدامه:</p>
+                <ul>
+                    <li>🟢 <strong>الكارت المعدول:</strong> يتحسب موجب (+).</li>
+                    <li>🔴 <strong>الكارت المقلوب:</strong> يتحسب سالب (-).</li>
+                </ul>
+                <div class="final-result">
+                    <p>أعلى سكور <strong>يكسب</strong> 👑</p>
+                    <p>أقل سكور <strong>يخسر ويشيل الليلة</strong>، ويعمل سكان لباركود "الأحكام"! 🚨</p>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
