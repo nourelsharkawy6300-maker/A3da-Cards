@@ -116,6 +116,11 @@ function scanAgain() {
 }
 
 function onScanSuccess(decodedText, decodedResult) {
+    // --- تعديل قعدة السحري: تصفير الذاكرة عشان الاسكان المتكرر ---
+localStorage.removeItem('scannedCardId'); 
+localStorage.removeItem('antiCheatFlag');
+sessionStorage.clear();
+// --------------------------------------------------------
     // 🚨 التكاية هنا: بما إنه عمل سكان حقيقي بالكاميرا، بنمسح الـ ID القديم عشان نسمح بالكارت الجديد 
     localStorage.removeItem('qaada_character_id');
     localStorage.removeItem('qaada_scan_time');
