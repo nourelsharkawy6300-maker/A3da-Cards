@@ -2,71 +2,56 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="theme-color" content="#4a4d9e">
-    <meta name="referrer" content="no-referrer">
-    
-    <title>لعبة قعدة</title>
-    
-    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@500;700;800;900&display=swap" rel="stylesheet">
-    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>قعدة - سحب الكروت</title>
     <link rel="stylesheet" href="style.css">
-
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-RNZPERH684"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', 'G-RNZPERH684');
-    </script>
-
-<script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
+    <!-- استدعاء مكتبة قراءة الباركود -->
+    <script src="https://unpkg.com/html5-qrcode"></script>
 </head>
 <body>
+    <div id="content-box" class="glass-box">
 
-    <!-- شاشة اللوبي (الانتظار وتكوين الروم) -->
-<div id="lobby-state" style="display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 100vh;">
-    <div style="font-size: 50px; margin-bottom: 15px;">🎲</div>
-    <h1 style="margin-bottom: 25px; color: #f0f0f0;">قعدة - توزيع ورق</h1>
-    
-    <!-- المعلم اللي هيوزع -->
-    <button class="action-btn btn-primary" onclick="startNewGame()" style="margin-bottom: 25px; width: 80%; max-width: 300px;">جيم جديد (اسحب شفرة)</button>
-    
-    <hr style="width: 80%; border-color: rgba(240,240,240,0.1); margin-bottom: 25px;">
-    
-    <!-- باقي الشلة اللي هتدخل -->
-    <h3 style="margin-bottom: 15px; color: rgba(240,240,240,0.8);">معاك كود الشلة؟</h3>
-    <input type="number" id="pin-input" placeholder="اكتب الـ 2 رقم هنا" style="padding: 12px; font-size: 20px; text-align: center; margin-bottom: 15px; border-radius: 8px; border: 2px solid #4a4d9e; width: 60%; max-width: 200px; outline: none; font-weight: bold;">
-    <button class="action-btn btn-secondary" onclick="joinGame()" style="width: 60%; max-width: 200px;">ادخل الروم</button>
-</div>
-    
-    <div class="glass-box" id="content-box">
-        
-        <img src="logo.png" alt="لوجو قعدة" class="game-logo" onerror="this.style.display='none'">
+        <!-- شاشة 1: اللوبي (الانتظار وتكوين الروم) -->
+        <div id="lobby-state" style="display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 50vh;">
+            <div style="font-size: 50px; margin-bottom: 15px;">🎲</div>
+            <h1 style="margin-bottom: 25px; color: #f0f0f0;">قعدة - توزيع ورق</h1>
 
-        <div id="loading-state">
+            <button id="new-game-btn" class="action-btn btn-primary" style="margin-bottom: 25px; width: 80%; max-width: 300px;">جيم جديد (اسحب شفرة)</button>
+
+            <hr style="width: 80%; border-color: rgba(240,240,240,0.1); margin-bottom: 25px;">
+
+            <h3 style="margin-bottom: 15px; color: rgba(240,240,240,0.8);">معاك كود الشلة؟</h3>
+            <input type="number" id="pin-input" placeholder="اكتب الـ 2 رقم هنا" style="padding: 12px; font-size: 20px; text-align: center; margin-bottom: 15px; border-radius: 8px; border: 2px solid #4a4d9e; width: 60%; max-width: 200px; outline: none; font-weight: bold; background: rgba(255,255,255,0.1); color: white;">
+            <button id="join-game-btn" class="action-btn btn-secondary" style="width: 60%; max-width: 200px;">ادخل الروم</button>
+        </div>
+
+        <!-- شاشة 2: الكاميرا -->
+        <div id="scanner-state" style="display:none; width: 100%;">
+            <h2>وجه الكاميرا للكارت</h2>
+            <div class="small-text" style="margin-bottom: 15px;">جاري تفعيل الكاميرا... وافق على الصلاحية</div>
+            <div id="reader" style="width: 100%; max-width: 400px; margin: 0 auto; border-radius: 12px; overflow: hidden;"></div>
+        </div>
+
+        <!-- شاشة 3: التحميل -->
+        <div id="loading-state" style="display:none;">
             <div class="card-wrapper"><div class="card-loader"></div></div>
-            <h2>جاري فتح الكارت</h2>
+            <h2>جاري فتح الكارت...</h2>
             <div class="progress-container"><div class="progress-bar"></div></div>
         </div>
 
-        <div id="card-display-state" class="final-card-container">
+        <!-- شاشة 4: عرض الكارت النهائي -->
+        <div id="card-display-state" class="final-card-container" style="display:none;">
             <h2>كارتك جاهز</h2>
-            <img id="game-card-img" src="" alt="كارت قعدة" class="display-card">
-            <div class="btn-group">
-                <button class="action-btn btn-primary" onclick="scanAgain()">اسكان تاني</button>
-                <button class="action-btn btn-secondary" onclick="closeCard()">خروج</button>
+            <img id="game-card-img" src="" alt="كارت قعدة" class="display-card" style="max-width: 100%; border-radius: 12px; margin-bottom: 20px; box-shadow: 0 8px 16px rgba(0,0,0,0.3);">
+            <div class="btn-group" style="display: flex; gap: 10px; justify-content: center;">
+                <button id="scan-again-btn" class="action-btn btn-primary">اسكان تاني</button>
+                <button id="close-card-btn" class="action-btn btn-secondary">خروج</button>
             </div>
-        </div>
-
-        <div id="scanner-state">
-            <h2>وجه الكاميرا للكارت</h2>
-            <div class="small-text">جاري تفعيل الكاميرا... وافق على الصلاحية</div>
-            <div id="reader"></div>
         </div>
 
     </div>
 
-    <script src="script.js"></script>
+    <!-- استدعاء ملف الجافاسكريبت بنظام الموديول -->
+    <script type="module" src="script.js"></script>
 </body>
 </html>
