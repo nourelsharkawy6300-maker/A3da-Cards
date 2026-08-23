@@ -83,16 +83,23 @@ function onScanSuccess(decodedText) {
   revealCard(cardId);
 }
 
-// Accepts a raw number ("5") or a full URL ("https://.../index.html?id=5")
+// نسخة أقوى: بتدور على "id=" جوه أي صيغة نص — رقم، رابط كامل، أو query ناقصة
 function extractCardId(decodedText) {
   const trimmed = decodedText.trim();
-  if (/^\d+$/.test(trimmed)) return parseCardId(trimmed);
-  try {
-    const url = new URL(trimmed);
-    return parseCardId(url.searchParams.get("id"));
-  } catch {
-    return null;
+
+  // الحالة 1: النص رقم بس، مثلاً "5"
+  if (/^\d+$/.test(trimmed)) {
+    return parseCardId(trimmed);
   }
+
+  // الحالة 2: النص فيه "id=" في أي مكان — سواء رابط كامل أو query ناقصة
+  // بيمسك id=5 من: "https://site.com/?id=5" أو "?id=5" أو "id=5" أو حتى "game/index.html?id=5"
+  const match = trimmed.match(/[?&]?id=(\d+)/i);
+  if (match) {
+    return parseCardId(match[1]);
+  }
+
+  return null;
 }
 
 // ---------- Card reveal ----------
