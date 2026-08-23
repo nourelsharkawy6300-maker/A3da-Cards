@@ -20,7 +20,7 @@
 body {
     font-family: 'Tajawal', sans-serif;
     /* نفس الخلفية الفاجرة اللي بتسحب الصورة الأصلية */
-    background: linear-gradient(135deg, rgba(10, 15, 24, 0.92), rgba(74, 77, 158, 0.85)), url('../game-bg.jpg');
+    background: linear-gradient(135deg, rgba(10, 15, 24, 0.92), rgba(74, 77, 158, 0.85)), url('../image_23f560.jpg');
     background-size: cover;
     background-position: center;
     background-attachment: fixed;
