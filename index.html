@@ -104,6 +104,16 @@
             display: block; margin-top: 16px; font-size: 12px;
             color: rgba(240,240,240,0.6); text-decoration: underline; cursor: pointer;
         }
+        .rules-link {
+            display: block; margin-top: 16px; padding: 11px;
+            font-family: 'Tajawal', sans-serif; font-weight: 700; font-size: 14px;
+            color: rgba(240,240,240,0.9); text-decoration: none;
+            border: 1.5px solid rgba(240,240,240,0.3); border-radius: 12px;
+            transition: all 0.25s ease; box-sizing: border-box;
+        }
+        .rules-link:hover, .rules-link:active {
+            background: rgba(240,240,240,0.1); border-color: rgba(240,240,240,0.6);
+        }
     </style>
 
     <script>
@@ -333,6 +343,7 @@
                 <button class="action-btn btn-primary" onclick="startNewGame()">لعبة جديدة</button>
                 <button class="action-btn btn-secondary" onclick="showJoinScreen()">انضمام بـ PIN</button>
             </div>
+            <a href="rules/" target="_blank" rel="noopener" class="rules-link">📜 طريقة اللعب</a>
         </div>
 
         <!-- شاشة إدخال PIN -->
