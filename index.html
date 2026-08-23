@@ -313,29 +313,10 @@
 
         function onScanFailure(error) { /* صامت */ }
 
-        function closeCard() {
-            if(typeof gtag === 'function') { gtag('event', 'card_closed'); }
-
-            // امسح الـ id من الرابط بعد الخروج — عشان لو المستخدم رجع فتح
-            // نفس التاب (رفرش أو رجوع) من غير ما يعمل سكان تاني للكارت،
-            // يوديه لشاشة "اللعبة جاهزة" (فيها اسكان كارتك / ابدأ لعبة جديدة)
-            // مش يرجعه تلقائي لنفس الكارت اللي قفله.
-            const url = new URL(window.location);
-            url.searchParams.delete('id');
-            window.history.replaceState({}, "", url);
-
-            const contentBox = document.getElementById('content-box');
-            contentBox.innerHTML = `
-                <div style="animation: popUpBounce 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;">
-                    <div style="font-size: 65px; margin-bottom: 10px; filter: drop-shadow(0 4px 6px rgba(0,0,0,0.3));">🏁</div>
-                    <h2 style="font-size: 30px; font-weight: 900; color: #f0f0f0; margin-bottom: 5px;">عاش يا بطل!</h2>
-                    <div style="color: rgba(240, 240, 240, 0.8); font-size: 16px; font-weight: 500; margin-bottom: 25px; line-height: 1.6;">
-                        دورك خلص في الكارت ده<br>تقدر تقفل الصفحة دلوقتي
-                    </div>
-                    <button class="action-btn btn-primary" onclick="scanAgain()" style="width: 80%; max-width: 200px; padding: 12px; margin: 0 auto; display: block;">سكان لكارت جديد</button>
-                </div>
-            `;
-        }
+      function closeCard() {
+    if(typeof gtag === 'function') { gtag('event', 'card_closed'); }
+    resetGame();
+}
     </script>
 </head>
 <body>
