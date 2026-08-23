@@ -77,7 +77,7 @@
         .card-loader::after { content: '🎲'; font-size: 25px; }
         @keyframes flipCard { 0% { transform: perspective(400px) rotateY(0deg); } 100% { transform: perspective(400px) rotateY(360deg); } }
         .progress-container { width: 100%; height: 6px; background: rgba(240, 240, 240, 0.1); border-radius: 10px; margin-top: 25px; overflow: hidden; position: relative; }
-        .progress-bar { height: 100%; width: 0%; border-radius: 10px; box-shadow: 0 0 10px rgba(240, 240, 240, 0.8); animation: loadProgress 3.5s cubic-bezier(0.4, 0, 0.2, 1) forwards; background: linear-gradient(90deg, #f0f0f0 0%, #ffffff 50%, #f0f0f0 100%); background-size: 200% 100%; }
+        .progress-bar { height: 100%; width: 0%; border-radius: 10px; box-shadow: 0 0 10px rgba(240, 240, 240, 0.8); animation: loadProgress 1s cubic-bezier(0.4, 0, 0.2, 1) forwards; background: linear-gradient(90deg, #f0f0f0 0%, #ffffff 50%, #f0f0f0 100%); background-size: 200% 100%; }
         @keyframes loadProgress { 0% { width: 0%; background-position: 100% 0; } 50% { background-position: 0 0; } 100% { width: 100%; background-position: -100% 0; } }
 
         #scanner-state { display: none; animation: popUpBounce 0.5s forwards; }
@@ -100,6 +100,10 @@
             margin: 6px 0 18px; text-shadow: 0 4px 10px rgba(0,0,0,0.4);
         }
         .lobby-error { font-size: 13px; color: #ffd1c9; min-height: 16px; margin: -6px 0 10px; }
+        .reset-link {
+            display: block; margin-top: 16px; font-size: 12px;
+            color: rgba(240,240,240,0.6); text-decoration: underline; cursor: pointer;
+        }
     </style>
 
     <script>
@@ -109,32 +113,13 @@
             if(e.keyCode == 123 || (e.ctrlKey && e.shiftKey && (e.keyCode == 'I'.charCodeAt(0) || e.keyCode == 'C'.charCodeAt(0) || e.keyCode == 'J'.charCodeAt(0))) || (e.ctrlKey && e.keyCode == 'U'.charCodeAt(0))) { return false; }
         };
 
-        // ====== شرائح الشخصيات — ترتيب ثابت للأبد، رقم الكارت نفسه اتشال من هنا ======
-        // كل ID هنا هو "شريحة شخصية" مش "كارت". أي كارت فيزيائي ممكن ياخد أي شريحة
-        // حسب البين — ده اللي بيمنع حفظ الناس لمعنى كل رقم كارت.
-        const CHARACTER_SLOTS = [
-            "1FIT9DQMzTSDYY1c80_V5R9TQ6rgjspFE", // الريتش
-            "1f48JxTbpjPk9kQEYBF9yDy-urDFuuG_p", // المؤامره
-            "1GFBXZi6B5EMuhtYI2JG3TMiipWord_J6", // العاجله
-            "1n2GyRH3ylV90W-rrltVPDVsUuRJa9IRd", // يوتيوبر
-            "1uRJr_faktNsWVhhdyvCE-SYYvQFfhaUG", // كول سينتر
-            "12JojP3lyglDLo5f0MfQ5F6TPTrYtx5oU", // شات جيبتي
-            "1iPqd3RsKZ_58npfNHjkNhNpxoloR707U", // امهات التيك توك
-            "1mFvK1g0SEwvRXjGavI8CQUlncbd3XQnb", // ثانويه
-            "1CwqeXmn4Y62aM6wrgJU26P0hEjZrxrK9",  // السريجي
-            "1Z6XzeKU19LmDig_t1MjBgJr8co-pBTXO", // المتنمره
-            "1ymU5DbIyjX42UiG79eElyFjdl-oFSmFQ", // استرونج
-            "1NRiDZ8_n9EkizYzMSNMM7WQuI3SGFJav", // صيوحه
-            "1eXuTA7bCgvgDuAE4TEHvNSwlS4OUtYk6", // محنك
-            "1FXFDnu0WW3uTizC_kH9wJyrB-j1M1alm", // فوود بلوجر
-            "1IbSi94OVcuI2f5IrjWYMHl_puhd7van2", // لينكد ان
-            "1xDzfiEBEy-bTQfmF_r-8k2QFziBLDf3c", // تويتر
-            "1maWFoNb4lLuWZxa6_bJ6YBhRPz-Ov4NI", // خدمه العملاء
-            "1f7OCeOlIjK-VP6zXsB3NJHoOtjj3Xoh1"  // الشاي بلبن
-        ];
+        // ====== شرائح الشخصيات — ترتيب ثابت للأبد ======
+        // كل رقم هنا هو اسم ملف الصورة داخل /cards (مثلاً 5 يعني cards/5.jpg)
+        // ده "هوية" الشخصية الثابتة — أي كارت فيزيائي ممكن ياخد أي شريحة حسب البين.
+        const CHARACTER_SLOTS = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18];
         const TOTAL_CARDS = CHARACTER_SLOTS.length; // 18
 
-        // ---------- محرك الخلط الثابت (نفس منطق /shared/qaada-engine.js) ----------
+        // ---------- محرك الخلط الثابت ----------
         function mulberry32(seed) {
             return function () {
                 seed |= 0; seed = (seed + 0x6D2B79F5) | 0;
@@ -157,7 +142,7 @@
             const seed = (pinNum * 2654435761) ^ 0x9E3779B9;
             return seededShuffle(CHARACTER_SLOTS, seed);
         }
-        function getDriveIdForCard(pin, cardId) {
+        function getImageNumberForCard(pin, cardId) {
             return getShuffledSlots(pin)[cardId - 1];
         }
         function parseCardId(raw) {
@@ -174,6 +159,7 @@
         const PIN_KEY = "qaada_game_pin";
         function savePin(pin) { localStorage.setItem(PIN_KEY, pin); }
         function loadPin() { return localStorage.getItem(PIN_KEY); }
+        function clearPin() { localStorage.removeItem(PIN_KEY); }
 
         // ---------- إدارة الشاشات ----------
         function hideAllStates() {
@@ -233,7 +219,6 @@
             savePin(pin);
             if(typeof gtag === 'function') { gtag('event', 'game_joined'); }
 
-            // لو كان فيه رقم كارت في اللينك أصلاً (نادر) كمّل عليه، وإلا روح لشاشة السكان
             const urlParams = new URLSearchParams(window.location.search);
             const cardId = urlParams.get('id');
             if (cardId) {
@@ -245,7 +230,17 @@
             }
         }
 
-        // ---------- تحميل الكارت الفعلي ----------
+        // للاختبار: يمسح البين ويرجعك لشاشة الاختيار من الأول
+        function resetGame() {
+            clearPin();
+            const url = new URL(window.location);
+            url.searchParams.delete('id');
+            window.history.replaceState({}, "", url);
+            hideAllStates();
+            document.getElementById('lobby-home').style.display = 'block';
+        }
+
+        // ---------- تحميل الكارت — من /cards مباشرة، مفيش Google Drive خالص ----------
         function loadCardForId(rawCardId, pin) {
             hideAllStates();
             document.getElementById('loading-state').style.display = 'block';
@@ -253,24 +248,12 @@
             const cardId = parseCardId(rawCardId);
             if (!cardId) { showError(); return; }
 
-            const driveId = getDriveIdForCard(pin, cardId);
+            const imageNumber = getImageNumberForCard(pin, cardId);
             const mainImg = document.getElementById('game-card-img');
 
-            const urls = [
-                `https://drive.google.com/thumbnail?id=${driveId}&sz=w1000`,
-                `https://lh3.googleusercontent.com/d/${driveId}`,
-                `https://drive.google.com/uc?export=view&id=${driveId}`
-            ];
-            let currentUrlIndex = 0;
-
             mainImg.onerror = function() {
-                currentUrlIndex++;
-                if (currentUrlIndex < urls.length) {
-                    mainImg.src = urls[currentUrlIndex];
-                } else {
-                    document.getElementById('loading-state').style.display = 'none';
-                    showError();
-                }
+                document.getElementById('loading-state').style.display = 'none';
+                showError();
             };
 
             mainImg.onload = function() {
@@ -279,7 +262,8 @@
                 if(typeof gtag === 'function') { gtag('event', 'card_opened', { 'card_id': cardId }); }
             };
 
-            mainImg.src = urls[0];
+            // المسار: مجلد cards في جذر الريبو، بجانب index.html مباشرة
+            mainImg.src = `cards/${imageNumber}.jpg`;
         }
 
         function showError() {
@@ -287,6 +271,7 @@
             document.getElementById('content-box').innerHTML += `
                 <div style="font-size: 50px; margin-bottom: 15px;">⚠️</div>
                 <h2>الكارت غير موجود</h2>
+                <div class="reset-link" onclick="resetGame()">ابدأ من جديد</div>
             `;
         }
 
@@ -370,6 +355,7 @@
             <div class="btn-group">
                 <button class="action-btn btn-primary" onclick="scanAgain()">اسكان كارتي</button>
             </div>
+            <div class="reset-link" onclick="resetGame()">ابدأ لعبة تانية من الأول</div>
         </div>
 
         <div id="loading-state" style="display:none;">
