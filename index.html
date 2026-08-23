@@ -5,9 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="theme-color" content="#4a4d9e">
     <meta name="referrer" content="no-referrer">
-    
+
     <title>لعبة قعدة</title>
-    
+
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@500;700;800;900&display=swap" rel="stylesheet">
 
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-RNZPERH684"></script>
@@ -19,11 +19,11 @@
     </script>
 
     <script src="https://unpkg.com/html5-qrcode"></script>
-    
+
     <style>
-        body { 
-            margin: 0; font-family: 'Tajawal', sans-serif; background-color: #4a4d9e; 
-            background-image: url('image_23f560.jpg'); background-size: 150%; 
+        body {
+            margin: 0; font-family: 'Tajawal', sans-serif; background-color: #4a4d9e;
+            background-image: url('image_23f560.jpg'); background-size: 150%;
             background-position: center; background-attachment: fixed;
             animation: panBackground 30s infinite alternate cubic-bezier(0.45, 0.05, 0.55, 0.95);
             color: #f0f0f0; display: flex; justify-content: center; align-items: center;
@@ -37,11 +37,11 @@
 
         .glass-box {
             background: rgba(240, 240, 240, 0.08); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
-            border: 1px solid rgba(240, 240, 240, 0.15); border-radius: 24px; padding: 20px 15px; 
+            border: 1px solid rgba(240, 240, 240, 0.15); border-radius: 24px; padding: 20px 15px;
             box-shadow: 0 30px 60px rgba(0, 0, 0, 0.6); width: 95%; max-width: 420px; box-sizing: border-box;
             z-index: 1; animation: popUpBounce 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
         }
-        
+
         @keyframes popUpBounce { 0% { opacity: 0; transform: scale(0.8) translateY(40px); } 100% { opacity: 1; transform: scale(1) translateY(0); } }
 
         .game-logo { max-width: 100px; margin: 0 auto 10px auto; display: block; filter: drop-shadow(0 4px 6px rgba(0,0,0,0.3)); }
@@ -49,8 +49,8 @@
         .small-text { font-weight: 500; font-size: 14px; color: rgba(240, 240, 240, 0.7); margin-bottom: 5px; }
 
         .display-card {
-            width: 100%; max-height: 68vh; object-fit: contain; border-radius: 12px; 
-            border: 2px solid rgba(240, 240, 240, 0.8); margin: 5px auto 15px auto; display: block; pointer-events: none; 
+            width: 100%; max-height: 68vh; object-fit: contain; border-radius: 12px;
+            border: 2px solid rgba(240, 240, 240, 0.8); margin: 5px auto 15px auto; display: block; pointer-events: none;
             animation: premiumGlow 4s ease-in-out infinite;
         }
 
@@ -64,8 +64,8 @@
         @keyframes cardReveal3D { 0% { opacity: 0; transform: rotateY(-90deg) scale(0.6) translateY(50px); } 100% { opacity: 1; transform: rotateY(0deg) scale(1) translateY(0); } }
 
         .btn-group { display: flex; gap: 10px; justify-content: center; margin-top: 5px; width: 100%; }
-        .action-btn { font-family: 'Tajawal', sans-serif; font-weight: 800; font-size: 15px; padding: 12px 5px; border-radius: 12px; cursor: pointer; transition: all 0.3s ease; flex: 1; }
-        .btn-primary { background: #f0f0f0; color: #4a4d9e; border: none; box-shadow: 0 5px 15px rgba(0,0,0,0.3); animation: pulseBtn 2s infinite cubic-bezier(0.66, 0, 0, 1); }
+        .action-btn { font-family: 'Tajawal', sans-serif; font-weight: 800; font-size: 15px; padding: 12px 5px; border-radius: 12px; cursor: pointer; transition: all 0.3s ease; flex: 1; border: none; }
+        .btn-primary { background: #f0f0f0; color: #4a4d9e; box-shadow: 0 5px 15px rgba(0,0,0,0.3); animation: pulseBtn 2s infinite cubic-bezier(0.66, 0, 0, 1); }
         @keyframes pulseBtn { 0% { box-shadow: 0 0 0 0 rgba(240, 240, 240, 0.5); } 70% { box-shadow: 0 0 0 12px rgba(240, 240, 240, 0); } 100% { box-shadow: 0 0 0 0 rgba(240, 240, 240, 0); } }
         .btn-secondary { background: rgba(240, 240, 240, 0.1); color: #f0f0f0; border: 2px solid #f0f0f0; }
         .action-btn:active { transform: scale(0.92); }
@@ -84,6 +84,22 @@
         #reader { width: 100%; border-radius: 15px; overflow: hidden; background: #fff; border: 2px solid #f0f0f0; margin-top: 15px; color: #000; box-shadow: 0 15px 30px rgba(0,0,0,0.5); }
         #reader img { display: none; }
         #reader video { object-fit: cover !important; }
+
+        /* ---- Lobby screens (PIN entry) — same glass aesthetic ---- */
+        #lobby-home, #lobby-join, #lobby-host { display: none; animation: popUpBounce 0.5s forwards; }
+        .pin-input {
+            width: 100%; text-align: center; font-size: 32px; font-weight: 800;
+            letter-spacing: 14px; padding: 12px 8px; margin: 12px 0 14px;
+            border-radius: 12px; border: 2px solid rgba(240,240,240,0.5);
+            background: rgba(240,240,240,0.92); color: #4a4d9e;
+            font-family: 'Tajawal', sans-serif; box-sizing: border-box;
+        }
+        .pin-input:focus { outline: none; border-color: #fff; }
+        .pin-display-num {
+            font-size: 48px; font-weight: 900; letter-spacing: 10px; color: #fff;
+            margin: 6px 0 18px; text-shadow: 0 4px 10px rgba(0,0,0,0.4);
+        }
+        .lobby-error { font-size: 13px; color: #ffd1c9; min-height: 16px; margin: -6px 0 10px; }
     </style>
 
     <script>
@@ -93,109 +109,193 @@
             if(e.keyCode == 123 || (e.ctrlKey && e.shiftKey && (e.keyCode == 'I'.charCodeAt(0) || e.keyCode == 'C'.charCodeAt(0) || e.keyCode == 'J'.charCodeAt(0))) || (e.ctrlKey && e.keyCode == 'U'.charCodeAt(0))) { return false; }
         };
 
-        // ====== 🚨 قاعدة البيانات المباشرة 🚨 ======
-        const secureDB = {
-            "1": "1FIT9DQMzTSDYY1c80_V5R9TQ6rgjspFE", // 1 الريتش
-            "2": "1f48JxTbpjPk9kQEYBF9yDy-urDFuuG_p", // 2 المؤامره
-            "3": "1GFBXZi6B5EMuhtYI2JG3TMiipWord_J6", // 3 العاجله
-            "4": "1n2GyRH3ylV90W-rrltVPDVsUuRJa9IRd", // 4 يوتيوبر
-            "5": "1uRJr_faktNsWVhhdyvCE-SYYvQFfhaUG", // 5 كول سينتر (بقى لوحده اهو)
-            "6": "12JojP3lyglDLo5f0MfQ5F6TPTrYtx5oU", // 6 شات جيبتي
-            "7": "1iPqd3RsKZ_58npfNHjkNhNpxoloR707U", // 7 امهات التيك توك
-            "8": "1mFvK1g0SEwvRXjGavI8CQUlncbd3XQnb", // 8 ثانويه
-            "9": "1CwqeXmn4Y62aM6wrgJU26P0hEjZrxrK9",  // 9 السريجي
-            "10": "1Z6XzeKU19LmDig_t1MjBgJr8co-pBTXO",// 10 المتنمره
-            "11": "1ymU5DbIyjX42UiG79eElyFjdl-oFSmFQ",// 11 استرونج
-            "12": "1NRiDZ8_n9EkizYzMSNMM7WQuI3SGFJav",// 12 صيوحه
-            "13": "1eXuTA7bCgvgDuAE4TEHvNSwlS4OUtYk6",// 13 محنك
-            "14": "1FXFDnu0WW3uTizC_kH9wJyrB-j1M1alm",// 14 فوود بلوجر
-            "15": "1IbSi94OVcuI2f5IrjWYMHl_puhd7van2",// 15 لينكد ان
-            "16": "1xDzfiEBEy-bTQfmF_r-8k2QFziBLDf3c", // 16 تويتر
-            "17": "1maWFoNb4lLuWZxa6_bJ6YBhRPz-Ov4NI",// 17 خدمه العملاء
-            "18": "1f7OCeOlIjK-VP6zXsB3NJHoOtjj3Xoh1" // 18 الشاي بلبن
-        };
-        // ======================================================================
+        // ====== شرائح الشخصيات — ترتيب ثابت للأبد، رقم الكارت نفسه اتشال من هنا ======
+        // كل ID هنا هو "شريحة شخصية" مش "كارت". أي كارت فيزيائي ممكن ياخد أي شريحة
+        // حسب البين — ده اللي بيمنع حفظ الناس لمعنى كل رقم كارت.
+        const CHARACTER_SLOTS = [
+            "1FIT9DQMzTSDYY1c80_V5R9TQ6rgjspFE", // الريتش
+            "1f48JxTbpjPk9kQEYBF9yDy-urDFuuG_p", // المؤامره
+            "1GFBXZi6B5EMuhtYI2JG3TMiipWord_J6", // العاجله
+            "1n2GyRH3ylV90W-rrltVPDVsUuRJa9IRd", // يوتيوبر
+            "1uRJr_faktNsWVhhdyvCE-SYYvQFfhaUG", // كول سينتر
+            "12JojP3lyglDLo5f0MfQ5F6TPTrYtx5oU", // شات جيبتي
+            "1iPqd3RsKZ_58npfNHjkNhNpxoloR707U", // امهات التيك توك
+            "1mFvK1g0SEwvRXjGavI8CQUlncbd3XQnb", // ثانويه
+            "1CwqeXmn4Y62aM6wrgJU26P0hEjZrxrK9",  // السريجي
+            "1Z6XzeKU19LmDig_t1MjBgJr8co-pBTXO", // المتنمره
+            "1ymU5DbIyjX42UiG79eElyFjdl-oFSmFQ", // استرونج
+            "1NRiDZ8_n9EkizYzMSNMM7WQuI3SGFJav", // صيوحه
+            "1eXuTA7bCgvgDuAE4TEHvNSwlS4OUtYk6", // محنك
+            "1FXFDnu0WW3uTizC_kH9wJyrB-j1M1alm", // فوود بلوجر
+            "1IbSi94OVcuI2f5IrjWYMHl_puhd7van2", // لينكد ان
+            "1xDzfiEBEy-bTQfmF_r-8k2QFziBLDf3c", // تويتر
+            "1maWFoNb4lLuWZxa6_bJ6YBhRPz-Ov4NI", // خدمه العملاء
+            "1f7OCeOlIjK-VP6zXsB3NJHoOtjj3Xoh1"  // الشاي بلبن
+        ];
+        const TOTAL_CARDS = CHARACTER_SLOTS.length; // 18
+
+        // ---------- محرك الخلط الثابت (نفس منطق /shared/qaada-engine.js) ----------
+        function mulberry32(seed) {
+            return function () {
+                seed |= 0; seed = (seed + 0x6D2B79F5) | 0;
+                let t = Math.imul(seed ^ (seed >>> 15), 1 | seed);
+                t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+                return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+            };
+        }
+        function seededShuffle(array, seed) {
+            const rand = mulberry32(seed);
+            const arr = array.slice();
+            for (let i = arr.length - 1; i > 0; i--) {
+                const j = Math.floor(rand() * (i + 1));
+                [arr[i], arr[j]] = [arr[j], arr[i]];
+            }
+            return arr;
+        }
+        function getShuffledSlots(pin) {
+            const pinNum = Number(pin);
+            const seed = (pinNum * 2654435761) ^ 0x9E3779B9;
+            return seededShuffle(CHARACTER_SLOTS, seed);
+        }
+        function getDriveIdForCard(pin, cardId) {
+            return getShuffledSlots(pin)[cardId - 1];
+        }
+        function parseCardId(raw) {
+            if (raw === null || raw === undefined) return null;
+            const str = String(raw).trim();
+            if (!/^\d+$/.test(str)) return null;
+            const n = parseInt(str, 10);
+            return (n >= 1 && n <= TOTAL_CARDS) ? n : null;
+        }
+        function isValidPin(raw) { return /^\d{1,2}$/.test(String(raw).trim()); }
+        function normalizePin(raw) { return String(raw).trim().padStart(2, "0"); }
+        function generateNewPin() { return String(Math.floor(Math.random() * 100)).padStart(2, "0"); }
+
+        const PIN_KEY = "qaada_game_pin";
+        function savePin(pin) { localStorage.setItem(PIN_KEY, pin); }
+        function loadPin() { return localStorage.getItem(PIN_KEY); }
+
+        // ---------- إدارة الشاشات ----------
+        function hideAllStates() {
+            ['loading-state','card-display-state','scanner-state','lobby-home','lobby-join','lobby-host']
+                .forEach(id => { const el = document.getElementById(id); if (el) el.style.display = 'none'; });
+        }
 
         window.onload = function() {
             const urlParams = new URLSearchParams(window.location.search);
             const cardId = urlParams.get('id');
+            const pin = loadPin();
 
-            // -------- 🚨 كود قعدة السري: حماية من الغش وتثبيت الشخصية 🚨 --------
-            if (cardId) {
-                let savedId = localStorage.getItem('qaada_character_id');
-                let savedTime = localStorage.getItem('qaada_scan_time');
-                let now = new Date().getTime(); // الوقت دلوقتي
-
-                // لو مسجل شخصية قبل كده، وعدى عليها أقل من 6 ساعات (مدة القعدة)
-                if (savedId && savedTime && (now - savedTime < 6 * 60 * 60 * 1000)) {
-                    if (cardId !== savedId) {
-                        // قفشناه بيغش وبيغير الرقم!
-                        alert('قفشناك يا غشاش! 🚨 فاكر إنك هتبدل شخصيتك؟ هترجع لشخصيتك الأصلية غصب عنك!');
-                        window.location.replace(`?id=${savedId}`); // بيرجعه فوراً
-                        return; // وقف الكود هنا عشان ميكملش تحميل الشخصية الغلط
-                    }
-                } else {
-                    // لو أول مرة يسحب، أو عدى 6 ساعات (قعدة جديدة)، بنسجل الشخصية الجديدة
-                    localStorage.setItem('qaada_character_id', cardId);
-                    localStorage.setItem('qaada_scan_time', now);
-                }
+            if (!pin) {
+                hideAllStates();
+                document.getElementById('lobby-home').style.display = 'block';
+                return;
             }
-            // --------------------------------------------------------------
 
-            if (cardId && secureDB[cardId]) {
-                const driveId = secureDB[cardId];
-                const mainImg = document.getElementById('game-card-img');
-                
-                // 🚨 نظام التحميل الصارم (3 طرق عشان لو جوجل هنج) 🚨
-                const urls = [
-                    `https://drive.google.com/thumbnail?id=${driveId}&sz=w1000`, 
-                    `https://lh3.googleusercontent.com/d/${driveId}`, 
-                    `https://drive.google.com/uc?export=view&id=${driveId}`
-                ];
-                
-                let currentUrlIndex = 0;
-
-                // لو الصورة محملتش بالطريقة الأولى، الكود هيدخل عالتانية والتالتة أوتوماتيك
-                mainImg.onerror = function() {
-                    currentUrlIndex++;
-                    if (currentUrlIndex < urls.length) {
-                        mainImg.src = urls[currentUrlIndex];
-                    } else {
-                        // لو الـ 3 طرق فشلوا (مستحيل يحصل)
-                        document.getElementById('loading-state').style.display = 'none';
-                        showError();
-                    }
-                };
-
-                // أول ما الصورة تحمل فعلياً (سواء من اللينك الأول أو الثاني أو الثالث)
-                mainImg.onload = function() {
-                    document.getElementById('loading-state').style.display = 'none';
-                    document.getElementById('card-display-state').style.display = 'block';
-                    if(typeof gtag === 'function') { gtag('event', 'card_opened', { 'card_id': cardId }); }
-                };
-
-                // بدء التحميل
-                mainImg.src = urls[0];
-
+            if (cardId) {
+                loadCardForId(cardId, pin);
             } else {
-                showError();
+                hideAllStates();
+                document.getElementById('host-pin-display').textContent = pin;
+                document.getElementById('lobby-host').style.display = 'block';
+            }
+        };
+
+        // ---------- شاشات اللوبي ----------
+        function startNewGame() {
+            const pin = generateNewPin();
+            savePin(pin);
+            if(typeof gtag === 'function') { gtag('event', 'new_game_created'); }
+            hideAllStates();
+            document.getElementById('host-pin-display').textContent = pin;
+            document.getElementById('lobby-host').style.display = 'block';
+        }
+
+        function showJoinScreen() {
+            hideAllStates();
+            document.getElementById('lobby-join').style.display = 'block';
+        }
+
+        function backToHome() {
+            hideAllStates();
+            document.getElementById('lobby-home').style.display = 'block';
+        }
+
+        function joinGame() {
+            const raw = document.getElementById('pin-input-field').value;
+            const errorEl = document.getElementById('join-error');
+            if (!isValidPin(raw)) {
+                errorEl.textContent = 'دخل بين مكون من رقمين صحيح.';
+                return;
+            }
+            errorEl.textContent = '';
+            const pin = normalizePin(raw);
+            savePin(pin);
+            if(typeof gtag === 'function') { gtag('event', 'game_joined'); }
+
+            // لو كان فيه رقم كارت في اللينك أصلاً (نادر) كمّل عليه، وإلا روح لشاشة السكان
+            const urlParams = new URLSearchParams(window.location.search);
+            const cardId = urlParams.get('id');
+            if (cardId) {
+                loadCardForId(cardId, pin);
+            } else {
+                hideAllStates();
+                document.getElementById('host-pin-display').textContent = pin;
+                document.getElementById('lobby-host').style.display = 'block';
             }
         }
 
+        // ---------- تحميل الكارت الفعلي ----------
+        function loadCardForId(rawCardId, pin) {
+            hideAllStates();
+            document.getElementById('loading-state').style.display = 'block';
+
+            const cardId = parseCardId(rawCardId);
+            if (!cardId) { showError(); return; }
+
+            const driveId = getDriveIdForCard(pin, cardId);
+            const mainImg = document.getElementById('game-card-img');
+
+            const urls = [
+                `https://drive.google.com/thumbnail?id=${driveId}&sz=w1000`,
+                `https://lh3.googleusercontent.com/d/${driveId}`,
+                `https://drive.google.com/uc?export=view&id=${driveId}`
+            ];
+            let currentUrlIndex = 0;
+
+            mainImg.onerror = function() {
+                currentUrlIndex++;
+                if (currentUrlIndex < urls.length) {
+                    mainImg.src = urls[currentUrlIndex];
+                } else {
+                    document.getElementById('loading-state').style.display = 'none';
+                    showError();
+                }
+            };
+
+            mainImg.onload = function() {
+                document.getElementById('loading-state').style.display = 'none';
+                document.getElementById('card-display-state').style.display = 'block';
+                if(typeof gtag === 'function') { gtag('event', 'card_opened', { 'card_id': cardId }); }
+            };
+
+            mainImg.src = urls[0];
+        }
+
         function showError() {
-            document.getElementById('loading-state').style.display = 'none';
-            document.getElementById('card-display-state').style.display = 'none';
+            hideAllStates();
             document.getElementById('content-box').innerHTML += `
                 <div style="font-size: 50px; margin-bottom: 15px;">⚠️</div>
                 <h2>الكارت غير موجود</h2>
             `;
         }
 
+        // ---------- السكانر ----------
         let html5QrCode;
         function scanAgain() {
-            document.getElementById('card-display-state').style.display = 'none';
+            hideAllStates();
             document.getElementById('scanner-state').style.display = 'block';
-            
+
             if(typeof gtag === 'function') { gtag('event', 'scan_again_clicked'); }
 
             if(!html5QrCode) {
@@ -237,10 +337,42 @@
 </head>
 <body>
     <div class="glass-box" id="content-box">
-        
+
         <img src="logo.png" alt="لوجو قعدة" class="game-logo" onerror="this.style.display='none'">
 
-        <div id="loading-state">
+        <!-- شاشة البداية: لعبة جديدة / انضمام -->
+        <div id="lobby-home">
+            <h2>يلا نلعب قعدة</h2>
+            <div class="small-text">ابدأ لعبة جديدة أو انضم بـ PIN من صحابك</div>
+            <div class="btn-group" style="margin-top: 18px;">
+                <button class="action-btn btn-primary" onclick="startNewGame()">لعبة جديدة</button>
+                <button class="action-btn btn-secondary" onclick="showJoinScreen()">انضمام بـ PIN</button>
+            </div>
+        </div>
+
+        <!-- شاشة إدخال PIN -->
+        <div id="lobby-join">
+            <h2>انضم للعبة</h2>
+            <div class="small-text">دخل الـ PIN اللي بعته ليك صاحبك</div>
+            <input id="pin-input-field" class="pin-input" type="text" inputmode="numeric" pattern="[0-9]*" maxlength="2" placeholder="00">
+            <div id="join-error" class="lobby-error"></div>
+            <div class="btn-group">
+                <button class="action-btn btn-primary" onclick="joinGame()">انضمام</button>
+                <button class="action-btn btn-secondary" onclick="backToHome()">رجوع</button>
+            </div>
+        </div>
+
+        <!-- شاشة عرض PIN اللعبة (للمضيف أو بعد الانضمام) -->
+        <div id="lobby-host">
+            <h2>اللعبة جاهزة</h2>
+            <div class="small-text">ابعت الـ PIN ده لصحابك، وبعدين اسكان كارتك</div>
+            <div class="pin-display-num" id="host-pin-display">00</div>
+            <div class="btn-group">
+                <button class="action-btn btn-primary" onclick="scanAgain()">اسكان كارتي</button>
+            </div>
+        </div>
+
+        <div id="loading-state" style="display:none;">
             <div class="card-wrapper"><div class="card-loader"></div></div>
             <h2>جاري فتح الكارت</h2>
             <div class="progress-container"><div class="progress-bar"></div></div>
