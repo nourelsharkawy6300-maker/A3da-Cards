@@ -322,7 +322,4 @@ window.onload = function() {
         document.getElementById('lobby-home').style.display = 'block';
     }
 };
-    </script>
-}
-};
 
