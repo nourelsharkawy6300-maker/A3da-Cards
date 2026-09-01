@@ -3,517 +3,118 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <meta name="theme-color" content="#4a4d9e">
+    <meta name="theme-color" content="#EBE2CE">
     <title>لعبة قعدة</title>
-
-    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@500;700;800;900&display=swap" rel="stylesheet">
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-RNZPERH684"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', 'G-RNZPERH684');
-    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@700;800;900&family=Alexandria:wght@400;500;600;700&display=swap" rel="stylesheet">
     <script src="https://unpkg.com/html5-qrcode"></script>
-
-    <style>
-        /* ==========================================
-           1. الأساسيات (Clean & Native App Feel)
-           ========================================== */
-        body {
-            margin: 0; font-family: 'Tajawal', sans-serif; background-color: #f4f6f8; /* رمادي فاتح مريح للعين */
-            color: #1e1e1e; display: flex; justify-content: center; align-items: flex-start;
-            min-height: 100vh; text-align: center; user-select: none; -webkit-user-select: none;
-        }
-
-        /* بوكس التطبيق (كأنه شاشة موبايل حقيقية) */
-        .app-container {
-            background: #ffffff;
-            width: 100%; max-width: 480px; min-height: 100vh;
-            padding: 30px 20px; box-sizing: border-box;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.05);
-            position: relative; overflow-x: hidden;
-        }
-
-        .game-logo { max-width: 80px; margin: 0 auto 20px auto; display: block; }
-        h2 { font-size: 26px; margin: 0 0 8px 0; font-weight: 900; color: #4a4d9e; letter-spacing: -0.5px;}
-        .small-text { font-weight: 700; font-size: 14px; color: #6c757d; margin-bottom: 25px; }
-
-        /* ==========================================
-           2. الأزرار والمدخلات (Flat Design)
-           ========================================== */
-        .btn-group { display: flex; gap: 12px; justify-content: center; margin-top: 15px; width: 100%; }
-        .action-btn { font-family: 'Tajawal', sans-serif; font-weight: 800; font-size: 16px; padding: 14px 10px; border-radius: 12px; cursor: pointer; transition: transform 0.1s; flex: 1; border: none; }
-        .btn-primary { background: #4a4d9e; color: #ffffff; box-shadow: 0 4px 15px rgba(74, 77, 158, 0.2); }
-        .btn-secondary { background: #f0f2f5; color: #4a4d9e; border: 2px solid #e9ecef; }
-        .action-btn:active { transform: scale(0.96); }
-
-        .pin-input { width: 100%; text-align: center; font-size: 38px; font-weight: 900; letter-spacing: 20px; padding: 15px 10px; margin: 15px 0 20px; border-radius: 16px; border: 2px solid #e9ecef; background: #f8f9fa; color: #4a4d9e; font-family: 'Tajawal', sans-serif; box-sizing: border-box; transition: border 0.3s ease;}
-        .pin-input:focus { outline: none; border-color: #4a4d9e; background: #fff;}
-        .pin-display-num { font-size: 55px; font-weight: 900; letter-spacing: 15px; color: #4a4d9e; margin: 10px 0 25px; }
-        
-        .lobby-error { font-size: 14px; color: #e74c3c; min-height: 18px; margin: -10px 0 15px; font-weight: 800;}
-        .reset-link { display: block; margin-top: 25px; font-size: 14px; font-weight: 800; color: #adb5bd; text-decoration: underline; cursor: pointer; }
-        .rules-link { display: block; margin-top: 25px; padding: 14px; font-family: 'Tajawal', sans-serif; font-weight: 800; font-size: 15px; color: #4a4d9e; text-decoration: none; border: 2px solid #e9ecef; border-radius: 14px; background: #f8f9fa; }
-
-        /* ==========================================
-           3. لوحة النقط للمعلم (Premium Cards)
-           ========================================== */
-        .input-group { display: flex; gap: 10px; margin-bottom: 25px; }
-        #player-name-input { flex: 1; padding: 14px; border-radius: 12px; border: 2px solid #e9ecef; background: #f8f9fa; color: #1e1e1e; font-family: 'Tajawal'; font-weight: 800; outline: none; font-size: 16px; text-align: center;}
-        #player-name-input:focus { border-color: #4a4d9e; background: #fff; }
-        
-        .players-list { list-style: none; padding: 0; margin: 0 0 20px 0; display: flex; flex-wrap: wrap; gap: 8px; justify-content: center;}
-        .players-list li { background: #e9ecef; color: #4a4d9e; padding: 8px 16px; border-radius: 20px; font-weight: 800; font-size: 14px; }
-        
-        .round-badge { display: inline-block; background: #fdf0d5; color: #e67e22; padding: 8px 20px; border-radius: 20px; font-size: 15px; font-weight: 900; margin-bottom: 15px; border: 2px solid #fce3b1;}
-        
-        /* كارت اللاعب */
-        .player-card { background: #ffffff; border: 2px solid #e9ecef; border-radius: 16px; padding: 18px; margin-bottom: 15px; display: flex; flex-direction: column; gap: 15px; box-shadow: 0 4px 10px rgba(0,0,0,0.02); }
-        .player-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 2px dashed #f0f2f5; padding-bottom: 12px;}
-        .player-name { font-size: 18px; font-weight: 900; color: #1e1e1e; }
-        .player-score { font-size: 24px; font-weight: 900; color: #4a4d9e; background: #f0f2f5; padding: 4px 14px; border-radius: 12px;}
-        
-        /* زراير التقييم النظيفة والمقفولة */
-        .eval-btns { display: flex; gap: 10px; }
-        .eval-btn { flex: 1; padding: 12px; border-radius: 10px; border: none; font-size: 15px; font-weight: 900; cursor: pointer; font-family: 'Tajawal'; transition: all 0.1s; }
-        .eval-btn.success { background: #e8f8f5; border: 2px solid #2ecc71; color: #2ecc71; }
-        .eval-btn.fail { background: #fdedec; border: 2px solid #e74c3c; color: #e74c3c; }
-        .eval-btn:active { transform: scale(0.95); }
-        
-        .eval-locked { width: 100%; padding: 12px; border-radius: 10px; background: #f8f9fa; color: #adb5bd; font-weight: 900; font-size: 15px; border: 2px solid #e9ecef; display: flex; align-items: center; justify-content: center; gap: 8px;}
-
-        .host-cam-btn { background: #fff; border: 2px dashed #4a4d9e; color: #4a4d9e; width: 100%; padding: 14px; border-radius: 14px; font-size: 16px; font-weight: 900; font-family: 'Tajawal'; cursor: pointer; margin-bottom: 20px; transition: all 0.1s; }
-        .host-cam-btn:active { transform: scale(0.98); background: #f8f9fa;}
-
-        /* ==========================================
-           4. الكروت والكاميرا
-           ========================================== */
-        .game-state { display: none; animation: fadeIn 0.3s ease forwards; }
-        @keyframes fadeIn { 0% { opacity: 0; transform: translateY(10px); } 100% { opacity: 1; transform: translateY(0); } }
-
-        .display-card { width: 100%; max-height: 65vh; object-fit: contain; border-radius: 16px; border: 2px solid #e9ecef; margin: 0 auto 20px auto; display: block; box-shadow: 0 10px 30px rgba(0,0,0,0.08);}
-        
-        .card-loader { width: 80px; height: 110px; margin: 0 auto 25px auto; background: #4a4d9e; border-radius: 12px; display: flex; justify-content: center; align-items: center; animation: flipCard3D 1.2s infinite ease-in-out; }
-        .card-loader::after { content: '🎲'; font-size: 30px; }
-        @keyframes flipCard3D { 0% { transform: perspective(400px) rotateY(0deg); } 50% { transform: perspective(400px) rotateY(180deg); } 100% { transform: perspective(400px) rotateY(360deg); } }
-        
-        .funny-quote { color: #4a4d9e; font-size: 18px; font-weight: 900; margin-top: 15px; min-height: 50px; line-height: 1.4;}
-        
-        #reader { width: 100%; border-radius: 16px; overflow: hidden; background: #000; border: 2px solid #e9ecef; margin-top: 15px; }
-        #reader img { display: none; }
-        #reader video { object-fit: cover !important; }
-    </style>
+    <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-    <div class="app-container" id="content-box">
-        <img src="logo.png" alt="لوجو قعدة" class="game-logo" onerror="this.style.display='none'">
+    <div class="table" id="content-box">
         
         <!-- اللوبي -->
         <div id="lobby-home" class="game-state">
-            <h2>لعبة قعدة</h2>
-            <div class="small-text">ابدأ جيم جديد (للمعلم) أو انضم بـ PIN</div>
-            <div class="btn-group" style="margin-top: 30px;">
-                <button class="action-btn btn-primary" onclick="initHost()">أنا المعلم</button>
-                <button class="action-btn btn-secondary" onclick="showJoinScreen()">انضمام كلاعب</button>
+            <header class="board-header" style="justify-content: center; margin-top: 20px;">
+                <h1 class="board-title">لعبة قعدة</h1>
+            </header>
+            <p class="empty-state is-visible" style="margin-bottom: 20px;">ابدأ جيم جديد كـ (معلم) أو انضم بـ PIN</p>
+            <div style="display: flex; gap: 10px; flex-direction: column;">
+                <button class="btn btn--primary" onclick="initHost()">أنا المعلم</button>
+                <button class="btn btn--ghost" onclick="showJoinScreen()">انضمام كلاعب</button>
             </div>
-            <a href="rules/" target="_blank" rel="noopener" class="rules-link">📜 طريقة اللعب الرسمية</a>
         </div>
 
         <!-- الانضمام للاعبين -->
         <div id="lobby-join" class="game-state">
-            <h2>انضم للروم</h2>
-            <div class="small-text">أدخل الـ PIN الخاص بالشلة</div>
-            <input id="pin-input-field" class="pin-input" type="text" inputmode="numeric" pattern="[0-9]*" maxlength="2" placeholder="00">
-            <div id="join-error" class="lobby-error"></div>
-            <div class="btn-group">
-                <button class="action-btn btn-primary" onclick="joinGame()">دخول الكاميرا</button>
-                <button class="action-btn btn-secondary" onclick="leaveRoom()">رجوع</button>
+            <header class="board-header"><h1 class="board-title">انضم للروم</h1></header>
+            <section class="add-player">
+                <input id="pin-input-field" class="add-player__input" type="text" inputmode="numeric" pattern="[0-9]*" maxlength="2" placeholder="أدخل الـ PIN...">
+            </section>
+            <div id="join-error" style="color: var(--brick); font-size: 14px; margin-bottom: 10px;"></div>
+            <div style="display: flex; gap: 10px;">
+                <button class="btn btn--primary" onclick="joinGame()">دخول</button>
+                <button class="btn btn--ghost" onclick="leaveRoom()">رجوع</button>
             </div>
         </div>
 
         <!-- تأسيس الروم للمعلم -->
         <div id="host-setup" class="game-state">
-            <h2>تأسيس القعدة</h2>
-            <div class="small-text">شفرة الروم السرية (ابعتها للشلة)</div>
-            <div class="pin-display-num" id="new-room-pin">00</div>
-            <div class="input-group">
-                <input type="text" id="player-name-input" placeholder="اكتب اسم اللاعب هنا..." maxlength="15">
-                <button class="action-btn btn-primary" style="flex: 0.4;" onclick="addPlayer()">إضافة</button>
-            </div>
-            <ul id="players-list" class="players-list"></ul>
-            <button class="action-btn btn-primary" style="width: 100%; margin-top: 10px;" onclick="startScoreboard()">🚀 ابدأ الجيم</button>
-            <div class="reset-link" onclick="leaveRoom()">إلغاء والرجوع</div>
+            <header class="board-header">
+                <h1 class="board-title">تأسيس القعدة</h1>
+                <div class="round-stamp"><span class="round-stamp__label">كود الروم</span><span class="round-stamp__num" id="new-room-pin"></span></div>
+            </header>
+            <section class="add-player" aria-label="إضافة لاعب">
+                <input type="text" id="playerNameInput" class="add-player__input" placeholder="اسم اللاعب الجديد..." maxlength="20" autocomplete="off">
+                <button type="button" id="addPlayerBtn" class="btn btn--ink" onclick="addPlayer()">إضافة</button>
+            </section>
+            <ul class="player-list" id="players-list-setup"></ul>
+            <footer class="board-controls">
+                <button type="button" class="btn btn--primary" onclick="startScoreboard()">🚀 ابدأ الجيم</button>
+                <button type="button" class="btn btn--danger" onclick="leaveRoom()">إلغاء</button>
+            </footer>
         </div>
 
-        <!-- لوحة النقط المحترفة (بها منع التكرار) -->
+        <!-- لوحة النقط للمعلم -->
         <div id="scoreboard-state" class="game-state">
-            <div class="round-badge" id="round-title-display">الراوند 1: مواقف</div>
-            <div class="small-text">شفرة الروم الحالية: <span id="active-pin-display" style="font-weight: 900; color: #4a4d9e;"></span></div>
+            <header class="board-header">
+                <h1 class="board-title" id="round-title-display">مواقف</h1>
+                <div class="round-stamp" id="roundStamp">
+                    <span class="round-stamp__label">الجولة</span>
+                    <span class="round-stamp__num" id="roundNumber">1</span>
+                </div>
+            </header>
             
-            <button class="host-cam-btn" onclick="scanAgain()">📸 اسكان كارت المعلم</button>
+            <button class="btn btn--ghost" style="width: 100%; border: 2px dashed var(--ochre); color: var(--ochre-d); margin-bottom: 20px;" onclick="scanAgain()">📸 اسكان كارت المعلم</button>
 
-            <!-- الكروت هتترمي هنا -->
-            <div id="scoreboard-container" style="text-align: right;"></div>
+            <ul class="player-list" id="scoreboard-container"></ul>
             
-            <button id="next-round-btn" class="action-btn btn-primary" style="width: 100%; margin-top: 15px;" onclick="nextRound()">⏭️ الراوند اللي بعده</button>
-            <div class="reset-link" onclick="leaveRoom()">تدمير الروم بالكامل</div>
+            <footer class="board-controls">
+                <button type="button" id="next-round-btn" class="btn btn--primary" onclick="nextRound()">الجولة التالية</button>
+                <button type="button" class="btn btn--ghost" onclick="leaveRoom()">تدمير الروم</button>
+            </footer>
         </div>
 
         <!-- النتيجة النهائية -->
         <div id="final-result-state" class="game-state">
-            <div style="font-size: 70px; margin-bottom: 10px;">🏆</div>
-            <h2 style="font-size: 30px;">انتهت القعدة!</h2>
-            <div id="winner-display" style="color: #2ecc71; font-weight: 900; font-size: 22px; margin-top: 20px;"></div>
-            <div id="loser-display" style="color: #e74c3c; font-weight: 900; font-size: 22px; margin: 15px 0 30px; padding: 15px; background: #fdedec; border-radius: 16px; border: 2px solid #fadbd8;"></div>
-            <div class="small-text" style="color: #1e1e1e; margin-bottom: 25px; font-weight: 800;">الخسران يمسك موبايله فوراً ويعمل سكان لباركود (الأحكام) 😈</div>
-            <button class="action-btn btn-primary" style="width: 100%;" onclick="leaveRoom()">رجوع للرئيسية</button>
+            <header class="board-header" style="justify-content: center; border: none;"><h1 class="board-title" style="font-size: 40px;">🏆 انتهت القعدة</h1></header>
+            <ul class="player-list">
+                <li class="player-row" style="background: rgba(63, 107, 78, 0.1); border-color: var(--forest);">
+                    <div class="player-row__info"><span class="player-row__name" id="winner-display" style="color: var(--forest-d);"></span></div>
+                </li>
+                <li class="player-row" style="background: rgba(166, 61, 47, 0.1); border-color: var(--brick); margin-top: 10px;">
+                    <div class="player-row__info"><span class="player-row__name" id="loser-display" style="color: var(--brick-d);"></span></div>
+                </li>
+            </ul>
+            <p class="empty-state is-visible" style="margin-top: 20px; border-color: var(--brick); color: var(--brick-d);">الخسران يمسك موبايله فوراً ويعمل سكان لباركود (الأحكام) 😈</p>
+            <footer class="board-controls">
+                <button class="btn btn--primary" style="width: 100%;" onclick="leaveRoom()">رجوع للرئيسية</button>
+            </footer>
         </div>
 
-        <!-- التحميل -->
-        <div id="loading-state" class="game-state">
-            <div class="card-loader"></div>
-            <h2>جاري فك الشفرة</h2>
-            <div id="random-quote" class="funny-quote"></div>
+        <!-- شاشات الكاميرا والكروت -->
+        <div id="loading-state" class="game-state" style="text-align: center; padding: 40px 0;">
+            <h1 class="board-title" style="margin-bottom: 20px;">🎲 جاري فك الشفرة</h1>
+            <p id="random-quote" style="font-family: var(--font-body); font-weight: 700; color: var(--ink-70);"></p>
         </div>
 
-        <!-- الكارت -->
         <div id="card-display-state" class="game-state">
-            <h2>كارتك جاهز</h2>
-            <img id="game-card-img" src="" alt="كارت قعدة" class="display-card">
-            <div class="btn-group">
-                <button class="action-btn btn-primary" onclick="scanAgain()">سحب جديد</button>
-                <button class="action-btn btn-secondary" onclick="closeCard()">خروج من الروم</button>
+            <header class="board-header"><h1 class="board-title">كارتك جاهز</h1></header>
+            <img id="game-card-img" src="" alt="كارت قعدة" style="width: 100%; border-radius: var(--radius-lg); border: 2px solid var(--ink); margin-bottom: 20px;">
+            <div style="display: flex; gap: 10px;">
+                <button class="btn btn--primary" onclick="scanAgain()">سحب جديد</button>
+                <button class="btn btn--danger" onclick="closeCard()">خروج</button>
             </div>
         </div>
 
-        <!-- الكاميرا -->
         <div id="scanner-state" class="game-state">
-            <h2>وجه الكاميرا للكارت</h2>
-            <div class="small-text">جاري تفعيل الكاميرا... وافق على الصلاحية</div>
-            <div id="reader"></div>
-            <button class="action-btn btn-secondary" style="width: 100%; margin-top: 15px;" onclick="cancelScan()">خروج من الروم</button>
+            <header class="board-header"><h1 class="board-title">وجه الكاميرا للكارت</h1></header>
+            <div id="reader" style="border-radius: var(--radius-md); overflow: hidden; border: 2px solid var(--ink); margin-bottom: 20px;"></div>
+            <button class="btn btn--danger" style="width: 100%;" onclick="cancelScan()">رجوع</button>
         </div>
+
     </div>
-
-    <!-- ==========================================
-         JAVASCRIPT (STRICT LOGIC & LOCKS)
-         ========================================== -->
-    <script>
-        document.addEventListener('contextmenu', event => event.preventDefault());
-
-        const CHARACTER_SLOTS = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18];
-        let html5QrCode = null;
-        let currentPlayers = [];
-        let currentRound = 1;
-
-        const funnyQuotes = [
-            "يا ترى هتطلع أم خالد ولا إياد الموجي؟ 👀",
-            "استرها علينا يارب من كارت الدبيس... 💸",
-            "جهز نفسك لتقليد الدكتور! 👨‍🏫",
-            "يا ساتر.. شكلها فيها كارت قفلنا المايك 🤐",
-            "اسحب كارتك وواجه مصيرك يا معلم! ⚡"
-        ];
-
-        /* --- محرك اللخبطة --- */
-        function mulberry32(seed) {
-            return function () {
-                seed |= 0; seed = (seed + 0x6D2B79F5) | 0;
-                let t = Math.imul(seed ^ (seed >>> 15), 1 | seed);
-                t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
-                return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
-            };
-        }
-        function seededShuffle(array, seed) {
-            const rand = mulberry32(seed);
-            const arr = array.slice();
-            for (let i = arr.length - 1; i > 0; i--) {
-                const j = Math.floor(rand() * (i + 1));
-                [arr[i], arr[j]] = [arr[j], arr[i]];
-            }
-            return arr;
-        }
-        function getImageNumberForCard(pin, cardId) {
-            const seed = (Number(pin) * 2654435761) ^ 0x9E3779B9;
-            return seededShuffle(CHARACTER_SLOTS, seed)[cardId - 1];
-        }
-
-        /* --- الذاكرة --- */
-        function savePin(pin) { localStorage.setItem("qaada_game_pin", pin); }
-        function loadPin() { return localStorage.getItem("qaada_game_pin"); }
-        function clearData() { 
-            localStorage.removeItem("qaada_game_pin");
-            localStorage.removeItem("qaada_is_host");
-            localStorage.removeItem("qaada_players");
-            localStorage.removeItem("qaada_round");
-        }
-        function savePlayers() { localStorage.setItem("qaada_players", JSON.stringify(currentPlayers)); }
-        function loadPlayers() { currentPlayers = JSON.parse(localStorage.getItem("qaada_players")) || []; }
-        function saveRound() { localStorage.setItem("qaada_round", currentRound.toString()); }
-        function loadRound() { currentRound = parseInt(localStorage.getItem("qaada_round")) || 1; }
-
-        function hideAllStates() {
-            document.querySelectorAll('.game-state').forEach(el => el.style.display = 'none');
-        }
-
-        /* --- نظام المعلم --- */
-        function initHost() {
-            clearData();
-            const newPin = String(Math.floor(Math.random() * 100)).padStart(2, "0");
-            savePin(newPin);
-            localStorage.setItem("qaada_is_host", "true");
-            currentPlayers = [];
-            currentRound = 1;
-            savePlayers();
-            saveRound();
-            
-            hideAllStates();
-            document.getElementById("new-room-pin").innerText = newPin;
-            document.getElementById("players-list").innerHTML = "";
-            document.getElementById("host-setup").style.display = "block";
-        }
-
-        function addPlayer() {
-            const input = document.getElementById("player-name-input");
-            const name = input.value.trim();
-            if(name.length > 0) {
-                // 🚨 التعديل السري: إضافة evaluatedRound عشان نقفل عليه الزرار بعد التقييم
-                currentPlayers.push({ name: name, score: 0, evaluatedRound: 0, lastAction: '' });
-                savePlayers();
-                input.value = "";
-                const li = document.createElement("li");
-                li.innerText = name;
-                document.getElementById("players-list").appendChild(li);
-            }
-        }
-
-        function startScoreboard() {
-            if(currentPlayers.length === 0) { alert("يا معلم ضيف لاعب واحد على الأقل!"); return; }
-            hideAllStates();
-            document.getElementById("active-pin-display").innerText = loadPin();
-            renderScoreboard();
-            document.getElementById("scoreboard-state").style.display = "block";
-        }
-
-        function getRoundDetails() {
-            if(currentRound === 1) return { title: "الراوند 1: مواقف", pts: 5 };
-            if(currentRound === 2) return { title: "الراوند 2: أكشن", pts: 10 };
-            if(currentRound === 3) return { title: "الراوند 3: حاسب", pts: 5 };
-            return { title: "النهاية", pts: 0 };
-        }
-
-        // 🚨 الكود الذكي لمنع التكرار 🚨
-        function renderScoreboard() {
-            const details = getRoundDetails();
-            document.getElementById("round-title-display").innerText = details.title;
-            const container = document.getElementById("scoreboard-container");
-            container.innerHTML = "";
-            
-            currentPlayers.forEach((player, index) => {
-                let actionArea = "";
-
-                // لو المعلم قيمه خلاص في الراوند ده، نقفل الزراير ونطلعله البادج
-                if (player.evaluatedRound === currentRound) {
-                    const badgeColor = player.lastAction === '✅ نفذ' ? '#2ecc71' : '#e74c3c';
-                    actionArea = `
-                        <div class="eval-locked">
-                            <span style="color: ${badgeColor};">تم التقييم: ${player.lastAction}</span>
-                        </div>
-                    `;
-                } else {
-                    // لو لسه متقيمش، تظهر الزراير عادي
-                    actionArea = `
-                        <div class="eval-btns">
-                            <button class="eval-btn success" onclick="evaluatePlayer(${index}, true)">✅ نفذ</button>
-                            <button class="eval-btn fail" onclick="evaluatePlayer(${index}, false)">❌ لبس</button>
-                        </div>
-                    `;
-                }
-
-                container.innerHTML += `
-                    <div class="player-card">
-                        <div class="player-header">
-                            <span class="player-name">${player.name}</span>
-                            <span class="player-score">${player.score}</span>
-                        </div>
-                        ${actionArea}
-                    </div>
-                `;
-            });
-        }
-
-        // 🚨 دالة الحساب وحفظ حالة التقييم
-        function evaluatePlayer(index, isSuccess) {
-            // أمان إضافي عشان لو داس مرتين بسرعة
-            if (currentPlayers[index].evaluatedRound === currentRound) return; 
-
-            const currentPts = getRoundDetails().pts;
-            const pointsToApply = isSuccess ? currentPts : -currentPts;
-            
-            currentPlayers[index].score += pointsToApply;
-            currentPlayers[index].evaluatedRound = currentRound; // قفلنا عليه الراوند
-            currentPlayers[index].lastAction = isSuccess ? '✅ نفذ' : '❌ لبس';
-            
-            savePlayers();
-            renderScoreboard();
-        }
-
-        function nextRound() {
-            currentRound++;
-            saveRound();
-            if (currentRound > 3) {
-                finishGame();
-            } else {
-                renderScoreboard();
-                if(currentRound === 3) document.getElementById("next-round-btn").innerText = "🏁 إنهاء الجيم وإعلان النتيجة";
-            }
-        }
-
-        function finishGame() {
-            hideAllStates();
-            let sortedPlayers = [...currentPlayers].sort((a, b) => b.score - a.score);
-            document.getElementById("winner-display").innerText = `🥇 الكسبان: ${sortedPlayers[0].name} (${sortedPlayers[0].score})`;
-            document.getElementById("loser-display").innerText = `☠️ الخسران: ${sortedPlayers[sortedPlayers.length - 1].name} (${sortedPlayers[sortedPlayers.length - 1].score})`;
-            document.getElementById("final-result-state").style.display = "block";
-        }
-
-        /* --- نظام الكاميرا --- */
-        function showJoinScreen() { hideAllStates(); document.getElementById('lobby-join').style.display = 'block'; }
-
-        function joinGame() {
-            const pinRaw = document.getElementById('pin-input-field').value;
-            const errorEl = document.getElementById('join-error');
-            if(!/^\d{1,2}$/.test(pinRaw.trim())) { errorEl.textContent = 'أدخل كود من رقمين.'; return; }
-            
-            errorEl.textContent = '';
-            clearData(); 
-            savePin(pinRaw.trim().padStart(2, "0"));
-            localStorage.setItem("qaada_is_host", "false"); 
-            openScanner();
-        }
-
-        function openScanner() {
-            hideAllStates();
-            document.getElementById('scanner-state').style.display = 'block';
-            if(!html5QrCode) { html5QrCode = new Html5Qrcode("reader"); }
-            html5QrCode.start(
-                { facingMode: "environment" }, { fps: 15, qrbox: { width: 250, height: 250 } },
-                onScanSuccess, (e) => {}
-            ).catch(err => {
-                html5QrCode.start({ facingMode: "user" }, { fps: 15, qrbox: { width: 250, height: 250 } }, onScanSuccess, (e)=>{});
-            });
-        }
-
-        const meQrBypass = {
-            "https://q.me-qr.com/a3fxd10w": "?id=1", "https://q.me-qr.com/v32kajn6": "?id=2", "https://q.me-qr.com/tnz5fn8w": "?id=3",
-            "https://q.me-qr.com/75t883gh": "?id=4", "https://q.me-qr.com/vrgdgaat": "?id=5", "https://q.me-qr.com/1bt4w6k3": "?id=6",
-            "https://q.me-qr.com/lzj8sobk": "?id=7", "https://q.me-qr.com/gertcxy1": "?id=8", "https://q.me-qr.com/o9h7x2to": "?id=9",
-            "https://q.me-qr.com/pllxlcji": "?id=10", "https://q.me-qr.com/vsi4olis": "?id=11", "https://q.me-qr.com/39949qq8": "?id=12",
-            "https://q.me-qr.com/ykmrvd8e": "?id=13", "https://q.me-qr.com/ysw5jpux": "?id=14", "https://q.me-qr.com/vr7a52pb": "?id=15",
-            "https://q.me-qr.com/dgd0165e": "?id=16", "https://q.me-qr.com/j4bv25ov": "?id=17", "https://q.me-qr.com/px8s6n9q": "?id=18"
-        };
-
-        function onScanSuccess(decodedText, decodedResult) {
-            let scannedLink = decodedText.trim();
-            let cleanTarget = meQrBypass[scannedLink] ? meQrBypass[scannedLink] : scannedLink;
-            html5QrCode.stop().then(() => { window.location.replace(cleanTarget); }).catch(() => { window.location.replace(cleanTarget); });
-        }
-
-        function loadCardForId(rawCardId, pin) {
-            hideAllStates();
-            document.getElementById('loading-state').style.display = 'block';
-            document.getElementById('random-quote').innerText = funnyQuotes[Math.floor(Math.random() * funnyQuotes.length)];
-            
-            const cardId = parseCardId(rawCardId);
-            if (!cardId) { 
-                document.getElementById('loading-state').style.display = 'none';
-                leaveRoom();
-                return; 
-            }
-
-            const imageNumber = getImageNumberForCard(pin, cardId);
-            const mainImg = document.getElementById('game-card-img');
-
-            mainImg.onload = function() {
-                setTimeout(() => {
-                    document.getElementById('loading-state').style.display = 'none';
-                    document.getElementById('card-display-state').style.display = 'block';
-                }, 1800); 
-            };
-            mainImg.src = `cards/${imageNumber}.jpg`;
-        }
-
-        function scanAgain() {
-            const url = new URL(window.location);
-            url.searchParams.delete('id');
-            window.history.replaceState({}, "", url);
-            openScanner();
-        }
-
-        function closeCard() {
-            const isHost = localStorage.getItem("qaada_is_host");
-            const url = new URL(window.location);
-            url.searchParams.delete('id');
-            window.history.replaceState({}, "", url);
-
-            if(html5QrCode) { html5QrCode.stop().catch(()=>{}); }
-
-            if (isHost === "true") {
-                hideAllStates();
-                document.getElementById('scoreboard-state').style.display = 'block';
-            } else {
-                leaveRoom();
-            }
-        }
-
-        function cancelScan() {
-            if(html5QrCode) { html5QrCode.stop().catch(()=>{}); }
-            closeCard();
-        }
-
-        function leaveRoom() {
-            clearData();
-            if(html5QrCode) { html5QrCode.stop().catch(()=>{}); }
-            const url = new URL(window.location);
-            url.searchParams.delete('id');
-            window.history.replaceState({}, "", url);
-            hideAllStates();
-            document.getElementById('lobby-home').style.display = 'block';
-        }
-
-        /* --- حارس البوابة (Strict OnLoad) --- */
-        window.onload = function() {
-            const urlParams = new URLSearchParams(window.location.search);
-            const cardIdRaw = urlParams.get('id');
-            const pin = loadPin();
-            const isHost = localStorage.getItem("qaada_is_host");
-
-            hideAllStates();
-
-            if (cardIdRaw) {
-                if (pin) loadCardForId(cardIdRaw, pin);
-                else document.getElementById('lobby-home').style.display = 'block';
-                return;
-            } 
-            
-            if (isHost === "true" && pin) {
-                loadPlayers();
-                loadRound();
-                if (currentPlayers.length > 0 && currentRound <= 3) {
-                    document.getElementById("active-pin-display").innerText = pin;
-                    renderScoreboard();
-                    document.getElementById('scoreboard-state').style.display = 'block';
-                } else if (currentRound > 3) {
-                    finishGame();
-                } else {
-                    document.getElementById("new-room-pin").innerText = pin;
-                    document.getElementById('host-setup').style.display = 'block';
-                }
-            } else {
-                clearData();
-                document.getElementById('lobby-home').style.display = 'block';
-            }
-        };
-    </script>
+    <script src="js/app.js"></script>
 </body>
 </html>
