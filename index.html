@@ -153,9 +153,9 @@
             <div class="reset-link" onclick="resetGame()">إلغاء والرجوع</div>
         </div>
 
-        <!-- 🌟 لوحة النقط المتقدمة (بها زرار سكان المعلم والزراير الثابتة) 🌟 -->
+        <!-- 🌟 لوحة النقط الذكية (مترتبة حسب الراوند 3 راوندات بس) 🌟 -->
         <div id="scoreboard-state" class="game-state">
-            <h2 id="round-title-display">الراوند الأول</h2>
+            <h2 id="round-title-display">الراوند 1: مواقف بالشخصية</h2>
             <div class="small-text">كود الروم: <span id="active-pin-display" style="font-weight: 900; color: #00ffcc;"></span></div>
             
             <!-- زرار الكاميرا للمعلم عشان يشارك في اللعب -->
@@ -172,7 +172,7 @@
             <h2>النتيجة النهائية</h2>
             <div id="winner-display" style="color: #2ecc71; font-weight: 900; font-size: 20px; margin-bottom: 10px;"></div>
             <div id="loser-display" style="color: #e74c3c; font-weight: 900; font-size: 20px; margin-bottom: 20px; padding: 10px; background: rgba(231, 76, 60, 0.1); border-radius: 12px; border: 1px solid #e74c3c;"></div>
-            <div class="small-text" style="color: #f0f0f0; margin-bottom: 15px; font-weight: bold;">الخسران يمسك موبايله دلوقتي ويعمل سكان لباركود (الأحكام) 😈</div>
+            <div class="small-text" style="color: #f0f0f0; margin-bottom: 15px; font-weight: bold;">الخسران يمسك موبايله دلوقتي، والقعدة تختارله حكم ينفذه من الكروت! 😈</div>
             <button class="action-btn btn-primary" style="width: 100%;" onclick="resetGame()">الرجوع للوبي</button>
         </div>
 
@@ -199,7 +199,7 @@
             <h2>وجه الكاميرا للكارت</h2>
             <div class="small-text">جاري تفعيل الكاميرا... وافق على الصلاحية</div>
             <div id="reader"></div>
-            <!-- زرار رجوع مهم جداً عشان لو المعلم أو اللاعب فتح الكاميرا بالغلط -->
+            <!-- زرار رجوع عشان لو المعلم أو اللاعب فتح الكاميرا بالغلط -->
             <button class="action-btn btn-secondary" style="width: 100%; margin-top: 15px;" onclick="cancelScan()">رجوع</button>
         </div>
     </div>
@@ -303,38 +303,45 @@
             document.getElementById("scoreboard-state").style.display = "block";
         }
 
+        // 🚨 أسماء الراوندات الجديدة المظبوطة (3 راوندات بس)
         function getRoundTitle() {
             if(currentRound === 1) return "الراوند 1: مواقف بالشخصية";
-            if(currentRound === 2) return "الراوند 2: مواقف عادي";
-            if(currentRound === 3) return "الراوند 3: أكشن + حاسب";
-            if(currentRound === 4) return "الراوند 4: أكشن عادي";
+            if(currentRound === 2) return "الراوند 2: أكشن";
+            if(currentRound === 3) return "الراوند 3: حاسب";
             return "النهاية";
         }
 
+        // 🚨 الزراير المتغيرة بناءً على 3 راوندات فقط
         function renderScoreboard() {
             document.getElementById("round-title-display").innerText = getRoundTitle();
             const container = document.getElementById("scoreboard-container");
             container.innerHTML = "";
             
             currentPlayers.forEach((player, index) => {
-                // 🚨 الزراير ثابتة دايماً زي ما طلبت عشان متلخبطش المعلم
-                let buttonsHTML = `
-                    <div class="score-btns-row">
-                        <span class="score-label">مواقف:</span>
-                        <button class="score-btn plus" onclick="updateScore(${index}, 5)">✅ 5</button>
-                        <button class="score-btn minus" onclick="updateScore(${index}, -5)">❌ 5</button>
-                    </div>
-                    <div class="score-btns-row">
-                        <span class="score-label">أكشن:</span>
-                        <button class="score-btn plus" onclick="updateScore(${index}, 10)">✅ 10</button>
-                        <button class="score-btn minus" onclick="updateScore(${index}, -10)">❌ 10</button>
-                    </div>
-                    <div class="score-btns-row">
-                        <span class="score-label">حاسب:</span>
-                        <button class="score-btn plus" onclick="updateScore(${index}, 5)">✅ 5</button>
-                        <button class="score-btn minus" onclick="updateScore(${index}, -5)">❌ 5</button>
-                    </div>
-                `;
+                let buttonsHTML = "";
+                
+                if (currentRound === 1) {
+                    buttonsHTML = `
+                        <div class="score-btns-row">
+                            <span class="score-label">مواقف:</span>
+                            <button class="score-btn plus" onclick="updateScore(${index}, 5)">✅ 5+</button>
+                            <button class="score-btn minus" onclick="updateScore(${index}, -5)">❌ 5-</button>
+                        </div>`;
+                } else if (currentRound === 2) {
+                    buttonsHTML = `
+                        <div class="score-btns-row">
+                            <span class="score-label">أكشن:</span>
+                            <button class="score-btn plus" onclick="updateScore(${index}, 10)">✅ 10+</button>
+                            <button class="score-btn minus" onclick="updateScore(${index}, -10)">❌ 10-</button>
+                        </div>`;
+                } else if (currentRound === 3) {
+                    buttonsHTML = `
+                        <div class="score-btns-row">
+                            <span class="score-label">حاسب:</span>
+                            <button class="score-btn plus" onclick="updateScore(${index}, 5)">✅ 5+</button>
+                            <button class="score-btn minus" onclick="updateScore(${index}, -5)">❌ 5-</button>
+                        </div>`;
+                }
 
                 container.innerHTML += `
                     <div class="score-row">
@@ -352,14 +359,15 @@
             renderScoreboard();
         }
 
+        // 🚨 قفل اللعبة بعد الراوند الـ 3 بدلاً من الـ 4
         function nextRound() {
             currentRound++;
             saveRound();
-            if (currentRound > 4) {
+            if (currentRound > 3) {
                 finishGame();
             } else {
                 renderScoreboard();
-                if(currentRound === 4) document.getElementById("next-round-btn").innerText = "🏁 إنهاء الجيم وإعلان النتيجة";
+                if(currentRound === 3) document.getElementById("next-round-btn").innerText = "🏁 إنهاء الجيم وإعلان النتيجة";
             }
         }
 
@@ -452,7 +460,7 @@
             mainImg.src = `cards/${imageNumber}.jpg`;
         }
 
-        // 🚨 الخروج الصارم والمتجاوب
+        // الخروج الصارم والمتجاوب
         function closeCard() {
             const url = new URL(window.location);
             url.searchParams.delete('id');
@@ -518,12 +526,14 @@
                     loadPlayers();
                     loadRound();
                     if (currentPlayers.length > 0) {
-                        if (currentRound > 4) {
+                        // 🚨 التعديل الأخير: الجيم يخلص بعد 3
+                        if (currentRound > 3) {
                             finishGame();
                         } else {
                             document.getElementById("active-pin-display").innerText = pin;
                             renderScoreboard();
-                            if(currentRound === 4) document.getElementById("next-round-btn").innerText = "🏁 إنهاء الجيم وإعلان النتيجة";
+                            // الزرار يقول إنهاء في الراوند التالت
+                            if(currentRound === 3) document.getElementById("next-round-btn").innerText = "🏁 إنهاء الجيم وإعلان النتيجة";
                             document.getElementById('scoreboard-state').style.display = 'block';
                         }
                     } else {
