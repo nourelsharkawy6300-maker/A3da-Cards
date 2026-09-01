@@ -4,36 +4,30 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="theme-color" content="#4a4d9e">
-    <meta name="referrer" content="no-referrer">
-
     <title>لعبة قعدة</title>
 
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@500;700;800;900&display=swap" rel="stylesheet">
-
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-RNZPERH684"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', 'G-RNZPERH684');
-    </script>
-
     <script src="https://unpkg.com/html5-qrcode"></script>
 
     <style>
         body {
             margin: 0; font-family: 'Tajawal', sans-serif; background-color: #4a4d9e;
-            background-image: url('image_23f560.jpg'); background-size: 150%;
+            background-image: url('image_23f560.jpg'); background-size: cover;
             background-position: center; background-attachment: fixed;
-            animation: panBackground 30s infinite alternate cubic-bezier(0.45, 0.05, 0.55, 0.95);
             color: #f0f0f0; display: flex; justify-content: center; align-items: center;
             min-height: 100vh; text-align: center; overflow: hidden; position: relative;
             user-select: none; -webkit-user-select: none;
         }
 
-        @keyframes panBackground { 0% { background-position: 0% 0%; } 50% { background-position: 100% 100%; } 100% { background-position: 0% 100%; } }
-
         body::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(74, 77, 158, 0.45); z-index: 0; }
+
+        /* 🌟 تأثير النقط في الخلفية (من كودك) */
+        .particles {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 0;
+            background-image: radial-gradient(rgba(255,255,255,0.15) 2px, transparent 2px);
+            background-size: 40px 40px; animation: particleMove 15s linear infinite;
+        }
+        @keyframes particleMove { 0% { transform: translateY(0); } 100% { transform: translateY(-40px); } }
 
         .glass-box {
             background: rgba(240, 240, 240, 0.08); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
@@ -70,14 +64,21 @@
         .btn-secondary { background: rgba(240, 240, 240, 0.1); color: #f0f0f0; border: 2px solid #f0f0f0; }
         .action-btn:active { transform: scale(0.92); }
 
-        .card-wrapper { position: relative; width: 65px; height: 95px; margin: 0 auto 25px auto; }
-        .card-wrapper::before { content: ''; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 100%; height: 100%; background: #f0f0f0; border-radius: 12px; filter: blur(18px); opacity: 0.5; animation: pulseGlow 1.5s infinite alternate ease-in-out; z-index: -1; }
-        @keyframes pulseGlow { 0% { transform: translate(-50%, -50%) scale(1); opacity: 0.3; } 100% { transform: translate(-50%, -50%) scale(1.3); opacity: 0.7; } }
-        .card-loader { width: 100%; height: 100%; background: rgba(240, 240, 240, 0.95); border-radius: 12px; border: 2px solid #fff; box-shadow: 0 10px 20px rgba(0,0,0,0.3); display: flex; justify-content: center; align-items: center; animation: flipCard 2.5s cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite; }
+        /* 🌟 كارت الـ 3D اللي بيلف (مدموج من كودك) */
+        .card-loader {
+            width: 70px; height: 100px; margin: 0 auto 20px auto;
+            background: linear-gradient(135deg, #f1c40f, #e67e22);
+            border-radius: 10px; border: 3px solid #fff; box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+            display: flex; justify-content: center; align-items: center;
+            animation: flipCard3D 1.5s infinite ease-in-out;
+        }
         .card-loader::after { content: '🎲'; font-size: 25px; }
-        @keyframes flipCard { 0% { transform: perspective(400px) rotateY(0deg); } 100% { transform: perspective(400px) rotateY(360deg); } }
-        .progress-container { width: 100%; height: 6px; background: rgba(240, 240, 240, 0.1); border-radius: 10px; margin-top: 25px; overflow: hidden; position: relative; }
-        .progress-bar { height: 100%; width: 0%; border-radius: 10px; box-shadow: 0 0 10px rgba(240, 240, 240, 0.8); animation: loadProgress 1s cubic-bezier(0.4, 0, 0.2, 1) forwards; background: linear-gradient(90deg, #f0f0f0 0%, #ffffff 50%, #f0f0f0 100%); background-size: 200% 100%; }
+        @keyframes flipCard3D { 0% { transform: perspective(400px) rotateY(0deg); } 50% { transform: perspective(400px) rotateY(180deg); } 100% { transform: perspective(400px) rotateY(360deg); } }
+        
+        .funny-quote { color: #00ffcc; font-size: 15px; font-weight: 800; margin-top: 15px; min-height: 45px; }
+
+        .progress-container { width: 100%; height: 6px; background: rgba(240, 240, 240, 0.1); border-radius: 10px; margin-top: 15px; overflow: hidden; position: relative; }
+        .progress-bar { height: 100%; width: 0%; border-radius: 10px; box-shadow: 0 0 10px rgba(240, 240, 240, 0.8); animation: loadProgress 2s cubic-bezier(0.4, 0, 0.2, 1) forwards; background: linear-gradient(90deg, #f0f0f0 0%, #ffffff 50%, #f0f0f0 100%); background-size: 200% 100%; }
         @keyframes loadProgress { 0% { width: 0%; background-position: 100% 0; } 50% { background-position: 0 0; } 100% { width: 100%; background-position: -100% 0; } }
 
         #scanner-state { display: none; animation: popUpBounce 0.5s forwards; }
@@ -85,51 +86,93 @@
         #reader img { display: none; }
         #reader video { object-fit: cover !important; }
 
-        /* ---- Lobby screens (PIN entry) — same glass aesthetic ---- */
         #lobby-home, #lobby-join, #lobby-host { display: none; animation: popUpBounce 0.5s forwards; }
-        .pin-input {
-            width: 100%; text-align: center; font-size: 32px; font-weight: 800;
-            letter-spacing: 14px; padding: 12px 8px; margin: 12px 0 14px;
-            border-radius: 12px; border: 2px solid rgba(240,240,240,0.5);
-            background: rgba(240,240,240,0.92); color: #4a4d9e;
-            font-family: 'Tajawal', sans-serif; box-sizing: border-box;
-        }
+        .pin-input { width: 100%; text-align: center; font-size: 32px; font-weight: 800; letter-spacing: 14px; padding: 12px 8px; margin: 12px 0 14px; border-radius: 12px; border: 2px solid rgba(240,240,240,0.5); background: rgba(240,240,240,0.92); color: #4a4d9e; font-family: 'Tajawal', sans-serif; box-sizing: border-box; }
         .pin-input:focus { outline: none; border-color: #fff; }
-        .pin-display-num {
-            font-size: 48px; font-weight: 900; letter-spacing: 10px; color: #fff;
-            margin: 6px 0 18px; text-shadow: 0 4px 10px rgba(0,0,0,0.4);
-        }
+        .pin-display-num { font-size: 48px; font-weight: 900; letter-spacing: 10px; color: #fff; margin: 6px 0 18px; text-shadow: 0 4px 10px rgba(0,0,0,0.4); }
         .lobby-error { font-size: 13px; color: #ffd1c9; min-height: 16px; margin: -6px 0 10px; }
-        .reset-link {
-            display: block; margin-top: 16px; font-size: 12px;
-            color: rgba(240,240,240,0.6); text-decoration: underline; cursor: pointer;
-        }
-        .rules-link {
-            display: block; margin-top: 16px; padding: 11px;
-            font-family: 'Tajawal', sans-serif; font-weight: 700; font-size: 14px;
-            color: rgba(240,240,240,0.9); text-decoration: none;
-            border: 1.5px solid rgba(240,240,240,0.3); border-radius: 12px;
-            transition: all 0.25s ease; box-sizing: border-box;
-        }
-        .rules-link:hover, .rules-link:active {
-            background: rgba(240,240,240,0.1); border-color: rgba(240,240,240,0.6);
-        }
+        .reset-link { display: block; margin-top: 16px; font-size: 12px; color: rgba(240,240,240,0.6); text-decoration: underline; cursor: pointer; }
+        .rules-link { display: block; margin-top: 16px; padding: 11px; font-family: 'Tajawal', sans-serif; font-weight: 700; font-size: 14px; color: rgba(240,240,240,0.9); text-decoration: none; border: 1.5px solid rgba(240,240,240,0.3); border-radius: 12px; transition: all 0.25s ease; box-sizing: border-box; }
+        .rules-link:hover, .rules-link:active { background: rgba(240,240,240,0.1); border-color: rgba(240,240,240,0.6); }
     </style>
+</head>
+<body>
+    <!-- 🌟 شبكة النقط المتحركة في الخلفية -->
+    <div class="particles"></div>
+
+    <div class="glass-box" id="content-box">
+        <img src="logo.png" alt="لوجو قعدة" class="game-logo" onerror="this.style.display='none'">
+        
+        <div id="lobby-home">
+            <h2>يلا نلعب قعدة</h2>
+            <div class="small-text">ابدأ لعبة جديدة أو انضم بـ PIN من صحابك</div>
+            <div class="btn-group" style="margin-top: 18px;">
+                <button class="action-btn btn-primary" onclick="startNewGame()">لعبة جديدة</button>
+                <button class="action-btn btn-secondary" onclick="showJoinScreen()">انضمام بـ PIN</button>
+            </div>
+            <a href="rules/" target="_blank" rel="noopener" class="rules-link">📜 طريقة اللعب</a>
+        </div>
+
+        <div id="lobby-join">
+            <h2>انضم للعبة</h2>
+            <div class="small-text">دخل الـ PIN اللي بعته ليك صاحبك</div>
+            <input id="pin-input-field" class="pin-input" type="text" inputmode="numeric" pattern="[0-9]*" maxlength="2" placeholder="00">
+            <div id="join-error" class="lobby-error"></div>
+            <div class="btn-group">
+                <button class="action-btn btn-primary" onclick="joinGame()">انضمام</button>
+                <button class="action-btn btn-secondary" onclick="backToHome()">رجوع</button>
+            </div>
+        </div>
+
+        <div id="lobby-host">
+            <h2>اللعبة جاهزة</h2>
+            <div class="small-text">ابعت الـ PIN ده لصحابك، وبعدين اسكان كارتك</div>
+            <div class="pin-display-num" id="host-pin-display">00</div>
+            <div class="btn-group">
+                <button class="action-btn btn-primary" onclick="scanAgain()">اسكان كارتي</button>
+            </div>
+            <div class="reset-link" onclick="resetGame()">ابدأ لعبة تانية من الأول</div>
+        </div>
+
+        <!-- 🌟 شاشة التحميل مدموج فيها الـ 3D والجمل المضحكة -->
+        <div id="loading-state" style="display:none;">
+            <div class="card-loader"></div>
+            <h2>جاري فتح الكارت</h2>
+            <div id="random-quote" class="funny-quote"></div>
+            <div class="progress-container"><div class="progress-bar"></div></div>
+        </div>
+
+        <div id="card-display-state" class="final-card-container">
+            <h2>كارتك جاهز</h2>
+            <img id="game-card-img" src="" alt="كارت قعدة" class="display-card">
+            <div class="btn-group">
+                <button class="action-btn btn-primary" onclick="scanAgain()">اسكان تاني</button>
+                <button class="action-btn btn-secondary" onclick="closeCard()">خروج</button>
+            </div>
+        </div>
+
+        <div id="scanner-state">
+            <h2>وجه الكاميرا للكارت</h2>
+            <div class="small-text">جاري تفعيل الكاميرا... وافق على الصلاحية</div>
+            <div id="reader"></div>
+        </div>
+    </div>
 
     <script>
-        // سكيورتي منع التفتيش
         document.addEventListener('contextmenu', event => event.preventDefault());
-        document.onkeydown = function(e) {
-            if(e.keyCode == 123 || (e.ctrlKey && e.shiftKey && (e.keyCode == 'I'.charCodeAt(0) || e.keyCode == 'C'.charCodeAt(0) || e.keyCode == 'J'.charCodeAt(0))) || (e.ctrlKey && e.keyCode == 'U'.charCodeAt(0))) { return false; }
-        };
 
-        // ====== شرائح الشخصيات — ترتيب ثابت للأبد ======
-        // كل رقم هنا هو اسم ملف الصورة داخل /cards (مثلاً 5 يعني cards/5.jpg)
-        // ده "هوية" الشخصية الثابتة — أي كارت فيزيائي ممكن ياخد أي شريحة حسب البين.
         const CHARACTER_SLOTS = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18];
-        const TOTAL_CARDS = CHARACTER_SLOTS.length; // 18
+        const TOTAL_CARDS = CHARACTER_SLOTS.length;
 
-        // ---------- محرك الخلط الثابت ----------
+        // 🌟 الجمل المضحكة (من كودك)
+        const funnyQuotes = [
+            "يا ترى هتطلع أم خالد ولا إياد الموجي؟ 👀",
+            "استرها علينا يارب من كارت الدبيس... 💸",
+            "جهز نفسك لتقليد الدكتور! 👨‍🏫",
+            "يا ساتر.. شكلها فيها كارت قفلنا المايك 🤐",
+            "اسحب كارتك وواجه مصيرك يا معلم! ⚡"
+        ];
+
         function mulberry32(seed) {
             return function () {
                 seed |= 0; seed = (seed + 0x6D2B79F5) | 0;
@@ -152,9 +195,7 @@
             const seed = (pinNum * 2654435761) ^ 0x9E3779B9;
             return seededShuffle(CHARACTER_SLOTS, seed);
         }
-        function getImageNumberForCard(pin, cardId) {
-            return getShuffledSlots(pin)[cardId - 1];
-        }
+        function getImageNumberForCard(pin, cardId) { return getShuffledSlots(pin)[cardId - 1]; }
         function parseCardId(raw) {
             if (raw === null || raw === undefined) return null;
             const str = String(raw).trim();
@@ -171,7 +212,6 @@
         function loadPin() { return localStorage.getItem(PIN_KEY); }
         function clearPin() { localStorage.removeItem(PIN_KEY); }
 
-        // ---------- إدارة الشاشات ----------
         function hideAllStates() {
             ['loading-state','card-display-state','scanner-state','lobby-home','lobby-join','lobby-host']
                 .forEach(id => { const el = document.getElementById(id); if (el) el.style.display = 'none'; });
@@ -197,37 +237,24 @@
             }
         };
 
-        // ---------- شاشات اللوبي ----------
         function startNewGame() {
             const pin = generateNewPin();
             savePin(pin);
-            if(typeof gtag === 'function') { gtag('event', 'new_game_created'); }
             hideAllStates();
             document.getElementById('host-pin-display').textContent = pin;
             document.getElementById('lobby-host').style.display = 'block';
         }
 
-        function showJoinScreen() {
-            hideAllStates();
-            document.getElementById('lobby-join').style.display = 'block';
-        }
-
-        function backToHome() {
-            hideAllStates();
-            document.getElementById('lobby-home').style.display = 'block';
-        }
+        function showJoinScreen() { hideAllStates(); document.getElementById('lobby-join').style.display = 'block'; }
+        function backToHome() { hideAllStates(); document.getElementById('lobby-home').style.display = 'block'; }
 
         function joinGame() {
             const raw = document.getElementById('pin-input-field').value;
             const errorEl = document.getElementById('join-error');
-            if (!isValidPin(raw)) {
-                errorEl.textContent = 'دخل بين مكون من رقمين صحيح.';
-                return;
-            }
+            if (!isValidPin(raw)) { errorEl.textContent = 'دخل بين مكون من رقمين صحيح.'; return; }
             errorEl.textContent = '';
             const pin = normalizePin(raw);
             savePin(pin);
-            if(typeof gtag === 'function') { gtag('event', 'game_joined'); }
 
             const urlParams = new URLSearchParams(window.location.search);
             const cardId = urlParams.get('id');
@@ -240,7 +267,6 @@
             }
         }
 
-        // للاختبار: يمسح البين ويرجعك لشاشة الاختيار من الأول
         function resetGame() {
             clearPin();
             const url = new URL(window.location);
@@ -250,10 +276,12 @@
             document.getElementById('lobby-home').style.display = 'block';
         }
 
-        // ---------- تحميل الكارت — من /cards مباشرة، مفيش Google Drive خالص ----------
         function loadCardForId(rawCardId, pin) {
             hideAllStates();
             document.getElementById('loading-state').style.display = 'block';
+            
+            // 🌟 تغيير الجملة العشوائية كل مرة بنفتح كارت
+            document.getElementById('random-quote').innerText = funnyQuotes[Math.floor(Math.random() * funnyQuotes.length)];
 
             const cardId = parseCardId(rawCardId);
             if (!cardId) { showError(); return; }
@@ -267,12 +295,13 @@
             };
 
             mainImg.onload = function() {
-                document.getElementById('loading-state').style.display = 'none';
-                document.getElementById('card-display-state').style.display = 'block';
-                if(typeof gtag === 'function') { gtag('event', 'card_opened', { 'card_id': cardId }); }
+                // تأخير خفيف عشان اللاعب يقرأ الجملة المضحكة ويشوف الأنيميشن
+                setTimeout(() => {
+                    document.getElementById('loading-state').style.display = 'none';
+                    document.getElementById('card-display-state').style.display = 'block';
+                }, 2000); 
             };
 
-            // المسار: مجلد cards في جذر الريبو، بجانب index.html مباشرة
             mainImg.src = `cards/${imageNumber}.jpg`;
         }
 
@@ -285,127 +314,50 @@
             `;
         }
 
-        // ---------- السكانر ----------
         let html5QrCode;
         function scanAgain() {
             hideAllStates();
             document.getElementById('scanner-state').style.display = 'block';
-
-            if(typeof gtag === 'function') { gtag('event', 'scan_again_clicked'); }
-
             if(!html5QrCode) {
                 html5QrCode = new Html5Qrcode("reader");
-                html5QrCode.start(
-                    { facingMode: "environment" },
-                    { fps: 15, qrbox: { width: 250, height: 250 } },
-                    onScanSuccess,
-                    onScanFailure
-                ).catch(err => {
+                html5QrCode.start({ facingMode: "environment" }, { fps: 15, qrbox: { width: 250, height: 250 } }, onScanSuccess, onScanFailure)
+                .catch(err => {
                     html5QrCode.start({ facingMode: "user" }, { fps: 15, qrbox: { width: 250, height: 250 } }, onScanSuccess, onScanFailure);
                 });
             }
         }
 
-   // 🚨 قاموس التحويل (كمين الإعلانات للهروب من me-qr) 🚨
-const meQrBypass = {
-    "https://q.me-qr.com/a3fxd10w": "?id=1",
-    "https://q.me-qr.com/v32kajn6": "?id=2",
-    "https://q.me-qr.com/tnz5fn8w": "?id=3",
-    "https://q.me-qr.com/75t883gh": "?id=4",
-    "https://q.me-qr.com/vrgdgaat": "?id=5",
-    "https://q.me-qr.com/1bt4w6k3": "?id=6",
-    "https://q.me-qr.com/lzj8sobk": "?id=7",
-    "https://q.me-qr.com/gertcxy1": "?id=8",
-    "https://q.me-qr.com/o9h7x2to": "?id=9",
-    "https://q.me-qr.com/pllxlcji": "?id=10",
-    "https://q.me-qr.com/vsi4olis": "?id=11",
-    "https://q.me-qr.com/39949qq8": "?id=12",
-    "https://q.me-qr.com/ykmrvd8e": "?id=13",
-    "https://q.me-qr.com/ysw5jpux": "?id=14",
-    "https://q.me-qr.com/vr7a52pb": "?id=15",
-    "https://q.me-qr.com/dgd0165e": "?id=16",
-    "https://q.me-qr.com/j4bv25ov": "?id=17",
-    "https://q.me-qr.com/px8s6n9q": "?id=18"
-};
+        // كمين الهروب من الإعلانات
+        const meQrBypass = {
+            "https://q.me-qr.com/a3fxd10w": "?id=1", "https://q.me-qr.com/v32kajn6": "?id=2", "https://q.me-qr.com/tnz5fn8w": "?id=3",
+            "https://q.me-qr.com/75t883gh": "?id=4", "https://q.me-qr.com/vrgdgaat": "?id=5", "https://q.me-qr.com/1bt4w6k3": "?id=6",
+            "https://q.me-qr.com/lzj8sobk": "?id=7", "https://q.me-qr.com/gertcxy1": "?id=8", "https://q.me-qr.com/o9h7x2to": "?id=9",
+            "https://q.me-qr.com/pllxlcji": "?id=10", "https://q.me-qr.com/vsi4olis": "?id=11", "https://q.me-qr.com/39949qq8": "?id=12",
+            "https://q.me-qr.com/ykmrvd8e": "?id=13", "https://q.me-qr.com/ysw5jpux": "?id=14", "https://q.me-qr.com/vr7a52pb": "?id=15",
+            "https://q.me-qr.com/dgd0165e": "?id=16", "https://q.me-qr.com/j4bv25ov": "?id=17", "https://q.me-qr.com/px8s6n9q": "?id=18"
+        };
 
-function onScanSuccess(decodedText, decodedResult) {
-    // 1. تنظيف اللينك الممسوح من أي مسافات
-    let scannedLink = decodedText.trim();
-    
-    // 2. لو اللينك ده بتاع me-qr، اضحك عليهم وخد اللينك النظيف بتاعنا
-    let cleanTarget = meQrBypass[scannedLink] ? meQrBypass[scannedLink] : scannedLink;
+        function onScanSuccess(decodedText, decodedResult) {
+            let scannedLink = decodedText.trim();
+            let cleanTarget = meQrBypass[scannedLink] ? meQrBypass[scannedLink] : scannedLink;
+            html5QrCode.stop().then(() => { window.location.replace(cleanTarget); }).catch(err => { window.location.replace(cleanTarget); });
+        }
+        function onScanFailure(error) { /* صامت */ }
 
-    // 3. مسح الـ ID القديم عشان السيستم يسمح بالكارت الجديد بدون مشاكل (حماية سفاري)
-    try {
-        localStorage.removeItem('qaada_character_id');
-        localStorage.removeItem('qaada_scan_time');
-    } catch (e) {
-        // لو المتصفح خفي، كمل عادي ومفيش إيرور هيضرب
-    }
-
-    // 4. توجيه اللاعب فوراً للكارت من غير إعلانات
-    html5QrCode.stop().then(() => { 
-        window.location.replace(cleanTarget); 
-    }).catch(err => { 
-        window.location.replace(cleanTarget); 
-    });
-}
-
-        <!-- شاشة البداية: لعبة جديدة / انضمام -->
-        <div id="lobby-home">
-            <h2>يلا نلعب قعدة</h2>
-            <div class="small-text">ابدأ لعبة جديدة أو انضم بـ PIN من صحابك</div>
-            <div class="btn-group" style="margin-top: 18px;">
-                <button class="action-btn btn-primary" onclick="startNewGame()">لعبة جديدة</button>
-                <button class="action-btn btn-secondary" onclick="showJoinScreen()">انضمام بـ PIN</button>
-            </div>
-            <a href="rules/" target="_blank" rel="noopener" class="rules-link">📜 طريقة اللعب</a>
-        </div>
-
-        <!-- شاشة إدخال PIN -->
-        <div id="lobby-join">
-            <h2>انضم للعبة</h2>
-            <div class="small-text">دخل الـ PIN اللي بعته ليك صاحبك</div>
-            <input id="pin-input-field" class="pin-input" type="text" inputmode="numeric" pattern="[0-9]*" maxlength="2" placeholder="00">
-            <div id="join-error" class="lobby-error"></div>
-            <div class="btn-group">
-                <button class="action-btn btn-primary" onclick="joinGame()">انضمام</button>
-                <button class="action-btn btn-secondary" onclick="backToHome()">رجوع</button>
-            </div>
-        </div>
-
-        <!-- شاشة عرض PIN اللعبة (للمضيف أو بعد الانضمام) -->
-        <div id="lobby-host">
-            <h2>اللعبة جاهزة</h2>
-            <div class="small-text">ابعت الـ PIN ده لصحابك، وبعدين اسكان كارتك</div>
-            <div class="pin-display-num" id="host-pin-display">00</div>
-            <div class="btn-group">
-                <button class="action-btn btn-primary" onclick="scanAgain()">اسكان كارتي</button>
-            </div>
-            <div class="reset-link" onclick="resetGame()">ابدأ لعبة تانية من الأول</div>
-        </div>
-
-        <div id="loading-state" style="display:none;">
-            <div class="card-wrapper"><div class="card-loader"></div></div>
-            <h2>جاري فتح الكارت</h2>
-            <div class="progress-container"><div class="progress-bar"></div></div>
-        </div>
-
-        <div id="card-display-state" class="final-card-container">
-            <h2>كارتك جاهز</h2>
-            <img id="game-card-img" src="" alt="كارت قعدة" class="display-card">
-            <div class="btn-group">
-                <button class="action-btn btn-primary" onclick="scanAgain()">اسكان تاني</button>
-                <button class="action-btn btn-secondary" onclick="closeCard()">خروج</button>
-            </div>
-        </div>
-
-        <div id="scanner-state">
-            <h2>وجه الكاميرا للكارت</h2>
-            <div class="small-text">جاري تفعيل الكاميرا... وافق على الصلاحية</div>
-            <div id="reader"></div>
-        </div>
-
-    </div>
+        function closeCard() {
+            const url = new URL(window.location);
+            url.searchParams.delete('id');
+            window.history.replaceState({}, "", url);
+            const contentBox = document.getElementById('content-box');
+            contentBox.innerHTML = `
+                <div style="animation: popUpBounce 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;">
+                    <div style="font-size: 65px; margin-bottom: 10px; filter: drop-shadow(0 4px 6px rgba(0,0,0,0.3));">🏁</div>
+                    <h2 style="font-size: 30px; font-weight: 900; color: #f0f0f0; margin-bottom: 5px;">عاش يا بطل!</h2>
+                    <div style="color: rgba(240, 240, 240, 0.8); font-size: 16px; font-weight: 500; margin-bottom: 25px; line-height: 1.6;">دورك خلص في الكارت ده<br>تقدر تقفل الصفحة دلوقتي</div>
+                    <button class="action-btn btn-primary" onclick="scanAgain()" style="width: 80%; max-width: 200px; padding: 12px; margin: 0 auto; display: block;">سكان لكارت جديد</button>
+                </div>
+            `;
+        }
+    </script>
 </body>
 </html>
