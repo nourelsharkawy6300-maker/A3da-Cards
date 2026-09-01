@@ -306,23 +306,50 @@
             }
         }
 
-        function onScanSuccess(decodedText, decodedResult) {
-            html5QrCode.stop().then(() => { window.location.replace(decodedText); })
-            .catch(err => { window.location.replace(decodedText); });
-        }
+   // 🚨 قاموس التحويل (كمين الإعلانات للهروب من me-qr) 🚨
+const meQrBypass = {
+    "https://q.me-qr.com/a3fxd10w": "?id=1",
+    "https://q.me-qr.com/v32kajn6": "?id=2",
+    "https://q.me-qr.com/tnz5fn8w": "?id=3",
+    "https://q.me-qr.com/75t883gh": "?id=4",
+    "https://q.me-qr.com/vrgdgaat": "?id=5",
+    "https://q.me-qr.com/1bt4w6k3": "?id=6",
+    "https://q.me-qr.com/lzj8sobk": "?id=7",
+    "https://q.me-qr.com/gertcxy1": "?id=8",
+    "https://q.me-qr.com/o9h7x2to": "?id=9",
+    "https://q.me-qr.com/pllxlcji": "?id=10",
+    "https://q.me-qr.com/vsi4olis": "?id=11",
+    "https://q.me-qr.com/39949qq8": "?id=12",
+    "https://q.me-qr.com/ykmrvd8e": "?id=13",
+    "https://q.me-qr.com/ysw5jpux": "?id=14",
+    "https://q.me-qr.com/vr7a52pb": "?id=15",
+    "https://q.me-qr.com/dgd0165e": "?id=16",
+    "https://q.me-qr.com/j4bv25ov": "?id=17",
+    "https://q.me-qr.com/px8s6n9q": "?id=18"
+};
 
-        function onScanFailure(error) { /* صامت */ }
+function onScanSuccess(decodedText, decodedResult) {
+    // 1. تنظيف اللينك الممسوح من أي مسافات
+    let scannedLink = decodedText.trim();
+    
+    // 2. لو اللينك ده بتاع me-qr، اضحك عليهم وخد اللينك النظيف بتاعنا
+    let cleanTarget = meQrBypass[scannedLink] ? meQrBypass[scannedLink] : scannedLink;
 
-      function closeCard() {
-    if(typeof gtag === 'function') { gtag('event', 'card_closed'); }
-    resetGame();
+    // 3. مسح الـ ID القديم عشان السيستم يسمح بالكارت الجديد بدون مشاكل (حماية سفاري)
+    try {
+        localStorage.removeItem('qaada_character_id');
+        localStorage.removeItem('qaada_scan_time');
+    } catch (e) {
+        // لو المتصفح خفي، كمل عادي ومفيش إيرور هيضرب
+    }
+
+    // 4. توجيه اللاعب فوراً للكارت من غير إعلانات
+    html5QrCode.stop().then(() => { 
+        window.location.replace(cleanTarget); 
+    }).catch(err => { 
+        window.location.replace(cleanTarget); 
+    });
 }
-    </script>
-</head>
-<body>
-    <div class="glass-box" id="content-box">
-
-        <img src="logo.png" alt="لوجو قعدة" class="game-logo" onerror="this.style.display='none'">
 
         <!-- شاشة البداية: لعبة جديدة / انضمام -->
         <div id="lobby-home">
