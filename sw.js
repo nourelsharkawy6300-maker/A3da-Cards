@@ -1,5 +1,5 @@
 // رقم الإصدار (لما تعدل في اللعبة مستقبلاً، ادخل هنا خليها v2 وبعدين v3 وهكذا)
-const CACHE_NAME = 'qaada-game-v1';
+const CACHE_NAME = 'qaada-game-v2';
 
 // 1. تثبيت الأبلكيشن وتخطي الانتظار
 self.addEventListener('install', (e) => {
