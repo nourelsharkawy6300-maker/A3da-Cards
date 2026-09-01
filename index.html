@@ -59,12 +59,26 @@
             <div class="reset-link" onclick="resetGame()">إلغاء والرجوع</div>
         </div>
 
-        <!-- 3. لوحة الشرف (Scoreboard) -->
+     <!-- 3. لوحة الشرف (Scoreboard) -->
         <div id="scoreboard-state" class="game-state">
-            <h2>دفتر القعدة</h2>
+            <h2 id="round-title-display">الراوند الأول</h2>
             <div class="small-text">كود الروم: <span id="active-pin-display" style="font-weight: 900; color: #00ffcc;"></span></div>
+            
             <div id="scoreboard-container"></div>
+            
+            <button id="next-round-btn" class="action-btn btn-primary" style="width: 100%; margin-top: 15px;" onclick="nextRound()">⏭️ الراوند اللي بعده</button>
             <div class="reset-link" onclick="resetGame()">إنهاء الجيم ومسح الروم</div>
+        </div>
+
+        <!-- شاشة النتيجة النهائية (جديدة) -->
+        <div id="final-result-state" class="game-state">
+            <div style="font-size: 60px; margin-bottom: 10px;">🏆</div>
+            <h2>النتيجة النهائية</h2>
+            <div id="winner-display" style="color: #2ecc71; font-weight: 900; font-size: 22px; margin-bottom: 10px;"></div>
+            <div id="loser-display" style="color: #e74c3c; font-weight: 900; font-size: 22px; margin-bottom: 20px; padding: 10px; background: rgba(231, 76, 60, 0.1); border-radius: 12px; border: 1px solid #e74c3c;"></div>
+            
+            <div class="small-text" style="color: #f0f0f0; margin-bottom: 15px;">الخسران يمسك موبايله دلوقتي ويعمل سكان لباركود (الأحكام) 😈</div>
+            <button class="action-btn btn-primary" style="width: 100%;" onclick="resetGame()">الرجوع للوبي</button>
         </div>
 
         <!-- 4. شاشة انضمام اللاعبين -->
