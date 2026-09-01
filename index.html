@@ -18,93 +18,100 @@
 
     <style>
         /* ==========================================
-           1. الأساسيات والخلفية
+           1. الأساسيات
            ========================================== */
         body {
-            margin: 0; font-family: 'Tajawal', sans-serif; background-color: #4a4d9e;
+            margin: 0; font-family: 'Tajawal', sans-serif; background-color: #0a0f18; /* لون ليلي عميق */
             background-image: url('image_23f560.jpg'); background-size: cover;
             background-position: center; background-attachment: fixed;
             color: #f0f0f0; display: flex; justify-content: center; align-items: center;
             min-height: 100vh; text-align: center; overflow: hidden; position: relative;
             user-select: none; -webkit-user-select: none;
         }
-        body::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(74, 77, 158, 0.45); z-index: 0; }
+        body::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(135deg, rgba(74,77,158,0.85) 0%, rgba(10,15,24,0.95) 100%); z-index: 0; }
         
         .particles {
             position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 0;
-            background-image: radial-gradient(rgba(255,255,255,0.15) 2px, transparent 2px);
-            background-size: 40px 40px; animation: particleMove 15s linear infinite;
+            background-image: radial-gradient(rgba(240,240,240,0.1) 2px, transparent 2px);
+            background-size: 30px 30px; animation: particleMove 20s linear infinite; opacity: 0.5;
         }
-        @keyframes particleMove { 0% { transform: translateY(0); } 100% { transform: translateY(-40px); } }
+        @keyframes particleMove { 0% { transform: translateY(0); } 100% { transform: translateY(-30px); } }
 
         /* ==========================================
-           2. الصندوق الزجاجي (Glassmorphism)
+           2. الصندوق الزجاجي (الأساسي)
            ========================================== */
         .glass-box {
-            background: rgba(240, 240, 240, 0.08); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
-            border: 1px solid rgba(240, 240, 240, 0.15); border-radius: 24px; padding: 20px 15px;
-            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.6); width: 95%; max-width: 420px; box-sizing: border-box;
-            z-index: 1; animation: popUpBounce 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+            background: rgba(20, 25, 35, 0.4); backdrop-filter: blur(25px); -webkit-backdrop-filter: blur(25px);
+            border: 1px solid rgba(240, 240, 240, 0.1); border-radius: 28px; padding: 25px 20px;
+            box-shadow: 0 40px 80px rgba(0, 0, 0, 0.8), inset 0 2px 15px rgba(255,255,255,0.05); width: 95%; max-width: 440px; box-sizing: border-box;
+            z-index: 1; animation: popUpBounce 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) forwards; max-height: 95vh; overflow-y: auto;
         }
-        @keyframes popUpBounce { 0% { opacity: 0; transform: scale(0.8) translateY(40px); } 100% { opacity: 1; transform: scale(1) translateY(0); } }
+        .glass-box::-webkit-scrollbar { display: none; }
+        @keyframes popUpBounce { 0% { opacity: 0; transform: scale(0.9) translateY(30px); } 100% { opacity: 1; transform: scale(1) translateY(0); } }
 
-        .game-logo { max-width: 100px; margin: 0 auto 10px auto; display: block; filter: drop-shadow(0 4px 6px rgba(0,0,0,0.3)); }
-        h2 { font-size: 24px; margin: 0 0 5px 0; font-weight: 900; color: #f0f0f0; text-shadow: 0 4px 10px rgba(0,0,0,0.3); }
-        .small-text { font-weight: 500; font-size: 14px; color: rgba(240, 240, 240, 0.7); margin-bottom: 10px; }
+        .game-logo { max-width: 90px; margin: 0 auto 15px auto; display: block; filter: drop-shadow(0 4px 10px rgba(0,0,0,0.5)); }
+        h2 { font-size: 26px; margin: 0 0 5px 0; font-weight: 900; color: #fff; text-shadow: 0 4px 10px rgba(0,0,0,0.5); letter-spacing: -0.5px;}
+        .small-text { font-weight: 500; font-size: 14px; color: rgba(240, 240, 240, 0.6); margin-bottom: 20px; }
 
         /* ==========================================
-           3. الأزرار والمدخلات
+           3. الأزرار العادية
            ========================================== */
-        .btn-group { display: flex; gap: 10px; justify-content: center; margin-top: 5px; width: 100%; }
-        .action-btn { font-family: 'Tajawal', sans-serif; font-weight: 800; font-size: 15px; padding: 12px 5px; border-radius: 12px; cursor: pointer; transition: all 0.3s ease; flex: 1; border: none; }
-        .btn-primary { background: #f0f0f0; color: #4a4d9e; box-shadow: 0 5px 15px rgba(0,0,0,0.3); animation: pulseBtn 2s infinite cubic-bezier(0.66, 0, 0, 1); }
-        @keyframes pulseBtn { 0% { box-shadow: 0 0 0 0 rgba(240, 240, 240, 0.5); } 70% { box-shadow: 0 0 0 12px rgba(240, 240, 240, 0); } 100% { box-shadow: 0 0 0 0 rgba(240, 240, 240, 0); } }
-        .btn-secondary { background: rgba(240, 240, 240, 0.1); color: #f0f0f0; border: 2px solid #f0f0f0; }
-        .action-btn:active { transform: scale(0.92); }
+        .btn-group { display: flex; gap: 12px; justify-content: center; margin-top: 10px; width: 100%; }
+        .action-btn { font-family: 'Tajawal', sans-serif; font-weight: 800; font-size: 16px; padding: 14px 5px; border-radius: 14px; cursor: pointer; transition: all 0.2s ease; flex: 1; border: none; letter-spacing: -0.5px;}
+        .btn-primary { background: linear-gradient(135deg, #f0f0f0, #e0e0e0); color: #0a0f18; box-shadow: 0 8px 20px rgba(240,240,240,0.2); }
+        .btn-secondary { background: rgba(240, 240, 240, 0.05); color: #f0f0f0; border: 1.5px solid rgba(240,240,240,0.3); }
+        .action-btn:active { transform: scale(0.95); }
 
-        .pin-input { width: 100%; text-align: center; font-size: 32px; font-weight: 800; letter-spacing: 14px; padding: 12px 8px; margin: 12px 0 14px; border-radius: 12px; border: 2px solid rgba(240,240,240,0.5); background: rgba(240,240,240,0.92); color: #4a4d9e; font-family: 'Tajawal', sans-serif; box-sizing: border-box; }
-        .pin-input:focus { outline: none; border-color: #fff; }
-        .pin-display-num { font-size: 48px; font-weight: 900; letter-spacing: 10px; color: #fff; margin: 6px 0 18px; text-shadow: 0 4px 10px rgba(0,0,0,0.4); }
-        
-        .lobby-error { font-size: 13px; color: #ffd1c9; min-height: 16px; margin: -6px 0 10px; }
-        .reset-link { display: block; margin-top: 16px; font-size: 12px; color: rgba(240,240,240,0.6); text-decoration: underline; cursor: pointer; }
-        .rules-link { display: block; margin-top: 16px; padding: 11px; font-family: 'Tajawal', sans-serif; font-weight: 700; font-size: 14px; color: rgba(240,240,240,0.9); text-decoration: none; border: 1.5px solid rgba(240,240,240,0.3); border-radius: 12px; transition: all 0.25s ease; box-sizing: border-box; }
+        .pin-input { width: 100%; text-align: center; font-size: 36px; font-weight: 900; letter-spacing: 20px; padding: 15px 10px; margin: 15px 0; border-radius: 16px; border: 2px solid rgba(240,240,240,0.2); background: rgba(0,0,0,0.3); color: #00ffcc; font-family: 'Tajawal', sans-serif; box-sizing: border-box; text-shadow: 0 0 15px rgba(0,255,204,0.5); transition: border 0.3s ease;}
+        .pin-input:focus { outline: none; border-color: #00ffcc; }
+        .pin-display-num { font-size: 55px; font-weight: 900; letter-spacing: 15px; color: #00ffcc; margin: 10px 0 25px; text-shadow: 0 0 25px rgba(0,255,204,0.6); }
+        .lobby-error { font-size: 13px; color: #ff4757; min-height: 16px; margin: -5px 0 15px; font-weight: 700;}
+        .reset-link { display: block; margin-top: 20px; font-size: 13px; color: rgba(255,255,255,0.4); text-decoration: underline; cursor: pointer; transition: color 0.3s;}
+        .reset-link:hover { color: #ff4757; }
+        .rules-link { display: block; margin-top: 20px; padding: 12px; font-family: 'Tajawal', sans-serif; font-weight: 800; font-size: 15px; color: #fff; text-decoration: none; border: 1.5px solid rgba(240,240,240,0.2); border-radius: 14px; background: rgba(255,255,255,0.05); }
 
         /* ==========================================
-           4. لوحة النقط الذكية للمعلم (Clean Scoreboard)
+           4. شاشة المعلم - الديزاين الفاجر للوحة النقط
            ========================================== */
-        .input-group { display: flex; gap: 10px; margin-bottom: 15px; }
-        #player-name-input { flex: 1; padding: 10px; border-radius: 10px; border: none; font-family: 'Tajawal'; font-weight: 700; outline: none; text-align: center; }
-        .players-list { list-style: none; padding: 0; margin: 0 0 15px 0; max-height: 150px; overflow-y: auto; text-align: center; }
-        .players-list li { background: rgba(255,255,255,0.1); padding: 8px 12px; border-radius: 8px; margin-bottom: 5px; font-weight: 700; font-size: 14px; }
+        .input-group { display: flex; gap: 10px; margin-bottom: 20px; }
+        #player-name-input { flex: 1; padding: 14px; border-radius: 14px; border: 1.5px solid rgba(255,255,255,0.1); background: rgba(0,0,0,0.4); color: #fff; font-family: 'Tajawal'; font-weight: 700; outline: none; font-size: 16px;}
+        .players-list { list-style: none; padding: 0; margin: 0 0 20px 0; max-height: 150px; overflow-y: auto; display: flex; flex-wrap: wrap; gap: 8px; justify-content: center;}
+        .players-list li { background: rgba(74,77,158,0.4); border: 1px solid rgba(74,77,158,0.8); padding: 8px 15px; border-radius: 20px; color: #fff; font-weight: 800; font-size: 13px; }
         
-        .score-row { display: flex; align-items: center; justify-content: space-between; background: rgba(240, 240, 240, 0.95); color: #4a4d9e; padding: 12px 15px; border-radius: 12px; margin-bottom: 10px; font-weight: 800; box-shadow: 0 4px 10px rgba(0,0,0,0.3); }
-        .score-name { font-size: 16px; width: 65px; text-align: right; line-height: 1.2; }
-        .score-num { font-size: 24px; width: 40px; text-align: center; color: #4a4d9e; font-weight: 900;}
-        .score-actions { display: flex; gap: 8px; flex: 1; justify-content: center; align-items: center; }
-        .score-label { font-size: 12px; color: #4a4d9e; font-weight: 900;}
-        .score-btn { padding: 8px; border-radius: 8px; border: none; font-size: 13px; font-weight: 900; cursor: pointer; font-family: 'Tajawal'; min-width: 50px;}
-        .score-btn.plus { background: #2ecc71; color: white; }
-        .score-btn.minus { background: #e74c3c; color: white; }
-        .score-btn:active { transform: scale(0.9); }
+        /* حالة الراوند فوق */
+        .round-badge { display: inline-block; background: linear-gradient(135deg, #ff9f43, #ff4757); color: #fff; padding: 6px 16px; border-radius: 20px; font-size: 14px; font-weight: 900; margin-bottom: 10px; box-shadow: 0 4px 15px rgba(255,71,87,0.4); letter-spacing: -0.5px;}
+        
+        /* كارت اللاعب الفاجر */
+        .player-card { background: linear-gradient(180deg, rgba(255,255,255,0.08) 0%, rgba(255,255,255,0.02) 100%); border: 1px solid rgba(255,255,255,0.1); border-radius: 20px; padding: 16px; margin-bottom: 12px; display: flex; flex-direction: column; gap: 12px; box-shadow: 0 10px 20px rgba(0,0,0,0.3); }
+        .player-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 10px;}
+        .player-name { font-size: 18px; font-weight: 900; color: #fff; letter-spacing: -0.5px;}
+        .player-score { font-size: 24px; font-weight: 900; color: #00ffcc; text-shadow: 0 0 10px rgba(0,255,204,0.4);}
+        
+        /* زراير التقييم النظيفة */
+        .eval-btns { display: flex; gap: 10px; }
+        .eval-btn { flex: 1; padding: 12px; border-radius: 12px; border: none; font-size: 15px; font-weight: 900; cursor: pointer; font-family: 'Tajawal'; transition: all 0.2s; display: flex; align-items: center; justify-content: center; gap: 6px;}
+        .eval-btn.success { background: rgba(46, 204, 113, 0.15); border: 1.5px solid #2ecc71; color: #2ecc71; }
+        .eval-btn.fail { background: rgba(231, 76, 60, 0.15); border: 1.5px solid #e74c3c; color: #e74c3c; }
+        .eval-btn:active { transform: scale(0.95); }
+
+        /* زرار كاميرا المعلم */
+        .host-cam-btn { background: rgba(0,0,0,0.4); border: 1.5px solid #00ffcc; color: #00ffcc; width: 100%; padding: 14px; border-radius: 16px; font-size: 16px; font-weight: 900; font-family: 'Tajawal'; cursor: pointer; margin-bottom: 15px; display: flex; align-items: center; justify-content: center; gap: 8px; transition: all 0.2s; box-shadow: 0 5px 15px rgba(0,255,204,0.15);}
+        .host-cam-btn:active { transform: scale(0.98); }
 
         /* ==========================================
-           5. الكاميرا والأنيميشن
+           5. الكروت والكاميرا
            ========================================== */
         .game-state { display: none; animation: popUpBounce 0.5s forwards; }
-        .display-card { width: 100%; max-height: 68vh; object-fit: contain; border-radius: 12px; border: 2px solid rgba(240, 240, 240, 0.8); margin: 5px auto 15px auto; display: block; pointer-events: none; animation: premiumGlow 4s ease-in-out infinite; }
-        @keyframes premiumGlow { 0% { box-shadow: 0 15px 35px rgba(0,0,0,0.6); filter: brightness(1); } 50% { box-shadow: 0 20px 45px rgba(0,0,0,0.8); filter: brightness(1.08); } 100% { box-shadow: 0 15px 35px rgba(0,0,0,0.6); filter: brightness(1); } }
+        .display-card { width: 100%; max-height: 65vh; object-fit: contain; border-radius: 16px; border: 2px solid rgba(255, 255, 255, 0.1); margin: 0 auto 20px auto; display: block; pointer-events: none; animation: premiumGlow 3s ease-in-out infinite; box-shadow: 0 20px 50px rgba(0,0,0,0.5);}
+        @keyframes premiumGlow { 0% { box-shadow: 0 15px 35px rgba(0,0,0,0.6); filter: brightness(1); } 50% { box-shadow: 0 20px 45px rgba(0,255,204,0.15); filter: brightness(1.05); } 100% { box-shadow: 0 15px 35px rgba(0,0,0,0.6); filter: brightness(1); } }
         
-        .card-loader { width: 70px; height: 100px; margin: 0 auto 20px auto; background: linear-gradient(135deg, #f1c40f, #e67e22); border-radius: 10px; border: 3px solid #fff; box-shadow: 0 10px 20px rgba(0,0,0,0.3); display: flex; justify-content: center; align-items: center; animation: flipCard3D 1.5s infinite ease-in-out; }
-        .card-loader::after { content: '🎲'; font-size: 25px; }
+        .card-loader { width: 80px; height: 110px; margin: 0 auto 25px auto; background: linear-gradient(135deg, #4a4d9e, #ff4757); border-radius: 12px; border: 2px solid rgba(255,255,255,0.2); box-shadow: 0 15px 30px rgba(0,0,0,0.4); display: flex; justify-content: center; align-items: center; animation: flipCard3D 1.2s infinite ease-in-out; }
+        .card-loader::after { content: '🎲'; font-size: 30px; }
         @keyframes flipCard3D { 0% { transform: perspective(400px) rotateY(0deg); } 50% { transform: perspective(400px) rotateY(180deg); } 100% { transform: perspective(400px) rotateY(360deg); } }
         
-        .funny-quote { color: #00ffcc; font-size: 15px; font-weight: 800; margin-top: 15px; min-height: 45px; }
-        .progress-container { width: 100%; height: 6px; background: rgba(240, 240, 240, 0.1); border-radius: 10px; margin-top: 15px; overflow: hidden; position: relative; }
-        .progress-bar { height: 100%; width: 0%; border-radius: 10px; box-shadow: 0 0 10px rgba(240, 240, 240, 0.8); animation: loadProgress 2s cubic-bezier(0.4, 0, 0.2, 1) forwards; background: linear-gradient(90deg, #f0f0f0 0%, #ffffff 50%, #f0f0f0 100%); background-size: 200% 100%; }
-        @keyframes loadProgress { 0% { width: 0%; background-position: 100% 0; } 50% { background-position: 0 0; } 100% { width: 100%; background-position: -100% 0; } }
-
-        #reader { width: 100%; border-radius: 15px; overflow: hidden; background: #fff; border: 2px solid #f0f0f0; margin-top: 15px; color: #000; box-shadow: 0 15px 30px rgba(0,0,0,0.5); }
+        .funny-quote { color: #00ffcc; font-size: 16px; font-weight: 800; margin-top: 15px; min-height: 50px; line-height: 1.4;}
+        
+        #reader { width: 100%; border-radius: 20px; overflow: hidden; background: #000; border: 2px solid rgba(255,255,255,0.1); margin-top: 15px; box-shadow: 0 20px 40px rgba(0,0,0,0.6); }
         #reader img { display: none; }
         #reader video { object-fit: cover !important; }
     </style>
@@ -117,9 +124,9 @@
         
         <!-- ==================== 1. اللوبي ==================== -->
         <div id="lobby-home" class="game-state">
-            <h2>يلا نلعب قعدة</h2>
-            <div class="small-text">ابدأ لعبة جديدة (للمعلم) أو انضم بـ PIN</div>
-            <div class="btn-group" style="margin-top: 18px;">
+            <h2>لعبة قعدة</h2>
+            <div class="small-text">ابدأ جيم جديد كـ (معلم) أو انضم بـ PIN</div>
+            <div class="btn-group" style="margin-top: 20px;">
                 <button class="action-btn btn-primary" onclick="initHost()">أنا المعلم</button>
                 <button class="action-btn btn-secondary" onclick="showJoinScreen()">انضمام بـ PIN</button>
             </div>
@@ -127,65 +134,66 @@
         </div>
 
         <div id="lobby-join" class="game-state">
-            <h2>انضم للعبة</h2>
-            <div class="small-text">دخل الـ PIN اللي بعته ليك صاحبك</div>
+            <h2>انضم للروم</h2>
+            <div class="small-text">أدخل الـ PIN الخاص بالشلة</div>
             <input id="pin-input-field" class="pin-input" type="text" inputmode="numeric" pattern="[0-9]*" maxlength="2" placeholder="00">
             <div id="join-error" class="lobby-error"></div>
             <div class="btn-group">
-                <button class="action-btn btn-primary" onclick="joinGame()">انضمام</button>
-                <button class="action-btn btn-secondary" onclick="resetGame()">رجوع</button>
+                <button class="action-btn btn-primary" onclick="joinGame()">دخول</button>
+                <button class="action-btn btn-secondary" onclick="leaveRoom()">رجوع</button>
             </div>
         </div>
 
         <!-- ==================== 2. شاشات المعلم ==================== -->
         <div id="host-setup" class="game-state">
-            <h2>تأسيس الروم</h2>
-            <div class="small-text">كود الشلة بتاع الجيم ده:</div>
+            <h2>تأسيس القعدة</h2>
+            <div class="small-text">شفرة الروم السرية (ابعتها للشلة)</div>
             <div class="pin-display-num" id="new-room-pin">00</div>
             <div class="input-group">
-                <input type="text" id="player-name-input" placeholder="اسم اللاعب" maxlength="15">
+                <input type="text" id="player-name-input" placeholder="اكتب اسم اللاعب..." maxlength="15">
                 <button class="action-btn btn-primary" style="flex: 0.4;" onclick="addPlayer()">إضافة</button>
             </div>
             <ul id="players-list" class="players-list"></ul>
-            <button class="action-btn btn-primary" style="width: 100%;" onclick="startScoreboard()">🚀 ابدأ الجيم ووثق النقط</button>
-            <div class="reset-link" onclick="leaveRoom()">إلغاء والرجوع</div>
+            <button class="action-btn btn-primary" style="width: 100%;" onclick="startScoreboard()">🚀 ابدأ الجيم</button>
+            <div class="reset-link" onclick="leaveRoom()">إلغاء وتدمير الروم</div>
         </div>
 
+        <!-- 🌟 لوحة النقط الفاجرة والكلين 🌟 -->
         <div id="scoreboard-state" class="game-state">
-            <h2 id="round-title-display">الراوند 1: مواقف</h2>
-            <div class="small-text">كود الروم: <span id="active-pin-display" style="font-weight: 900; color: #00ffcc;"></span></div>
+            <div class="round-badge" id="round-title-display">الراوند 1: مواقف</div>
+            <div class="small-text">شفرة الروم: <span id="active-pin-display" style="font-weight: 900; color: #00ffcc;"></span></div>
             
-            <button class="action-btn btn-secondary" style="width: 100%; margin-bottom: 15px; border: 2px dashed #f1c40f; color: #f1c40f; background: rgba(241, 196, 15, 0.1);" onclick="scanAgain()">📸 اسكان كارت المعلم</button>
+            <button class="host-cam-btn" onclick="scanAgain()">📸 اسكان كارت المعلم</button>
 
+            <!-- الكروت هتترمي هنا -->
             <div id="scoreboard-container"></div>
             
-            <button id="next-round-btn" class="action-btn btn-primary" style="width: 100%; margin-top: 15px;" onclick="nextRound()">⏭️ الراوند اللي بعده</button>
-            <div class="reset-link" onclick="leaveRoom()">إنهاء الجيم ومسح الروم</div>
+            <button id="next-round-btn" class="action-btn btn-primary" style="width: 100%; margin-top: 10px;" onclick="nextRound()">⏭️ إنهاء الراوند الحالي</button>
+            <div class="reset-link" onclick="leaveRoom()">تدمير الروم بالكامل</div>
         </div>
 
         <div id="final-result-state" class="game-state">
-            <div style="font-size: 60px; margin-bottom: 10px;">🏆</div>
-            <h2>النتيجة النهائية</h2>
-            <div id="winner-display" style="color: #2ecc71; font-weight: 900; font-size: 20px; margin-bottom: 10px;"></div>
-            <div id="loser-display" style="color: #e74c3c; font-weight: 900; font-size: 20px; margin-bottom: 20px; padding: 10px; background: rgba(231, 76, 60, 0.1); border-radius: 12px; border: 1px solid #e74c3c;"></div>
-            <div class="small-text" style="color: #f0f0f0; margin-bottom: 15px; font-weight: bold;">الخسران يمسك موبايله دلوقتي، والقعدة تختارله حكم ينفذه من الكروت! 😈</div>
-            <button class="action-btn btn-primary" style="width: 100%;" onclick="leaveRoom()">الرجوع للوبي</button>
+            <div style="font-size: 70px; margin-bottom: 10px; filter: drop-shadow(0 0 20px rgba(255,215,0,0.5));">🏆</div>
+            <h2 style="font-size: 32px; color: #ffd700;">انتهت القعدة!</h2>
+            <div id="winner-display" style="color: #2ecc71; font-weight: 900; font-size: 22px; margin-top: 15px;"></div>
+            <div id="loser-display" style="color: #e74c3c; font-weight: 900; font-size: 22px; margin: 15px 0 25px; padding: 15px; background: rgba(231, 76, 60, 0.1); border-radius: 16px; border: 1px solid rgba(231, 76, 60, 0.3);"></div>
+            <div class="small-text" style="color: #fff; margin-bottom: 20px; font-weight: 800;">الخسران يمسك موبايله فوراً ويعمل سكان لباركود (الأحكام) 😈</div>
+            <button class="action-btn btn-primary" style="width: 100%;" onclick="leaveRoom()">رجوع للرئيسية</button>
         </div>
 
         <!-- ==================== 3. شاشات الكروت ==================== -->
         <div id="loading-state" class="game-state">
             <div class="card-loader"></div>
-            <h2>جاري فتح الكارت</h2>
+            <h2 style="color: #fff;">جاري فك الشفرة</h2>
             <div id="random-quote" class="funny-quote"></div>
-            <div class="progress-container"><div class="progress-bar"></div></div>
         </div>
 
         <div id="card-display-state" class="game-state">
             <h2>كارتك جاهز</h2>
             <img id="game-card-img" src="" alt="كارت قعدة" class="display-card">
             <div class="btn-group">
-                <!-- زرار الخروج الصارم للاعبين -->
-                <button class="action-btn btn-secondary" onclick="closeCard()" style="width: 100%;">خروج من الروم</button>
+                <button class="action-btn btn-primary" onclick="scanAgain()">سحب جديد</button>
+                <button class="action-btn btn-secondary" onclick="closeCard()">خروج</button>
             </div>
         </div>
 
@@ -193,12 +201,12 @@
             <h2>وجه الكاميرا للكارت</h2>
             <div class="small-text">جاري تفعيل الكاميرا... وافق على الصلاحية</div>
             <div id="reader"></div>
-            <button class="action-btn btn-secondary" style="width: 100%; margin-top: 15px;" onclick="cancelScan()">خروج من الروم</button>
+            <button class="action-btn btn-secondary" style="width: 100%; margin-top: 15px;" onclick="cancelScan()">رجوع</button>
         </div>
     </div>
 
     <!-- ==========================================
-         JAVASCRIPT (CLEAN LOGIC)
+         JAVASCRIPT (SMART LOGIC)
          ========================================== -->
     <script>
         document.addEventListener('contextmenu', event => event.preventDefault());
@@ -216,7 +224,7 @@
             "اسحب كارتك وواجه مصيرك يا معلم! ⚡"
         ];
 
-        /* --- 1. محرك اللخبطة الرياضي --- */
+        /* --- محرك اللخبطة الرياضي --- */
         function mulberry32(seed) {
             return function () {
                 seed |= 0; seed = (seed + 0x6D2B79F5) | 0;
@@ -239,7 +247,7 @@
             return seededShuffle(CHARACTER_SLOTS, seed)[cardId - 1];
         }
 
-        /* --- 2. إدارة الذاكرة (Storage) --- */
+        /* --- الذاكرة --- */
         function savePin(pin) { localStorage.setItem("qaada_game_pin", pin); }
         function loadPin() { return localStorage.getItem("qaada_game_pin"); }
         function clearData() { 
@@ -257,7 +265,7 @@
             document.querySelectorAll('.game-state').forEach(el => el.style.display = 'none');
         }
 
-        /* --- 3. نظام المعلم (Host Logic) --- */
+        /* --- نظام المعلم --- */
         function initHost() {
             clearData();
             const newPin = String(Math.floor(Math.random() * 100)).padStart(2, "0");
@@ -295,37 +303,41 @@
             document.getElementById("scoreboard-state").style.display = "block";
         }
 
-        // 🚨 الكلين كود: بناء زراير النقط بذكاء بدون تكرار
+        function getRoundDetails() {
+            if(currentRound === 1) return { title: "الراوند 1: مواقف", pts: 5 };
+            if(currentRound === 2) return { title: "الراوند 2: أكشن", pts: 10 };
+            if(currentRound === 3) return { title: "الراوند 3: حاسب", pts: 5 };
+            return { title: "النهاية", pts: 0 };
+        }
+
+        // 🚨 الكلين كود: بناء الكروت وتقييم ذكي 🚨
         function renderScoreboard() {
-            let roundTitle = "";
-            let btnValue = 5;
-            let labelText = "";
-
-            if (currentRound === 1) { roundTitle = "الراوند 1: مواقف"; btnValue = 5; labelText = "مواقف"; }
-            else if (currentRound === 2) { roundTitle = "الراوند 2: أكشن"; btnValue = 10; labelText = "أكشن"; }
-            else if (currentRound === 3) { roundTitle = "الراوند 3: حاسب"; btnValue = 5; labelText = "حاسب"; }
-
-            document.getElementById("round-title-display").innerText = roundTitle;
+            const details = getRoundDetails();
+            document.getElementById("round-title-display").innerText = details.title;
             const container = document.getElementById("scoreboard-container");
             container.innerHTML = "";
             
             currentPlayers.forEach((player, index) => {
                 container.innerHTML += `
-                    <div class="score-row">
-                        <div class="score-name">${player.name}</div>
-                        <div class="score-actions">
-                            <span class="score-label">${labelText}:</span>
-                            <button class="score-btn plus" onclick="updateScore(${index}, ${btnValue})">✅ ${btnValue}+</button>
-                            <button class="score-btn minus" onclick="updateScore(${index}, -${btnValue})">❌ ${btnValue}-</button>
+                    <div class="player-card">
+                        <div class="player-header">
+                            <span class="player-name">${player.name}</span>
+                            <span class="player-score">${player.score}</span>
                         </div>
-                        <div class="score-num">${player.score}</div>
+                        <div class="eval-btns">
+                            <button class="eval-btn success" onclick="evaluatePlayer(${index}, true)">✅ نفذ</button>
+                            <button class="eval-btn fail" onclick="evaluatePlayer(${index}, false)">❌ منفض</button>
+                        </div>
                     </div>
                 `;
             });
         }
 
-        function updateScore(index, value) {
-            currentPlayers[index].score += value;
+        // 🚨 دالة الحساب الذكية (المعلم بيدوس بس والسيستم بيحسب بناءً على الراوند)
+        function evaluatePlayer(index, isSuccess) {
+            const currentPts = getRoundDetails().pts;
+            const pointsToApply = isSuccess ? currentPts : -currentPts;
+            currentPlayers[index].score += pointsToApply;
             savePlayers();
             renderScoreboard();
         }
@@ -344,21 +356,21 @@
         function finishGame() {
             hideAllStates();
             let sortedPlayers = [...currentPlayers].sort((a, b) => b.score - a.score);
-            document.getElementById("winner-display").innerText = `🥇 الكسبان: ${sortedPlayers[0].name} (${sortedPlayers[0].score} نقطة)`;
-            document.getElementById("loser-display").innerText = `☠️ الخسران: ${sortedPlayers[sortedPlayers.length - 1].name} (${sortedPlayers[sortedPlayers.length - 1].score} نقطة)`;
+            document.getElementById("winner-display").innerText = `🥇 الكسبان: ${sortedPlayers[0].name} (${sortedPlayers[0].score})`;
+            document.getElementById("loser-display").innerText = `☠️ الخسران: ${sortedPlayers[sortedPlayers.length - 1].name} (${sortedPlayers[sortedPlayers.length - 1].score})`;
             document.getElementById("final-result-state").style.display = "block";
         }
 
-        /* --- 4. نظام الكاميرا والكروت --- */
+        /* --- نظام الكاميرا --- */
         function showJoinScreen() { hideAllStates(); document.getElementById('lobby-join').style.display = 'block'; }
 
         function joinGame() {
             const pinRaw = document.getElementById('pin-input-field').value;
             const errorEl = document.getElementById('join-error');
-            if(!/^\d{1,2}$/.test(pinRaw.trim())) { errorEl.textContent = 'دخل بين مكون من رقمين صحيح.'; return; }
+            if(!/^\d{1,2}$/.test(pinRaw.trim())) { errorEl.textContent = 'أدخل كود من رقمين.'; return; }
             
             errorEl.textContent = '';
-            clearData(); // مسح أي داتا قديمة قبل الانضمام
+            clearData(); 
             savePin(pinRaw.trim().padStart(2, "0"));
             localStorage.setItem("qaada_is_host", "false"); 
             openScanner();
@@ -396,10 +408,10 @@
             document.getElementById('loading-state').style.display = 'block';
             document.getElementById('random-quote').innerText = funnyQuotes[Math.floor(Math.random() * funnyQuotes.length)];
             
-            const cardId = parseInt(rawCardId, 10);
-            if (!cardId || cardId < 1 || cardId > 18) { 
+            const cardId = parseCardId(rawCardId);
+            if (!cardId) { 
                 document.getElementById('loading-state').style.display = 'none';
-                document.getElementById('lobby-home').style.display = 'block';
+                leaveRoom();
                 return; 
             }
 
@@ -410,12 +422,11 @@
                 setTimeout(() => {
                     document.getElementById('loading-state').style.display = 'none';
                     document.getElementById('card-display-state').style.display = 'block';
-                }, 2000); 
+                }, 1800); 
             };
             mainImg.src = `cards/${imageNumber}.jpg`;
         }
 
-        /* --- 5. الخروج الصارم وإغلاق الروم --- */
         function scanAgain() {
             const url = new URL(window.location);
             url.searchParams.delete('id');
@@ -423,19 +434,18 @@
             openScanner();
         }
 
-        // دالة الخروج للاعب العادي أو المعلم
         function closeCard() {
             const isHost = localStorage.getItem("qaada_is_host");
             const url = new URL(window.location);
             url.searchParams.delete('id');
             window.history.replaceState({}, "", url);
 
+            if(html5QrCode) { html5QrCode.stop().catch(()=>{}); }
+
             if (isHost === "true") {
-                // المعلم يرجع للوحة النقط بتاعته
                 hideAllStates();
                 document.getElementById('scoreboard-state').style.display = 'block';
             } else {
-                // اللاعب العادي يطرد بره الروم تماماً وتتفرمت ذاكرته
                 leaveRoom();
             }
         }
@@ -445,7 +455,6 @@
             closeCard();
         }
 
-        // دالة الفرمتة والرجوع للوبي الصارمة
         function leaveRoom() {
             clearData();
             if(html5QrCode) { html5QrCode.stop().catch(()=>{}); }
@@ -455,9 +464,8 @@
             hideAllStates();
             document.getElementById('lobby-home').style.display = 'block';
         }
-        function resetGame() { leaveRoom(); } // للتوافق مع الأزرار القديمة
 
-        /* --- 6. حارس البوابة (Strict OnLoad) --- */
+        /* --- حارس البوابة (Strict OnLoad) --- */
         window.onload = function() {
             const urlParams = new URLSearchParams(window.location.search);
             const cardIdRaw = urlParams.get('id');
@@ -466,20 +474,13 @@
 
             hideAllStates();
 
-            // 1. لو معاه كارت بيعمله سكان
             if (cardIdRaw) {
-                if (pin) {
-                    loadCardForId(cardIdRaw, pin);
-                } else {
-                    // معاه كارت بس مش عامل روم! اطرد للوبي فوراً
-                    document.getElementById('lobby-home').style.display = 'block';
-                }
+                if (pin) loadCardForId(cardIdRaw, pin);
+                else document.getElementById('lobby-home').style.display = 'block';
                 return;
             } 
             
-            // 2. لو فاتح اللينك الرئيسي للموقع
             if (isHost === "true" && pin) {
-                // المعلم نحافظله على روماته عشان ميخسرش نقط اللعيبة لو عمل ريفريش
                 loadPlayers();
                 loadRound();
                 if (currentPlayers.length > 0 && currentRound <= 3) {
@@ -493,7 +494,6 @@
                     document.getElementById('host-setup').style.display = 'block';
                 }
             } else {
-                // 🚨 هنا الصياعة: لو لاعب عادي فتح اللينك الرئيسي، نفرمت ذاكرته عشان ميفضلش عالق في روم قديمة للأبد!
                 clearData();
                 document.getElementById('lobby-home').style.display = 'block';
             }
