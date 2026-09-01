@@ -84,9 +84,27 @@ document.querySelectorAll('[data-action="back-to-home"]').forEach((btn) => {
 
 document.querySelectorAll('[data-action="back-to-lobby"]').forEach((btn) => {
   btn.addEventListener('click', () => {
+    // NAVIGATION SAFETY: stop the camera stream before leaving the scan
+    // screen, and detach it from the <video> element too — otherwise the
+    // element can briefly show a frozen last frame if the host re-opens
+    // the scan screen later.
     stopScan();
+    const videoEl = document.getElementById('scanVideo');
+    videoEl.srcObject = null;
     showScreen('screen-lobby');
   });
+});
+
+// NAVIGATION SAFETY (defense in depth): if the host backgrounds the tab,
+// switches apps, or closes/reloads the page while the scan screen is
+// active, make sure the camera stream is released rather than left
+// running invisibly. pagehide covers tab close/reload; visibilitychange
+// covers switching away without closing.
+window.addEventListener('pagehide', stopScan);
+document.addEventListener('visibilitychange', () => {
+  if (document.hidden && !document.getElementById('screen-scan').hidden) {
+    stopScan();
+  }
 });
 
 /* ===== Lobby -> Scan -> Game ===== */
