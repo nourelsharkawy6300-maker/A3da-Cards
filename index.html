@@ -5,359 +5,108 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="theme-color" content="#4a4d9e">
     <title>لعبة قعدة</title>
-
+    
+    <!-- خطوط جوجل -->
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@500;700;800;900&display=swap" rel="stylesheet">
+    
+    <!-- Google Analytics (من كودك) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-RNZPERH684"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-RNZPERH684');
+    </script>
+
+    <!-- Scanner -->
     <script src="https://unpkg.com/html5-qrcode"></script>
-
-    <style>
-        body {
-            margin: 0; font-family: 'Tajawal', sans-serif; background-color: #4a4d9e;
-            background-image: url('image_23f560.jpg'); background-size: cover;
-            background-position: center; background-attachment: fixed;
-            color: #f0f0f0; display: flex; justify-content: center; align-items: center;
-            min-height: 100vh; text-align: center; overflow: hidden; position: relative;
-            user-select: none; -webkit-user-select: none;
-        }
-
-        body::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(74, 77, 158, 0.45); z-index: 0; }
-
-        /* 🌟 تأثير النقط في الخلفية (من كودك) */
-        .particles {
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 0;
-            background-image: radial-gradient(rgba(255,255,255,0.15) 2px, transparent 2px);
-            background-size: 40px 40px; animation: particleMove 15s linear infinite;
-        }
-        @keyframes particleMove { 0% { transform: translateY(0); } 100% { transform: translateY(-40px); } }
-
-        .glass-box {
-            background: rgba(240, 240, 240, 0.08); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
-            border: 1px solid rgba(240, 240, 240, 0.15); border-radius: 24px; padding: 20px 15px;
-            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.6); width: 95%; max-width: 420px; box-sizing: border-box;
-            z-index: 1; animation: popUpBounce 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
-        }
-
-        @keyframes popUpBounce { 0% { opacity: 0; transform: scale(0.8) translateY(40px); } 100% { opacity: 1; transform: scale(1) translateY(0); } }
-
-        .game-logo { max-width: 100px; margin: 0 auto 10px auto; display: block; filter: drop-shadow(0 4px 6px rgba(0,0,0,0.3)); }
-        h2 { font-size: 24px; margin: 0 0 5px 0; font-weight: 900; color: #f0f0f0; text-shadow: 0 4px 10px rgba(0,0,0,0.3); }
-        .small-text { font-weight: 500; font-size: 14px; color: rgba(240, 240, 240, 0.7); margin-bottom: 5px; }
-
-        .display-card {
-            width: 100%; max-height: 68vh; object-fit: contain; border-radius: 12px;
-            border: 2px solid rgba(240, 240, 240, 0.8); margin: 5px auto 15px auto; display: block; pointer-events: none;
-            animation: premiumGlow 4s ease-in-out infinite;
-        }
-
-        @keyframes premiumGlow {
-            0% { box-shadow: 0 15px 35px rgba(0,0,0,0.6), 0 0 0px rgba(255,255,255,0); filter: brightness(1); }
-            50% { box-shadow: 0 20px 45px rgba(0,0,0,0.8), 0 0 20px rgba(255,255,255,0.15); filter: brightness(1.08); }
-            100% { box-shadow: 0 15px 35px rgba(0,0,0,0.6), 0 0 0px rgba(255,255,255,0); filter: brightness(1); }
-        }
-
-        .final-card-container { display: none; animation: cardReveal3D 0.7s cubic-bezier(0.34, 1.56, 0.64, 1) forwards; perspective: 1000px; }
-        @keyframes cardReveal3D { 0% { opacity: 0; transform: rotateY(-90deg) scale(0.6) translateY(50px); } 100% { opacity: 1; transform: rotateY(0deg) scale(1) translateY(0); } }
-
-        .btn-group { display: flex; gap: 10px; justify-content: center; margin-top: 5px; width: 100%; }
-        .action-btn { font-family: 'Tajawal', sans-serif; font-weight: 800; font-size: 15px; padding: 12px 5px; border-radius: 12px; cursor: pointer; transition: all 0.3s ease; flex: 1; border: none; }
-        .btn-primary { background: #f0f0f0; color: #4a4d9e; box-shadow: 0 5px 15px rgba(0,0,0,0.3); animation: pulseBtn 2s infinite cubic-bezier(0.66, 0, 0, 1); }
-        @keyframes pulseBtn { 0% { box-shadow: 0 0 0 0 rgba(240, 240, 240, 0.5); } 70% { box-shadow: 0 0 0 12px rgba(240, 240, 240, 0); } 100% { box-shadow: 0 0 0 0 rgba(240, 240, 240, 0); } }
-        .btn-secondary { background: rgba(240, 240, 240, 0.1); color: #f0f0f0; border: 2px solid #f0f0f0; }
-        .action-btn:active { transform: scale(0.92); }
-
-        /* 🌟 كارت الـ 3D اللي بيلف (مدموج من كودك) */
-        .card-loader {
-            width: 70px; height: 100px; margin: 0 auto 20px auto;
-            background: linear-gradient(135deg, #f1c40f, #e67e22);
-            border-radius: 10px; border: 3px solid #fff; box-shadow: 0 10px 20px rgba(0,0,0,0.3);
-            display: flex; justify-content: center; align-items: center;
-            animation: flipCard3D 1.5s infinite ease-in-out;
-        }
-        .card-loader::after { content: '🎲'; font-size: 25px; }
-        @keyframes flipCard3D { 0% { transform: perspective(400px) rotateY(0deg); } 50% { transform: perspective(400px) rotateY(180deg); } 100% { transform: perspective(400px) rotateY(360deg); } }
-        
-        .funny-quote { color: #00ffcc; font-size: 15px; font-weight: 800; margin-top: 15px; min-height: 45px; }
-
-        .progress-container { width: 100%; height: 6px; background: rgba(240, 240, 240, 0.1); border-radius: 10px; margin-top: 15px; overflow: hidden; position: relative; }
-        .progress-bar { height: 100%; width: 0%; border-radius: 10px; box-shadow: 0 0 10px rgba(240, 240, 240, 0.8); animation: loadProgress 2s cubic-bezier(0.4, 0, 0.2, 1) forwards; background: linear-gradient(90deg, #f0f0f0 0%, #ffffff 50%, #f0f0f0 100%); background-size: 200% 100%; }
-        @keyframes loadProgress { 0% { width: 0%; background-position: 100% 0; } 50% { background-position: 0 0; } 100% { width: 100%; background-position: -100% 0; } }
-
-        #scanner-state { display: none; animation: popUpBounce 0.5s forwards; }
-        #reader { width: 100%; border-radius: 15px; overflow: hidden; background: #fff; border: 2px solid #f0f0f0; margin-top: 15px; color: #000; box-shadow: 0 15px 30px rgba(0,0,0,0.5); }
-        #reader img { display: none; }
-        #reader video { object-fit: cover !important; }
-
-        #lobby-home, #lobby-join, #lobby-host { display: none; animation: popUpBounce 0.5s forwards; }
-        .pin-input { width: 100%; text-align: center; font-size: 32px; font-weight: 800; letter-spacing: 14px; padding: 12px 8px; margin: 12px 0 14px; border-radius: 12px; border: 2px solid rgba(240,240,240,0.5); background: rgba(240,240,240,0.92); color: #4a4d9e; font-family: 'Tajawal', sans-serif; box-sizing: border-box; }
-        .pin-input:focus { outline: none; border-color: #fff; }
-        .pin-display-num { font-size: 48px; font-weight: 900; letter-spacing: 10px; color: #fff; margin: 6px 0 18px; text-shadow: 0 4px 10px rgba(0,0,0,0.4); }
-        .lobby-error { font-size: 13px; color: #ffd1c9; min-height: 16px; margin: -6px 0 10px; }
-        .reset-link { display: block; margin-top: 16px; font-size: 12px; color: rgba(240,240,240,0.6); text-decoration: underline; cursor: pointer; }
-        .rules-link { display: block; margin-top: 16px; padding: 11px; font-family: 'Tajawal', sans-serif; font-weight: 700; font-size: 14px; color: rgba(240,240,240,0.9); text-decoration: none; border: 1.5px solid rgba(240,240,240,0.3); border-radius: 12px; transition: all 0.25s ease; box-sizing: border-box; }
-        .rules-link:hover, .rules-link:active { background: rgba(240,240,240,0.1); border-color: rgba(240,240,240,0.6); }
-    </style>
+    
+    <!-- ملفات التصميم والأبلكيشن -->
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="manifest" href="manifest.json">
 </head>
 <body>
-    <!-- 🌟 شبكة النقط المتحركة في الخلفية -->
+    <!-- تأثير النقط المتحركة (من كودك) -->
     <div class="particles"></div>
 
     <div class="glass-box" id="content-box">
         <img src="logo.png" alt="لوجو قعدة" class="game-logo" onerror="this.style.display='none'">
         
-        <div id="lobby-home">
+        <!-- 1. شاشة اللوبي الرئيسية -->
+        <div id="lobby-home" class="game-state">
             <h2>يلا نلعب قعدة</h2>
-            <div class="small-text">ابدأ لعبة جديدة أو انضم بـ PIN من صحابك</div>
-            <div class="btn-group" style="margin-top: 18px;">
-                <button class="action-btn btn-primary" onclick="startNewGame()">لعبة جديدة</button>
-                <button class="action-btn btn-secondary" onclick="showJoinScreen()">انضمام بـ PIN</button>
+            <div class="small-text">اختار هتلعب إيه النهاردة؟</div>
+            <div class="btn-group">
+                <button class="action-btn btn-primary" onclick="initHost()">أنا المعلم (روم جديدة)</button>
+                <button class="action-btn btn-secondary" onclick="showJoin()">انضمام كلاعب</button>
             </div>
             <a href="rules/" target="_blank" rel="noopener" class="rules-link">📜 طريقة اللعب</a>
         </div>
 
-        <div id="lobby-join">
+        <!-- 2. شاشة المعلم (تأسيس الروم وإضافة الأسماء) -->
+        <div id="host-setup" class="game-state">
+            <h2>تأسيس الروم</h2>
+            <div class="small-text">كود الشلة بتاع الجيم ده:</div>
+            <div class="pin-display-num" id="new-room-pin">00</div>
+            
+            <div class="input-group">
+                <input type="text" id="player-name-input" placeholder="اسم اللاعب (مثال: أروى أو منة)" maxlength="15">
+                <button class="action-btn btn-primary" style="flex: 0.4;" onclick="addPlayer()">إضافة</button>
+            </div>
+            <ul id="players-list" class="players-list"></ul>
+            
+            <button class="action-btn btn-primary" style="width: 100%; margin-top: 15px;" onclick="startScoreboard()">🚀 ابدأ الجيم ووثق النقط</button>
+            <div class="reset-link" onclick="resetGame()">إلغاء والرجوع</div>
+        </div>
+
+        <!-- 3. لوحة الشرف (Scoreboard) -->
+        <div id="scoreboard-state" class="game-state">
+            <h2>دفتر القعدة</h2>
+            <div class="small-text">كود الروم: <span id="active-pin-display" style="font-weight: 900; color: #00ffcc;"></span></div>
+            <div id="scoreboard-container"></div>
+            <div class="reset-link" onclick="resetGame()">إنهاء الجيم ومسح الروم</div>
+        </div>
+
+        <!-- 4. شاشة انضمام اللاعبين -->
+        <div id="lobby-join" class="game-state">
             <h2>انضم للعبة</h2>
-            <div class="small-text">دخل الـ PIN اللي بعته ليك صاحبك</div>
+            <div class="small-text">دخل كود الروم اللي المعلم قاله</div>
             <input id="pin-input-field" class="pin-input" type="text" inputmode="numeric" pattern="[0-9]*" maxlength="2" placeholder="00">
             <div id="join-error" class="lobby-error"></div>
             <div class="btn-group">
-                <button class="action-btn btn-primary" onclick="joinGame()">انضمام</button>
-                <button class="action-btn btn-secondary" onclick="backToHome()">رجوع</button>
+                <button class="action-btn btn-primary" onclick="joinGame()">دخول الكاميرا</button>
+                <button class="action-btn btn-secondary" onclick="resetGame()">رجوع</button>
             </div>
         </div>
 
-        <div id="lobby-host">
-            <h2>اللعبة جاهزة</h2>
-            <div class="small-text">ابعت الـ PIN ده لصحابك، وبعدين اسكان كارتك</div>
-            <div class="pin-display-num" id="host-pin-display">00</div>
-            <div class="btn-group">
-                <button class="action-btn btn-primary" onclick="scanAgain()">اسكان كارتي</button>
-            </div>
-            <div class="reset-link" onclick="resetGame()">ابدأ لعبة تانية من الأول</div>
+        <!-- 5. شاشة الكاميرا للاعبين -->
+        <div id="scanner-state" class="game-state">
+            <h2>وجه الكاميرا للكارت</h2>
+            <div class="small-text">جاري تفعيل الكاميرا... وافق على الصلاحية</div>
+            <div id="reader"></div>
+            <button class="action-btn btn-secondary" style="width: 100%; margin-top: 15px;" onclick="resetGame()">خروج من الروم</button>
         </div>
 
-        <!-- 🌟 شاشة التحميل مدموج فيها الـ 3D والجمل المضحكة -->
-        <div id="loading-state" style="display:none;">
+        <!-- 6. شاشة التحميل (فيها الجملة المضحكة والـ 3D من كودك) -->
+        <div id="loading-state" class="game-state">
             <div class="card-loader"></div>
             <h2>جاري فتح الكارت</h2>
             <div id="random-quote" class="funny-quote"></div>
             <div class="progress-container"><div class="progress-bar"></div></div>
         </div>
 
-        <div id="card-display-state" class="final-card-container">
+        <!-- 7. شاشة عرض الكارت (النتيجة) -->
+        <div id="card-display-state" class="game-state">
             <h2>كارتك جاهز</h2>
             <img id="game-card-img" src="" alt="كارت قعدة" class="display-card">
             <div class="btn-group">
-                <button class="action-btn btn-primary" onclick="scanAgain()">اسكان تاني</button>
+                <button class="action-btn btn-primary" onclick="openScanner()">اسكان تاني</button>
                 <button class="action-btn btn-secondary" onclick="closeCard()">خروج</button>
             </div>
         </div>
-
-        <div id="scanner-state">
-            <h2>وجه الكاميرا للكارت</h2>
-            <div class="small-text">جاري تفعيل الكاميرا... وافق على الصلاحية</div>
-            <div id="reader"></div>
-        </div>
     </div>
 
-    <script>
-        document.addEventListener('contextmenu', event => event.preventDefault());
-
-        const CHARACTER_SLOTS = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18];
-        const TOTAL_CARDS = CHARACTER_SLOTS.length;
-
-        // 🌟 الجمل المضحكة (من كودك)
-        const funnyQuotes = [
-            "يا ترى هتطلع أم خالد ولا إياد الموجي؟ 👀",
-            "استرها علينا يارب من كارت الدبيس... 💸",
-            "جهز نفسك لتقليد الدكتور! 👨‍🏫",
-            "يا ساتر.. شكلها فيها كارت قفلنا المايك 🤐",
-            "اسحب كارتك وواجه مصيرك يا معلم! ⚡"
-        ];
-
-        function mulberry32(seed) {
-            return function () {
-                seed |= 0; seed = (seed + 0x6D2B79F5) | 0;
-                let t = Math.imul(seed ^ (seed >>> 15), 1 | seed);
-                t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
-                return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
-            };
-        }
-        function seededShuffle(array, seed) {
-            const rand = mulberry32(seed);
-            const arr = array.slice();
-            for (let i = arr.length - 1; i > 0; i--) {
-                const j = Math.floor(rand() * (i + 1));
-                [arr[i], arr[j]] = [arr[j], arr[i]];
-            }
-            return arr;
-        }
-        function getShuffledSlots(pin) {
-            const pinNum = Number(pin);
-            const seed = (pinNum * 2654435761) ^ 0x9E3779B9;
-            return seededShuffle(CHARACTER_SLOTS, seed);
-        }
-        function getImageNumberForCard(pin, cardId) { return getShuffledSlots(pin)[cardId - 1]; }
-        function parseCardId(raw) {
-            if (raw === null || raw === undefined) return null;
-            const str = String(raw).trim();
-            if (!/^\d+$/.test(str)) return null;
-            const n = parseInt(str, 10);
-            return (n >= 1 && n <= TOTAL_CARDS) ? n : null;
-        }
-        function isValidPin(raw) { return /^\d{1,2}$/.test(String(raw).trim()); }
-        function normalizePin(raw) { return String(raw).trim().padStart(2, "0"); }
-        function generateNewPin() { return String(Math.floor(Math.random() * 100)).padStart(2, "0"); }
-
-        const PIN_KEY = "qaada_game_pin";
-        function savePin(pin) { localStorage.setItem(PIN_KEY, pin); }
-        function loadPin() { return localStorage.getItem(PIN_KEY); }
-        function clearPin() { localStorage.removeItem(PIN_KEY); }
-
-        function hideAllStates() {
-            ['loading-state','card-display-state','scanner-state','lobby-home','lobby-join','lobby-host']
-                .forEach(id => { const el = document.getElementById(id); if (el) el.style.display = 'none'; });
-        }
-
-        window.onload = function() {
-            const urlParams = new URLSearchParams(window.location.search);
-            const cardId = urlParams.get('id');
-            const pin = loadPin();
-
-            if (!pin) {
-                hideAllStates();
-                document.getElementById('lobby-home').style.display = 'block';
-                return;
-            }
-
-            if (cardId) {
-                loadCardForId(cardId, pin);
-            } else {
-                hideAllStates();
-                document.getElementById('host-pin-display').textContent = pin;
-                document.getElementById('lobby-host').style.display = 'block';
-            }
-        };
-
-        function startNewGame() {
-            const pin = generateNewPin();
-            savePin(pin);
-            hideAllStates();
-            document.getElementById('host-pin-display').textContent = pin;
-            document.getElementById('lobby-host').style.display = 'block';
-        }
-
-        function showJoinScreen() { hideAllStates(); document.getElementById('lobby-join').style.display = 'block'; }
-        function backToHome() { hideAllStates(); document.getElementById('lobby-home').style.display = 'block'; }
-
-        function joinGame() {
-            const raw = document.getElementById('pin-input-field').value;
-            const errorEl = document.getElementById('join-error');
-            if (!isValidPin(raw)) { errorEl.textContent = 'دخل بين مكون من رقمين صحيح.'; return; }
-            errorEl.textContent = '';
-            const pin = normalizePin(raw);
-            savePin(pin);
-
-            const urlParams = new URLSearchParams(window.location.search);
-            const cardId = urlParams.get('id');
-            if (cardId) {
-                loadCardForId(cardId, pin);
-            } else {
-                hideAllStates();
-                document.getElementById('host-pin-display').textContent = pin;
-                document.getElementById('lobby-host').style.display = 'block';
-            }
-        }
-
-        function resetGame() {
-            clearPin();
-            const url = new URL(window.location);
-            url.searchParams.delete('id');
-            window.history.replaceState({}, "", url);
-            hideAllStates();
-            document.getElementById('lobby-home').style.display = 'block';
-        }
-
-        function loadCardForId(rawCardId, pin) {
-            hideAllStates();
-            document.getElementById('loading-state').style.display = 'block';
-            
-            // 🌟 تغيير الجملة العشوائية كل مرة بنفتح كارت
-            document.getElementById('random-quote').innerText = funnyQuotes[Math.floor(Math.random() * funnyQuotes.length)];
-
-            const cardId = parseCardId(rawCardId);
-            if (!cardId) { showError(); return; }
-
-            const imageNumber = getImageNumberForCard(pin, cardId);
-            const mainImg = document.getElementById('game-card-img');
-
-            mainImg.onerror = function() {
-                document.getElementById('loading-state').style.display = 'none';
-                showError();
-            };
-
-            mainImg.onload = function() {
-                // تأخير خفيف عشان اللاعب يقرأ الجملة المضحكة ويشوف الأنيميشن
-                setTimeout(() => {
-                    document.getElementById('loading-state').style.display = 'none';
-                    document.getElementById('card-display-state').style.display = 'block';
-                }, 2000); 
-            };
-
-            mainImg.src = `cards/${imageNumber}.jpg`;
-        }
-
-        function showError() {
-            hideAllStates();
-            document.getElementById('content-box').innerHTML += `
-                <div style="font-size: 50px; margin-bottom: 15px;">⚠️</div>
-                <h2>الكارت غير موجود</h2>
-                <div class="reset-link" onclick="resetGame()">ابدأ من جديد</div>
-            `;
-        }
-
-        let html5QrCode;
-        function scanAgain() {
-            hideAllStates();
-            document.getElementById('scanner-state').style.display = 'block';
-            if(!html5QrCode) {
-                html5QrCode = new Html5Qrcode("reader");
-                html5QrCode.start({ facingMode: "environment" }, { fps: 15, qrbox: { width: 250, height: 250 } }, onScanSuccess, onScanFailure)
-                .catch(err => {
-                    html5QrCode.start({ facingMode: "user" }, { fps: 15, qrbox: { width: 250, height: 250 } }, onScanSuccess, onScanFailure);
-                });
-            }
-        }
-
-        // كمين الهروب من الإعلانات
-        const meQrBypass = {
-            "https://q.me-qr.com/a3fxd10w": "?id=1", "https://q.me-qr.com/v32kajn6": "?id=2", "https://q.me-qr.com/tnz5fn8w": "?id=3",
-            "https://q.me-qr.com/75t883gh": "?id=4", "https://q.me-qr.com/vrgdgaat": "?id=5", "https://q.me-qr.com/1bt4w6k3": "?id=6",
-            "https://q.me-qr.com/lzj8sobk": "?id=7", "https://q.me-qr.com/gertcxy1": "?id=8", "https://q.me-qr.com/o9h7x2to": "?id=9",
-            "https://q.me-qr.com/pllxlcji": "?id=10", "https://q.me-qr.com/vsi4olis": "?id=11", "https://q.me-qr.com/39949qq8": "?id=12",
-            "https://q.me-qr.com/ykmrvd8e": "?id=13", "https://q.me-qr.com/ysw5jpux": "?id=14", "https://q.me-qr.com/vr7a52pb": "?id=15",
-            "https://q.me-qr.com/dgd0165e": "?id=16", "https://q.me-qr.com/j4bv25ov": "?id=17", "https://q.me-qr.com/px8s6n9q": "?id=18"
-        };
-
-        function onScanSuccess(decodedText, decodedResult) {
-            let scannedLink = decodedText.trim();
-            let cleanTarget = meQrBypass[scannedLink] ? meQrBypass[scannedLink] : scannedLink;
-            html5QrCode.stop().then(() => { window.location.replace(cleanTarget); }).catch(err => { window.location.replace(cleanTarget); });
-        }
-        function onScanFailure(error) { /* صامت */ }
-
-        function closeCard() {
-            const url = new URL(window.location);
-            url.searchParams.delete('id');
-            window.history.replaceState({}, "", url);
-            const contentBox = document.getElementById('content-box');
-            contentBox.innerHTML = `
-                <div style="animation: popUpBounce 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;">
-                    <div style="font-size: 65px; margin-bottom: 10px; filter: drop-shadow(0 4px 6px rgba(0,0,0,0.3));">🏁</div>
-                    <h2 style="font-size: 30px; font-weight: 900; color: #f0f0f0; margin-bottom: 5px;">عاش يا بطل!</h2>
-                    <div style="color: rgba(240, 240, 240, 0.8); font-size: 16px; font-weight: 500; margin-bottom: 25px; line-height: 1.6;">دورك خلص في الكارت ده<br>تقدر تقفل الصفحة دلوقتي</div>
-                    <button class="action-btn btn-primary" onclick="scanAgain()" style="width: 80%; max-width: 200px; padding: 12px; margin: 0 auto; display: block;">سكان لكارت جديد</button>
-                </div>
-            `;
-        }
-    </script>
+    <!-- المحرك -->
+    <script src="js/app.js"></script>
 </body>
 </html>
