@@ -1,120 +1,142 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <meta name="theme-color" content="#EBE2CE">
-    <title>لعبة قعدة</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@700;800;900&family=Alexandria:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <script src="https://unpkg.com/html5-qrcode"></script>
-    <link rel="stylesheet" href="css/style.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>قعدة</title>
+
+<!--
+  SILENT CACHE BUSTING — layer 1: tell the browser (and any CDN/proxy in
+  between) never to serve a stale copy of THIS document from its own cache.
+  This only governs index.html itself — see the note at the bottom of the
+  reply for how the versioned ?v= query strings below handle CSS/JS.
+-->
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
+
+<!-- APP_VERSION: bump this on every deploy — see cache-busting note -->
+<link rel="stylesheet" href="style.css?v=1.0.0">
 </head>
 <body>
-    <div class="table" id="content-box">
-        
-        <!-- اللوبي -->
-        <div id="lobby-home" class="game-state">
-            <header class="board-header" style="justify-content: center; margin-top: 20px;">
-                <h1 class="board-title">لعبة قعدة</h1>
-            </header>
-            <p class="empty-state is-visible" style="margin-bottom: 20px;">ابدأ جيم جديد كـ (معلم) أو انضم بـ PIN</p>
-            <div style="display: flex; gap: 10px; flex-direction: column;">
-                <button class="btn btn--primary" onclick="initHost()">أنا المعلم</button>
-                <button class="btn btn--ghost" onclick="showJoinScreen()">انضمام كلاعب</button>
-            </div>
-        </div>
 
-        <!-- الانضمام للاعبين -->
-        <div id="lobby-join" class="game-state">
-            <header class="board-header"><h1 class="board-title">انضم للروم</h1></header>
-            <section class="add-player">
-                <input id="pin-input-field" class="add-player__input" type="text" inputmode="numeric" pattern="[0-9]*" maxlength="2" placeholder="أدخل الـ PIN...">
-            </section>
-            <div id="join-error" style="color: var(--brick); font-size: 14px; margin-bottom: 10px;"></div>
-            <div style="display: flex; gap: 10px;">
-                <button class="btn btn--primary" onclick="joinGame()">دخول</button>
-                <button class="btn btn--ghost" onclick="leaveRoom()">رجوع</button>
-            </div>
-        </div>
+<div class="app">
 
-        <!-- تأسيس الروم للمعلم -->
-        <div id="host-setup" class="game-state">
-            <header class="board-header">
-                <h1 class="board-title">تأسيس القعدة</h1>
-                <div class="round-stamp"><span class="round-stamp__label">كود الروم</span><span class="round-stamp__num" id="new-room-pin"></span></div>
-            </header>
-            <section class="add-player" aria-label="إضافة لاعب">
-                <input type="text" id="playerNameInput" class="add-player__input" placeholder="اسم اللاعب الجديد..." maxlength="20" autocomplete="off">
-                <button type="button" id="addPlayerBtn" class="btn btn--ink" onclick="addPlayer()">إضافة</button>
-            </section>
-            <ul class="player-list" id="players-list-setup"></ul>
-            <footer class="board-controls">
-                <button type="button" class="btn btn--primary" onclick="startScoreboard()">🚀 ابدأ الجيم</button>
-                <button type="button" class="btn btn--danger" onclick="leaveRoom()">إلغاء</button>
-            </footer>
-        </div>
+  <header class="app-bar">
+    <span class="app-bar__brand">قعدة</span>
+  </header>
 
-        <!-- لوحة النقط للمعلم -->
-        <div id="scoreboard-state" class="game-state">
-            <header class="board-header">
-                <h1 class="board-title" id="round-title-display">مواقف</h1>
-                <div class="round-stamp" id="roundStamp">
-                    <span class="round-stamp__label">الجولة</span>
-                    <span class="round-stamp__num" id="roundNumber">1</span>
-                </div>
-            </header>
-            
-            <button class="btn btn--ghost" style="width: 100%; border: 2px dashed var(--ochre); color: var(--ochre-d); margin-bottom: 20px;" onclick="scanAgain()">📸 اسكان كارت المعلم</button>
-
-            <ul class="player-list" id="scoreboard-container"></ul>
-            
-            <footer class="board-controls">
-                <button type="button" id="next-round-btn" class="btn btn--primary" onclick="nextRound()">الجولة التالية</button>
-                <button type="button" class="btn btn--ghost" onclick="leaveRoom()">تدمير الروم</button>
-            </footer>
-        </div>
-
-        <!-- النتيجة النهائية -->
-        <div id="final-result-state" class="game-state">
-            <header class="board-header" style="justify-content: center; border: none;"><h1 class="board-title" style="font-size: 40px;">🏆 انتهت القعدة</h1></header>
-            <ul class="player-list">
-                <li class="player-row" style="background: rgba(63, 107, 78, 0.1); border-color: var(--forest);">
-                    <div class="player-row__info"><span class="player-row__name" id="winner-display" style="color: var(--forest-d);"></span></div>
-                </li>
-                <li class="player-row" style="background: rgba(166, 61, 47, 0.1); border-color: var(--brick); margin-top: 10px;">
-                    <div class="player-row__info"><span class="player-row__name" id="loser-display" style="color: var(--brick-d);"></span></div>
-                </li>
-            </ul>
-            <p class="empty-state is-visible" style="margin-top: 20px; border-color: var(--brick); color: var(--brick-d);">الخسران يمسك موبايله فوراً ويعمل سكان لباركود (الأحكام) 😈</p>
-            <footer class="board-controls">
-                <button class="btn btn--primary" style="width: 100%;" onclick="leaveRoom()">رجوع للرئيسية</button>
-            </footer>
-        </div>
-
-        <!-- شاشات الكاميرا والكروت -->
-        <div id="loading-state" class="game-state" style="text-align: center; padding: 40px 0;">
-            <h1 class="board-title" style="margin-bottom: 20px;">🎲 جاري فك الشفرة</h1>
-            <p id="random-quote" style="font-family: var(--font-body); font-weight: 700; color: var(--ink-70);"></p>
-        </div>
-
-        <div id="card-display-state" class="game-state">
-            <header class="board-header"><h1 class="board-title">كارتك جاهز</h1></header>
-            <img id="game-card-img" src="" alt="كارت قعدة" style="width: 100%; border-radius: var(--radius-lg); border: 2px solid var(--ink); margin-bottom: 20px;">
-            <div style="display: flex; gap: 10px;">
-                <button class="btn btn--primary" onclick="scanAgain()">سحب جديد</button>
-                <button class="btn btn--danger" onclick="closeCard()">خروج</button>
-            </div>
-        </div>
-
-        <div id="scanner-state" class="game-state">
-            <header class="board-header"><h1 class="board-title">وجه الكاميرا للكارت</h1></header>
-            <div id="reader" style="border-radius: var(--radius-md); overflow: hidden; border: 2px solid var(--ink); margin-bottom: 20px;"></div>
-            <button class="btn btn--danger" style="width: 100%;" onclick="cancelScan()">رجوع</button>
-        </div>
-
+  <!-- ============ SCREEN: Home ============ -->
+  <section class="screen" id="screen-home" data-screen>
+    <div class="hero">
+      <h1 class="hero__title">قعدة</h1>
+      <p class="hero__subtitle">رفقة، ورق، وسهرة لسه ما بدأتش</p>
     </div>
-<script src="js/app.js"></script>
+    <div class="screen__actions">
+      <button type="button" class="btn btn--primary btn--block" id="btnCreateRoom">
+        ابدأ السهرة
+      </button>
+    </div>
+  </section>
+
+  <!-- ============ SCREEN: Host Name ============ -->
+  <section class="screen" id="screen-host-name" data-screen hidden>
+    <button type="button" class="back-btn" data-action="back-to-home" aria-label="رجوع">→</button>
+
+    <h2 class="screen__title">مين هيلم الشلة؟</h2>
+    <p class="screen__desc">اكتب اسمك عشان أصحابك يعرفوا مين اللي فاتح القعدة</p>
+
+    <div class="field">
+      <input
+        type="text"
+        id="hostNameInput"
+        class="field__input"
+        placeholder="اسمك هنا..."
+        maxlength="20"
+        autocomplete="off"
+      >
+    </div>
+
+    <div class="screen__actions">
+      <button type="button" class="btn btn--primary btn--block" id="btnConfirmHostName" disabled>
+        متابعة
+      </button>
+    </div>
+  </section>
+
+  <!-- ============ SCREEN: Lobby (PIN + Players) ============ -->
+  <section class="screen" id="screen-lobby" data-screen hidden>
+
+    <div class="pin-card">
+      <span class="pin-card__label">شارك الرقم ده مع أصحابك</span>
+      <span class="pin-card__value" id="pinValue">--</span>
+    </div>
+
+    <div class="players-block">
+      <div class="players-block__header">
+        <h2 class="screen__title screen__title--tight">اللاعبين</h2>
+        <span class="players-count" id="playersCount">0</span>
+      </div>
+
+      <ul class="players-list" id="playersList"></ul>
+
+      <div class="field field--inline">
+        <input
+          type="text"
+          id="playerNameInput"
+          class="field__input"
+          placeholder="اسم اللاعب..."
+          maxlength="20"
+          autocomplete="off"
+        >
+        <button type="button" class="btn btn--secondary" id="btnAddPlayer">إضافة</button>
+      </div>
+    </div>
+
+    <p class="lock-message" id="lockMessage" role="status" hidden></p>
+
+    <div class="screen__actions">
+      <button type="button" class="btn btn--primary btn--block" id="btnStartGame" disabled>
+        ابدأ اللعب
+      </button>
+    </div>
+  </section>
+
+  <!-- ============ SCREEN: Scan to Unlock ============ -->
+  <section class="screen screen--dark" id="screen-scan" data-screen hidden>
+    <button type="button" class="back-btn back-btn--light" data-action="back-to-lobby" aria-label="رجوع">→</button>
+
+    <h2 class="scan__title">امسح كارت البداية</h2>
+    <p class="scan__desc">وجّه الكاميرا على الكود اللي على كارت البداية عشان تفتح لوحة النقاط</p>
+
+    <div class="scan__frame">
+      <video id="scanVideo" class="scan__video" playsinline muted></video>
+      <div class="scan__reticle" aria-hidden="true"></div>
+    </div>
+
+    <p class="scan__status" id="scanStatus">جاري تشغيل الكاميرا...</p>
+  </section>
+
+  <!-- ============ SCREEN: Game (handoff point) ============ -->
+  <section class="screen" id="screen-game" data-screen hidden>
+    <div class="unlocked-banner">
+      <span class="unlocked-banner__icon">✓</span>
+      <span>تم فتح اللعبة بنجاح</span>
+    </div>
+
+    <h2 class="screen__title">لوحة النقاط</h2>
+    <p class="screen__desc">
+      هنا هي نقطة التسليم لمنطق السكوربورد بتاعك — اربط شاشة اللاعبين
+      وأزرار التقييم من هنا في <code>js/game.js</code> (لسه هتتضاف).
+    </p>
+  </section>
+
+</div>
+
+<script type="module" src="js/main.js?v=1.0.0"></script>
 </body>
 </html>
